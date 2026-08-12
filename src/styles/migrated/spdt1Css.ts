@@ -1,4 +1,3 @@
-// Automatically migrated from old_vayu_galaxy/spdt1.css
 export const spdt1Css = `body {
     margin: 0;
     font-family: var(--font-space-grotesk), sans-serif;

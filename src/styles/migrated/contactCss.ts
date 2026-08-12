@@ -1,4 +1,3 @@
-// Automatically migrated from old_vayu_galaxy/contact.css
 export const contactCss = `
 .white-bg {
     background: #ffffff

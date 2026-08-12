@@ -1,4 +1,3 @@
-// Automatically migrated from old_vayu_galaxy/about.css
 export const aboutCss = `body {
     margin: 0;
     font-family: var(--font-space-grotesk), sans-serif;
