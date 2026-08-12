@@ -1,11 +1,11 @@
 "use client";
 
-import { useScroll, MotionValue } from "framer-motion";
+import { useScroll, MotionValue, UseScrollOptions } from "framer-motion";
 import { RefObject } from "react";
 
 export interface ScrollProgressOptions {
   target?: RefObject<HTMLElement | null>;
-  offset?: [string, string] | string[];
+  offset?: UseScrollOptions["offset"];
 }
 
 /**
