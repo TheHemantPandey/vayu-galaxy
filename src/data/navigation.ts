@@ -15,7 +15,7 @@ export const headerLinks: NavLink[] = [
   { label: "About us", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "Project", href: "/spdt1" },
-  { label: "Blog", href: "#" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export const mobileLinks: NavLink[] = [
@@ -23,7 +23,7 @@ export const mobileLinks: NavLink[] = [
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "Project", href: "/spdt1" },
-  { label: "Blog", href: "#" },
+  { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "#" },
 ];
 
@@ -33,7 +33,7 @@ export const footerSections: FooterSection[] = [
     links: [
       { label: "What is Vayu Galaxy", href: "#" },
       { label: "Vayu Galaxy Founder", href: "#" },
-      { label: "Contact Us", href: "#" },
+      { label: "Contact Us", href: "/contact" },
       { label: "FAQ", href: "#" },
     ],
   },
@@ -49,7 +49,7 @@ export const footerSections: FooterSection[] = [
   {
     title: "NEWS & SOCIAL",
     links: [
-      { label: "News and Media", href: "#" },
+      { label: "Journal / Blog", href: "/blog" },
       { label: "Instagram", href: "#" },
       { label: "Linkedin", href: "#" },
       { label: "Twitter", href: "#" },
