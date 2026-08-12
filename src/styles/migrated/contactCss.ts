@@ -1,6 +1,5 @@
 // Automatically migrated from old_vayu_galaxy/contact.css
-export const contactCss = `@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-
+export const contactCss = `
 .white-bg {
     background: #ffffff
 }
@@ -50,7 +49,7 @@ export const contactCss = `@import url("https://fonts.googleapis.com/css2?family
     color: #5AAC4E !important;
     display: inline-block;
     padding: 18px 44px;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 14px;
     font-weight: 400;
     border: 0;
@@ -129,7 +128,7 @@ export const contactCss = `@import url("https://fonts.googleapis.com/css2?family
 }
 
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-weight: normal;
     font-style: normal
 }
@@ -140,7 +139,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     color: #0D210B;
     margin-top: 0px;
     font-style: normal;
@@ -149,7 +148,7 @@ h6 {
 }
 
 p {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 16px;
     line-height: 30px;
     margin-bottom: 15px;
@@ -393,7 +392,7 @@ hr {
 
 .btn {
     background: #234821;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-transform: normal;
     padding: 28px 22px;
     color: #fff;
@@ -2325,7 +2324,7 @@ hr {
 }
 
 .section-tittle span {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 24px;
     font-weight: 300;
     margin-left: 72px;
@@ -2571,7 +2570,7 @@ hr {
     transition: .3s;
     text-transform: capitalize;
     position: relative;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-decoration: underline #fff transparent
 }
 
@@ -3613,7 +3612,7 @@ hr {
     -moz-transition: .2s;
     -o-transition: .2s;
     transition: .2s;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     color: #fff
 }
 
@@ -4034,7 +4033,7 @@ hr {
     font-weight: 400;
     line-height: 1.4;
     margin-bottom: 20px;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     display: block;
     text-decoration: underline #fff transparent
 }
@@ -5446,7 +5445,7 @@ hr {
     color: #fff;
     font-weight: 900;
     margin-bottom: 0;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-transform: capitalize
 }
 
@@ -5505,7 +5504,7 @@ hr {
     cursor: pointer;
     display: block;
     float: left;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-weight: normal;
     width: 100% !important;
     line-height: 50px;
@@ -5541,7 +5540,7 @@ hr {
     top: 3px;
     transition: all 0.15s ease-in-out;
     width: 5px;
-    font-family: fontawesome;
+    font-family: var(--font-space-grotesk), sans-serif;
     color: #919191;
     font-size: 15px
 }
@@ -7085,7 +7084,7 @@ iframe {
 }
 
 .copyright p {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 10px;
     font-weight: 400;
     text-transform: uppercase;

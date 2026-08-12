@@ -1,7 +1,7 @@
 // Automatically migrated from old_vayu_galaxy/about.css
 export const aboutCss = `body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     background-color: #f4f4f4;
 }
 
@@ -43,7 +43,7 @@ export const aboutCss = `body {
 .logo {
     font-size: 26px;
     font-weight: bold;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-transform: uppercase;
 }
 .menu-icon {
@@ -130,7 +130,7 @@ export const aboutCss = `body {
 
 /* Futuristic Font & Styling */
 .content h1 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 55px;
     font-weight: 700;
     text-transform: uppercase;
@@ -166,7 +166,7 @@ export const aboutCss = `body {
 .about-content h2 {
     font-size: 28px;
     margin-bottom: 10px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-transform: uppercase;
     font-weight: 600;
     color: white;
@@ -176,7 +176,7 @@ export const aboutCss = `body {
 .about-content p {
     font-size: 16px;
     color: #666;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-align: justify;
 }
 
@@ -235,14 +235,14 @@ export const aboutCss = `body {
 }
 
 .founder-info h2 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     
 }
 
 .founder-info h4 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-weight: 600;
     margin-top: -10px;
     color: rgb(42, 28, 90);
@@ -363,7 +363,7 @@ export const aboutCss = `body {
 }
 
 .copyright p {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 10px;
     font-weight: 400;
     text-transform: uppercase;
@@ -384,7 +384,7 @@ export const aboutCss = `body {
 }
 
 .tech h1 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 28px;
     font-weight: 400;
     text-transform: uppercase;

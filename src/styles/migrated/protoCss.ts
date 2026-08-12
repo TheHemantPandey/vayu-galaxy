@@ -1,7 +1,7 @@
 // Automatically migrated from old_vayu_galaxy/proto.css
 export const protoCss = `body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     background-color: #f4f4f4;
 }
 
@@ -45,7 +45,7 @@ export const protoCss = `body {
 .logo {
     font-size: 26px;
     font-weight: bold;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-transform: uppercase;
 }
 .menu-icon {
@@ -122,7 +122,7 @@ export const protoCss = `body {
 
 @media (min-width: 768px) {
     .content h1 {
-        font-family: 'Orbitron', sans-serif;
+        font-family: var(--font-space-grotesk), sans-serif;
         font-size: 55px;
         font-weight: 700;
         letter-spacing: 2px;
@@ -167,7 +167,7 @@ export const protoCss = `body {
 /* Futuristic Font & Styling */
 @media (min-width: 768px) {
 .content h1 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 55px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -178,7 +178,7 @@ export const protoCss = `body {
 @media (max-width: 768px) {
     .content h1 {
         font-size: 42px;
-        font-family: 'Orbitron', sans-serif;
+        font-family: var(--font-space-grotesk), sans-serif;
     font-weight: 700;
     letter-spacing: 2px;
     text-shadow: 8px 8px 15px rgba(0, 0, 0, 0.8);
@@ -187,7 +187,7 @@ export const protoCss = `body {
 }
 
 .content p {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 1.3rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -207,7 +207,7 @@ export const protoCss = `body {
 }
 
 .tech h1 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 30px;
     font-weight: 600;
     text-transform: uppercase;
@@ -228,7 +228,7 @@ export const protoCss = `body {
 }
 
 .copyright p {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 10px;
     font-weight: 400;
     text-transform: uppercase;
@@ -316,7 +316,7 @@ export const protoCss = `body {
 .about-content h2 {
     font-size: 26px;
     margin-bottom: 10px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-transform: uppercase;
     font-weight: 650;
     color: rgb(0, 0, 0);
@@ -326,7 +326,7 @@ export const protoCss = `body {
 .about-content p {
     font-size: 16px;
     color: #000000;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-align: justify;
 }
 
@@ -393,7 +393,7 @@ export const protoCss = `body {
 .drone-content h2 {
     font-size: 28px;
     margin-bottom: 10px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-transform: uppercase;
     font-weight: 500;
     color: rgb(255, 255, 255);
@@ -403,7 +403,7 @@ export const protoCss = `body {
 .drone-content p {
     font-size: 16px;
     color: rgb(255, 255, 255);
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     text-align: justify;
 }
 
@@ -519,14 +519,14 @@ export const protoCss = `body {
 }
 
 .founder-info h2 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     
 }
 
 .founder-info h4 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-weight: 600;
     margin-top: -10px;
     color: rgb(42, 28, 90);
@@ -625,7 +625,7 @@ export const protoCss = `body {
 .risk-content h2 {
     font-size: 26px;
     margin-bottom: 10px;
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 4px;
