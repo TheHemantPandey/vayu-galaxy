@@ -1,0 +1,171 @@
+<section class="risk-section">
+    <div class="swiper risk-slider">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+                <div class="risk-container">
+                    <div class="risk-image">
+                        <img src="assets/dwarka.jpg" alt="">
+                    </div>
+                    <div class="risk-content">
+                        <h2>Dwarka. Gujrat</h2>
+                        <p>Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                            Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                            Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                        </p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+                <div class="risk-container">
+                    <div class="risk-image">
+                        <img src="assets/dwarka.jpg" alt="">
+                    </div>
+                    <div class="risk-content">
+                        <h2>Mumbai. Maharastra</h2>
+                        <p>Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                            Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                            Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                        </p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+                <div class="risk-container">
+                    <div class="risk-image">
+                        <img src="assets/dwarka.jpg" alt="">
+                    </div>
+                    <div class="risk-content">
+                        <h2>Jakarta. Indonesia</h2>
+                        <p>Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                            Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                            Understanding risks is essential for innovation. Our strategies ensure smooth navigation through uncertainties.
+                        </p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+<br><br><br>
+        <!-- Pagination and Navigation -->
+        <div class="swiper-pagination"></div>
+        
+    </div>
+</section>
+
+
+
+
+
+javascript code
+
+ <!-- Paste Step 4 (Swiper JS) Here -->
+ <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+ <script>
+ var swiper = new Swiper(".risk-slider", {
+     slidesPerView: 1,
+     spaceBetween: 30,
+     loop: true,
+     autoplay: {
+         delay: 6000, // Auto-slide every 6 seconds
+         disableOnInteraction: false,
+     },
+     pagination: {
+         el: ".swiper-pagination",
+         clickable: true,
+     },
+     navigation: {
+         nextEl: ".swiper-button-next",
+         prevEl: ".swiper-button-prev",
+     },
+ });
+ </script>
+
+
+
+css code 
+
+.risk-section {
+    padding: 50px 10%;
+    background-color: #ffffff;
+}
+
+.swiper {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.risk-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+}
+
+.risk-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.risk-image img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.risk-content {
+    flex: 1;
+    text-align: left;
+}
+
+.risk-content h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.risk-content p {
+    font-size: 16px;
+    color: #666;
+    text-align: justify;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #000000;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: 0.3s;
+}
+
+.read-more:hover {
+    background-color: #0056b3;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    .risk-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .risk-image {
+        justify-content: center;
+    }
+}
