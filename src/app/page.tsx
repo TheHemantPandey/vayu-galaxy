@@ -19,6 +19,7 @@ const forfirstpara = [
 const forsecondpara = [
   "Standing as a monument of absolute engineering marvel and spiritual legacy, Vayu Galaxy introduces the world's largest Lord Vishnu statue suspended in the air. This structure combines ancient Vedic architecture with modern high-altitude stabilization systems, creating a breathtaking spiritual beacon that transcends traditional boundaries.",
   "Hovering with advanced structural suspension and glowing with solar-powered illumination grids, the monument serves as an architectural protector of the city below. It represents a conceptual fusion of historical heritage, futuristic design, and absolute cultural pride.",
+  "This iconic design serves as a testament to human ingenuity and spiritual devotion, rising majestically into the sky. It invites visitors from around the globe to witness a harmonious synthesis of technology and timeless devotion, marking a new milestone in conceptual landmark creation.",
 ];
 const forthirdpara = [
   "The Devi Drone is a high-performance, modular unmanned aerial vehicle (UAV) engineered for security, high-altitude surveillance, emergency medical logistics, and disaster management. Designed and developed with cutting-edge aerospace systems, it delivers a reliable, fully autonomous solution for operations in challenging terrains.",
