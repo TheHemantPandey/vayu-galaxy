@@ -8,9 +8,9 @@ import ProjectGrid from "@/components/home/ProjectGrid";
 import FounderSection from "@/components/home/FounderSection";
 
 const placeholderParagraphs = [
-  "Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress. Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress. Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress.",
-  "Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress. Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress. Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress.",
-  "Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress. Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress. Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress.",
+  "Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress.",
+  "Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress.",
+  "Vayu Galaxy is built on innovation and excellence. Our journey is driven by groundbreaking solutions and a passion for progress.",
 ];
 
 export default function AboutPage() {
