@@ -10,9 +10,9 @@ export interface SocialLink {
  * Currently empty to prevent rendering, but ready to be populated.
  */
 export const socialLinks: SocialLink[] = [
-  { name: "Instagram", href: "", iconClass: "fab fa-instagram" },
-  { name: "LinkedIn", href: "", iconClass: "fab fa-linkedin-in" },
-  { name: "YouTube", href: "", iconClass: "fab fa-youtube" },
+  { name: "Instagram", href: "https://instagram.com", iconClass: "fab fa-instagram" },
+  { name: "LinkedIn", href: "https://linkedin.com", iconClass: "fab fa-linkedin-in" },
+  { name: "YouTube", href: "https://youtube.com", iconClass: "fab fa-youtube" },
 ];
 
 export interface HUDDetail {

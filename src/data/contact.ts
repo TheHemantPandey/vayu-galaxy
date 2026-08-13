@@ -18,7 +18,7 @@ export interface ContactProject {
 }
 
 export const contactPlaceholderInfo: ContactInfo = {
-  phone: "+91 98765 43210",
+  phone: "+91 97163 82612",
   email: "info@vayugalaxy.com",
   location: "Delhi NCR, India",
   hours: "Monday – Saturday, 10:00 AM – 6:00 PM",
