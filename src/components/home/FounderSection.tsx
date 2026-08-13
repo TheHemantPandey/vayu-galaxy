@@ -16,16 +16,17 @@ export default function FounderSection({
   name = "Mr. Raushan Kumar",
   title = "Meet Our Founder",
   descriptionParagraphs,
+  // TODO: Replace platform homepage with official Vayu Galaxy profile when verified.
   socialLinks = [
-    { href: "#", iconClass: "fab fa-facebook" },
-    { href: "#", iconClass: "fab fa-twitter" },
-    { href: "#", iconClass: "fab fa-instagram" },
-    { href: "#", iconClass: "fab fa-linkedin" },
-    { href: "#", iconClass: "fab fa-youtube" },
+    { href: "https://www.facebook.com/", iconClass: "fab fa-facebook" },
+    { href: "https://x.com/", iconClass: "fab fa-twitter" },
+    { href: "https://www.instagram.com/", iconClass: "fab fa-instagram" },
+    { href: "https://www.linkedin.com/", iconClass: "fab fa-linkedin" },
+    { href: "https://www.youtube.com/", iconClass: "fab fa-youtube" },
   ],
 }: FounderSectionProps) {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-between p-5 md:p-[50px] bg-black text-[#111111]">
+    <section id="founder" className="flex flex-col md:flex-row items-center justify-between p-5 md:p-[50px] bg-black text-[#111111]">
       <div className="flex-1 flex items-center justify-center overflow-hidden w-full md:w-auto mb-5 md:mb-0 md:pr-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

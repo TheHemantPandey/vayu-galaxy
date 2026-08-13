@@ -25,6 +25,7 @@ export default function Footer() {
   const deviProj = projectItems.find((p) => p.href === "/devi");
   const protoProj = projectItems.find((p) => p.href === "/proto");
   const spdt1Proj = projectItems.find((p) => p.href === "/spdt1");
+  const vishnuProj = projectItems.find((p) => p.href === "/#lord-vishnu");
 
   // Dynamic projects list
   const footerProjects = [
@@ -36,6 +37,10 @@ export default function Footer() {
     {
       name: spdt1Proj?.name === "SPD t1" ? "SPD T1" : spdt1Proj?.name || "SPD T1",
       href: "/spdt1",
+    },
+    {
+      name: vishnuProj?.name || "Lord Vishnu",
+      href: "/#lord-vishnu",
     },
   ];
 

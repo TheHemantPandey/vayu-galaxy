@@ -17,8 +17,6 @@ export default function CitiesAtRisk() {
           paragraphs={[city.description]}
           imageSrc={city.image}
           imageAlt={city.name}
-          buttonLink="#"
-          buttonText="Read More"
         />
       ))}
     </>

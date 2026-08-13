@@ -45,7 +45,7 @@ export default function ContactPage() {
     }
   };
 
-  const handleRegSubmit = (e: React.FormEvent) => {
+  const handleRegSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors: Record<string, string> = {};
 
@@ -68,17 +68,28 @@ export default function ContactPage() {
 
     setIsSubmitting(true);
     try {
-      // Log payload according to project submission architecture
-      console.log("Submit Early Registration:", {
-        type: "EARLY_REGISTRATION",
-        fullName: formData.fullName,
-        email: formData.email,
-        phone: formData.phone,
-        city: formData.city,
-        interestedIn: formData.interestedIn,
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "EARLY_REGISTRATION",
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          city: formData.city,
+          interestedIn: formData.interestedIn,
+        }),
       });
-      setIsSubmitted(true);
-      setSubmissionFailed(false);
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setSubmissionFailed(false);
+      } else {
+        console.error("Server registration failed with status:", response.status);
+        setSubmissionFailed(true);
+      }
     } catch (err) {
       console.error("Early registration submit error:", err);
       setSubmissionFailed(true);

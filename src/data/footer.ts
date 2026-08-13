@@ -9,10 +9,11 @@ export interface SocialLink {
  * Per project rules, we only render them if the URL is valid/verified (starts with http).
  * Currently empty to prevent rendering, but ready to be populated.
  */
+// TODO: Replace platform homepage with official Vayu Galaxy profile when verified.
 export const socialLinks: SocialLink[] = [
-  { name: "Instagram", href: "https://instagram.com", iconClass: "fab fa-instagram" },
-  { name: "LinkedIn", href: "https://linkedin.com", iconClass: "fab fa-linkedin-in" },
-  { name: "YouTube", href: "https://youtube.com", iconClass: "fab fa-youtube" },
+  { name: "Instagram", href: "https://www.instagram.com/", iconClass: "fab fa-instagram" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/", iconClass: "fab fa-linkedin-in" },
+  { name: "YouTube", href: "https://www.youtube.com/", iconClass: "fab fa-youtube" },
 ];
 
 export interface HUDDetail {

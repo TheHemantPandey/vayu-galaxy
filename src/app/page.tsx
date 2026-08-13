@@ -60,6 +60,7 @@ export default function HomePage() {
         <MapView />
 
         <AboutSection
+          id="lord-vishnu"
           theme="light"
           title={
             <>

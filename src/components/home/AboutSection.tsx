@@ -1,6 +1,7 @@
 import React from "react";
 
 interface AboutSectionProps {
+  id?: string;
   theme?: "light" | "dark";
   title: string | React.ReactNode;
   paragraphs: string[];
@@ -10,6 +11,7 @@ interface AboutSectionProps {
 }
 
 export default function AboutSection({
+  id,
   theme = "light",
   title,
   paragraphs,
@@ -21,6 +23,7 @@ export default function AboutSection({
 
   return (
     <section
+      id={id}
       className={`py-12 px-6 md:px-[10%] flex justify-center items-center ${
         isLight ? "bg-white text-[#111111]" : "bg-black text-[#FAFAFA]"
       }`}
