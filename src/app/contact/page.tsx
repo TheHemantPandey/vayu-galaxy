@@ -4,66 +4,134 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import {
-  contactPlaceholderInfo,
-  contactProjects,
-  enquiryTypes,
-  connectReasons,
-} from "@/data/contact";
+import { contactPlaceholderInfo, contactProjects } from "@/data/contact";
 
 export default function ContactPage() {
-  const formRef = useRef<HTMLFormElement>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const projectsRef = useRef<HTMLDivElement>(null);
+
+  const scrollToProjects = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (projectsRef.current) {
+      projectsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Form State
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     phone: "",
-    enquiryType: enquiryTypes[0],
-    message: "",
+    city: "",
+    interestedIn: "Vayu Galaxy",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionFailed, setSubmissionFailed] = useState(false);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
-
-  const scrollToForm = () => {
-    if (formRef.current) {
-      formRef.current.scrollIntoView({ behavior: "smooth" });
-      const firstInput = formRef.current.querySelector("input");
-      if (firstInput) {
-        firstInput.focus();
-      }
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleRegSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const validationErrors: Record<string, string> = {};
 
-    if (!formData.name || !formData.email || !formData.message) {
-      alert("Please fill in all required fields (Name, Email, Message).");
+    if (!formData.fullName.trim()) {
+      validationErrors.fullName = "Please enter your name.";
+    }
+    if (!formData.email.trim()) {
+      validationErrors.email = "Please enter your email address.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      validationErrors.email = "Please enter a valid email address.";
+    }
+    if (!formData.interestedIn) {
+      validationErrors.interestedIn = "Please select an area of interest.";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    console.log("Submit Vayu Galaxy Contact Form:", formData);
-    setIsSubmitted(true);
-
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      enquiryType: enquiryTypes[0],
-      message: "",
-    });
+    setIsSubmitting(true);
+    try {
+      // Log payload according to project submission architecture
+      console.log("Submit Early Registration:", {
+        type: "EARLY_REGISTRATION",
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        city: formData.city,
+        interestedIn: formData.interestedIn,
+      });
+      setIsSubmitted(true);
+      setSubmissionFailed(false);
+    } catch (err) {
+      console.error("Early registration submit error:", err);
+      setSubmissionFailed(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
+  const handleTryAgain = () => {
+    setSubmissionFailed(false);
+    setIsSubmitted(false);
+  };
+
+  // Pre-configured connection categories with subjects
+  const connections = [
+    {
+      num: "01",
+      title: "PROJECT / BUSINESS",
+      description: "Discuss a project, technology opportunity or business idea.",
+      subject: "Project / Business Inquiry — Vayu Galaxy",
+    },
+    {
+      num: "02",
+      title: "PARTNERSHIP",
+      description: "Explore collaboration and strategic opportunities.",
+      subject: "Partnership Inquiry — Vayu Galaxy",
+    },
+    {
+      num: "03",
+      title: "MEDIA / PRESS",
+      description: "For media, editorial and communication enquiries.",
+      subject: "Media / Press Inquiry — Vayu Galaxy",
+    },
+    {
+      num: "04",
+      title: "CAREERS / OPPORTUNITIES",
+      description: "For people interested in building with us.",
+      subject: "Career / Opportunity Inquiry — Vayu Galaxy",
+    },
+    {
+      num: "05",
+      title: "GENERAL",
+      description: "Something else? We'd still like to hear from you.",
+      subject: "General Inquiry — Vayu Galaxy",
+    },
+  ];
+
+  // Shared class for form labels (bolder, larger text size, and higher contrast)
+  const labelClass =
+    "text-xs font-bold uppercase tracking-[0.2em] text-black/75 group-focus-within:text-[#DFCFB7] transition-colors duration-300 font-mono";
+
   return (
-    <div className="contact-page-wrapper bg-[#050505] text-white min-h-screen flex flex-col justify-between">
+    <div className="contact-page-wrapper bg-[#050505] text-white min-h-screen flex flex-col justify-between select-none">
       {/* FontAwesome style icons */}
       <link
         rel="stylesheet"
@@ -78,101 +146,244 @@ export default function ContactPage() {
 
       <main className="flex-grow pt-[60px]">
         
-        {/* Section 1: HERO — dark */}
-        <section className="relative py-32 px-6 md:px-[10%] flex flex-col items-center justify-center text-center bg-gradient-to-b from-black to-[#050505] border-b border-white/5 min-h-[70vh]">
+        {/* SECTION 01: HERO — minimal blueprint layout */}
+        <section className="relative py-28 md:py-36 px-6 md:px-[10%] flex flex-col items-center justify-center text-center bg-gradient-to-b from-black to-[#050505] border-b border-white/5 min-h-[65vh]">
           {/* Subtle grid pattern background */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none z-0"></div>
           
-          <div className="relative z-10 max-w-[850px] w-full">
-            <span className="font-space-grotesk text-[13px] md:text-[14px] font-semibold uppercase tracking-[4px] text-[#DFCFB7] mb-6 block">
-              CONTACT VAYU GALAXY
+          <div className="relative z-10 max-w-[850px] w-full flex flex-col items-center">
+            <span className="font-space-grotesk text-[11px] font-semibold uppercase tracking-[5px] text-[#DFCFB7] mb-6 block font-mono">
+              CONTACT / VAYU GALAXY
             </span>
-            <h1 className="font-space-grotesk text-[38px] md:text-[65px] font-semibold uppercase tracking-[1.5px] leading-tight mb-8 text-[#FAFAFA] [text-shadow:2px_2px_15px_rgba(0,0,0,0.9)]">
-              LET&apos;S BUILD THE FUTURE TOGETHER
+            <h1 className="font-space-grotesk text-[38px] md:text-[62px] font-semibold uppercase tracking-[1px] leading-[1.1] mb-8 text-[#FAFAFA]">
+              LET&apos;S BUILD THE FUTURE<br />TOGETHER.
             </h1>
-            <p className="font-space-grotesk text-[16px] md:text-[19px] text-[#A0A0A0] leading-relaxed max-w-[650px] mx-auto font-normal">
-              Have a question, partnership idea, project enquiry, or simply want to learn more about Vayu Galaxy? Connect with our team and start a conversation about the future of living.
+            <p className="font-space-grotesk text-[15px] md:text-[18px] text-[#A0A0A0] leading-relaxed max-w-[600px] mb-10 font-normal">
+              Have a question, idea, partnership opportunity, or simply want to connect with Vayu Galaxy?
             </p>
+
+            {/* Direct Actions (Not forms) */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <a
+                href={`mailto:${contactPlaceholderInfo.email}?subject=${encodeURIComponent("General Inquiry — Vayu Galaxy")}`}
+                className="group bg-white text-black hover:bg-white/95 font-space-grotesk py-4 px-8 rounded-none uppercase font-semibold tracking-[2px] text-[11px] transition-all duration-300 inline-flex items-center gap-2"
+              >
+                EMAIL US{" "}
+                <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                  &rarr;
+                </span>
+              </a>
+              <a
+                href="#projects"
+                onClick={scrollToProjects}
+                className="group border border-white/20 hover:border-[#DFCFB7] text-white hover:text-[#DFCFB7] bg-transparent font-space-grotesk py-4 px-8 rounded-none uppercase font-semibold tracking-[2px] text-[11px] transition-all duration-300 inline-flex items-center gap-2"
+              >
+                EXPLORE OUR PROJECTS{" "}
+                <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                  &rarr;
+                </span>
+              </a>
+            </div>
           </div>
         </section>
 
-        {/* Section 2: ABOUT VAYU GALAXY — light */}
-        <section className="bg-white text-[#111111] py-28 px-6 md:px-[10%] border-b border-black/5">
-          <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        {/* SECTION 02: DIRECT CONTACT — main content details */}
+        <section className="bg-white text-black py-28 px-6 md:px-[10%] border-b border-black/5 relative z-10">
+          <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             
-            {/* Left: Heading and number */}
-            <div className="lg:col-span-5 border-l-2 border-[#DFCFB7] pl-6 md:pl-8">
-              <span className="font-space-grotesk text-[45px] font-light text-black/10 tracking-[1px] block leading-none mb-3 select-none">
-                01
+            {/* Left Side: Brand Statement */}
+            <div className="lg:col-span-6 border-l-2 border-[#DFCFB7] pl-6 md:pl-8">
+              <span className="font-space-grotesk text-[11px] font-semibold uppercase tracking-[3px] text-[#8E8E93] block mb-3 font-mono">
+                01 // CONTACT
               </span>
-              <h2 className="font-space-grotesk text-[28px] md:text-[38px] font-semibold uppercase tracking-[1px] leading-tight text-[#111111]">
-                A NEW WAY TO IMAGINE LIVING
+              <h2 className="font-space-grotesk text-[28px] md:text-[38px] font-medium uppercase tracking-[1px] leading-tight mb-8">
+                START A CONVERSATION.
+              </h2>
+              <p className="font-space-grotesk text-[16px] md:text-[18px] text-black leading-relaxed font-medium mb-4">
+                WE BELIEVE IN SHAPING THE FUTURE THROUGH ADVANCED AEROSPACE MOBILITY, INTELLECTUAL INFRASTRUCTURES, AND HUMAN-CENTERED DESIGN.
+              </p>
+              <p className="font-space-grotesk text-[14px] text-[#555555] leading-relaxed font-normal max-w-[480px]">
+                Whether you&apos;re interested in our active projects, strategic collaborations, technology platforms or career opportunities, we&apos;d be glad to hear from you.
+              </p>
+            </div>
+
+            {/* Right Side: Contact Information Layout */}
+            <div className="lg:col-span-6 space-y-8 lg:pl-8">
+              {/* EMAIL */}
+              <div className="group border-b border-black/10 pb-6">
+                <span className="text-[10px] font-semibold uppercase tracking-[2px] text-[#8E8E93] mb-1.5 block font-mono">
+                  EMAIL
+                </span>
+                <div className="flex justify-between items-baseline gap-4">
+                  <span className="text-lg md:text-xl font-medium tracking-wide">
+                    {contactPlaceholderInfo.email}
+                  </span>
+                  <a
+                    href={`mailto:${contactPlaceholderInfo.email}?subject=${encodeURIComponent("General Inquiry — Vayu Galaxy")}`}
+                    className="font-space-grotesk text-[11px] font-bold uppercase tracking-[2px] text-[#DFCFB7] hover:text-black transition-colors duration-300 inline-flex items-center gap-1.5"
+                  >
+                    EMAIL US{" "}
+                    <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                      &rarr;
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* PHONE */}
+              <div className="group border-b border-black/10 pb-6">
+                <span className="text-[10px] font-semibold uppercase tracking-[2px] text-[#8E8E93] mb-1.5 block font-mono">
+                  PHONE
+                </span>
+                <div className="flex justify-between items-baseline gap-4">
+                  <span className="text-lg md:text-xl font-medium tracking-wide">
+                    {contactPlaceholderInfo.phone}
+                  </span>
+                  <a
+                    href={`tel:${contactPlaceholderInfo.phone.replace(/\s+/g, "")}`}
+                    className="font-space-grotesk text-[11px] font-bold uppercase tracking-[2px] text-[#DFCFB7] hover:text-black transition-colors duration-300 inline-flex items-center gap-1.5"
+                  >
+                    CALL US{" "}
+                    <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                      &rarr;
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* LOCATION */}
+              <div className="group border-b border-black/10 pb-6">
+                <span className="text-[10px] font-semibold uppercase tracking-[2px] text-[#8E8E93] mb-1.5 block font-mono">
+                  LOCATION
+                </span>
+                <span className="text-lg md:text-xl font-medium tracking-wide block">
+                  {contactPlaceholderInfo.location}
+                </span>
+              </div>
+
+              {/* WORKING HOURS */}
+              <div className="group pb-2">
+                <span className="text-[10px] font-semibold uppercase tracking-[2px] text-[#8E8E93] mb-1.5 block font-mono">
+                  WORKING HOURS
+                </span>
+                <span className="text-base text-[#555555] block font-normal">
+                  {contactPlaceholderInfo.hours}
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* SECTION 03: CONNECTION TYPES — elegant horizontal rows */}
+        <section className="bg-[#0a0a0a] text-white py-28 px-6 md:px-[10%] border-b border-white/5 relative">
+          {/* Subtle grid visual */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.008)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.008)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none z-0"></div>
+
+          <div className="max-w-[1200px] mx-auto relative z-10">
+            
+            <div className="mb-14 border-b border-white/10 pb-6">
+              <span className="font-space-grotesk text-[11px] font-semibold uppercase tracking-[3px] text-[#DFCFB7] block mb-2 font-mono">
+                02 // CONNECTIONS
+              </span>
+              <h2 className="font-space-grotesk text-[26px] md:text-[34px] font-semibold uppercase tracking-[1px] text-[#FAFAFA] m-0">
+                WHY ARE YOU REACHING OUT?
               </h2>
             </div>
-            
-            {/* Right: Editorial Copy */}
-            <div className="lg:col-span-7 space-y-6 text-justify">
-              <p className="font-space-grotesk text-[16px] md:text-[18px] text-[#333333] leading-relaxed">
-                Vayu Galaxy represents a vision of living beyond conventional boundaries — bringing together technology, mobility, architecture, and human experience into a new kind of urban environment.
-              </p>
-              <p className="font-space-grotesk text-[15px] md:text-[16px] text-[#555555] leading-relaxed">
-                Our journey is driven by groundbreaking solutions and a passion for progress. We believe in human-centered innovation, integrating advanced mobility infrastructures and intelligent systems into elevated living environments. By redefining large-scale urban design, Vayu Galaxy lays the blueprint for a sustainable, future-oriented development that serves as a monument to modern engineering.
-              </p>
+
+            {/* Horizontal Connection List */}
+            <div className="divide-y divide-white/10 border-t border-b border-white/10">
+              {connections.map((item) => (
+                <div 
+                  key={item.num}
+                  className="group py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-white/[0.01] px-4 transition-all duration-300"
+                >
+                  {/* Category Num & Title */}
+                  <div className="flex items-center gap-6 md:w-1/3">
+                    <span className="font-mono text-sm text-[#8E8E93] group-hover:text-[#DFCFB7] transition-colors duration-300">
+                      {item.num}
+                    </span>
+                    <span className="font-space-grotesk text-[15px] font-semibold uppercase tracking-[2px] transition-transform duration-300 group-hover:translate-x-1.5">
+                      {item.title}
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <div className="md:w-1/2">
+                    <p className="font-space-grotesk text-[14px] text-[#A0A0A0] leading-relaxed m-0 font-normal">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Connect Action Trigger (Email subject specific) */}
+                  <div className="md:w-1/6 flex md:justify-end">
+                    <a 
+                      href={`mailto:${contactPlaceholderInfo.email}?subject=${encodeURIComponent(item.subject)}`}
+                      className="font-space-grotesk text-[11px] font-bold uppercase tracking-[2.5px] text-[#FAFAFA] group-hover:text-[#DFCFB7] transition-colors duration-300 border-b border-white/20 group-hover:border-[#DFCFB7]/60 pb-1 inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      CONNECT{" "}
+                      <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1 motion-reduce:transform-none">
+                        &rarr;
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
 
           </div>
         </section>
 
-        {/* Section 3: WHAT WE ARE BUILDING — dark */}
-        <section className="bg-[#0c0c0c] text-white py-28 px-6 md:px-[10%] border-b border-white/5 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.01),transparent_50%)] pointer-events-none"></div>
-          
-          <div className="max-w-[1200px] mx-auto relative z-10">
+        {/* SECTION 04: OUR WORLD / PROJECTS — refined 2x2 grid */}
+        <section ref={projectsRef} id="projects" className="bg-[#0c0c0c] text-white py-28 px-6 md:px-[10%] border-b border-white/5">
+          <div className="max-w-[1200px] mx-auto">
+            
             <div className="mb-16 border-b border-white/10 pb-6 flex justify-between items-end">
               <div>
-                <span className="font-space-grotesk text-[13px] font-semibold uppercase tracking-[3px] text-[#DFCFB7] block mb-2">
-                  DEVELOPMENTS
+                <span className="font-space-grotesk text-[11px] font-semibold uppercase tracking-[3px] text-[#DFCFB7] block mb-2 font-mono">
+                  03 // OUR WORLD
                 </span>
                 <h2 className="font-space-grotesk text-[26px] md:text-[34px] font-semibold uppercase tracking-[1px] text-[#FAFAFA] m-0">
-                  WHAT WE ARE BUILDING
+                  BUILT FOR WHAT&apos;S NEXT.
                 </h2>
+                <p className="font-space-grotesk text-sm text-[#A0A0A0] mt-3 font-normal max-w-[500px]">
+                  Explore the ideas, technologies and experiences Vayu Galaxy is building.
+                </p>
               </div>
-              <span className="font-space-grotesk text-[32px] font-light text-white/10 tracking-[1px] select-none hidden md:block">
-                02
-              </span>
             </div>
 
-            {/* Asymmetric Project Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-              {contactProjects.map((project, idx) => (
+            {/* Editorial 2x2 Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+              {contactProjects.map((project) => (
                 <div 
                   key={project.name}
-                  className="border border-white/10 rounded-lg p-6 bg-black/40 backdrop-blur-sm flex flex-col justify-between hover:border-white/20 transition-all duration-300 min-h-[340px]"
+                  className="group flex flex-col justify-between transition-all duration-300"
                 >
                   <div>
-                    {/* Render thumbnail safely */}
-                    <div className="w-full h-[260px] overflow-hidden rounded-md mb-6 relative border border-white/5 bg-black/20 flex items-center justify-center">
+                    {/* Visual Container */}
+                    <div className="w-full h-[240px] md:h-[280px] overflow-hidden rounded-none mb-5 relative border border-white/5 bg-black/20 flex items-center justify-center">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
                         src={project.image} 
                         alt={project.name}
-                        className={`w-full h-full hover:scale-105 transition-all duration-500 ${
-                          idx === 0 ? "object-cover" : "object-contain"
-                        }`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                       />
                     </div>
-                    <h3 className="font-space-grotesk text-[20px] font-semibold uppercase tracking-[1.5px] text-[#FAFAFA] mb-3">
+                    <h3 className="font-space-grotesk text-[18px] font-semibold uppercase tracking-[1.5px] text-[#FAFAFA] mb-2">
                       {project.name}
                     </h3>
-                    <p className="font-space-grotesk text-[14px] text-[#A0A0A0] leading-relaxed mb-6 text-justify">
+                    <p className="font-space-grotesk text-[13px] text-[#A0A0A0] leading-relaxed mb-4 max-w-[480px] font-normal">
                       {project.description}
                     </p>
                   </div>
                   <Link 
                     href={project.href}
-                    className="font-space-grotesk text-[12px] font-bold uppercase tracking-[2px] text-[#DFCFB7] hover:text-[#5AAC4E] transition-all flex items-center gap-2 w-fit mt-auto"
+                    className="font-space-grotesk text-[11px] font-bold uppercase tracking-[2px] text-[#DFCFB7] hover:text-[#5AAC4E] transition-all flex items-center gap-1.5 w-fit"
                   >
-                    EXPLORE <span className="text-[14px]">→</span>
+                    EXPLORE{" "}
+                    <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1 motion-reduce:transform-none">
+                      &rarr;
+                    </span>
                   </Link>
                 </div>
               ))}
@@ -181,321 +392,212 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Section 4: WHY VAYU GALAXY — light */}
-        <section className="bg-white text-[#111111] py-28 px-6 md:px-[10%] border-b border-black/5">
-          <div className="max-w-[1200px] mx-auto">
+        {/* SECTION 05: EARLY REGISTRATION — premium editorial split layout */}
+        <section className="bg-white text-black py-28 px-6 md:px-[10%] border-b border-black/5 relative">
+          <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
-            <div className="mb-16 border-b border-black/10 pb-6 flex justify-between items-end">
-              <div>
-                <span className="font-space-grotesk text-[13px] font-semibold uppercase tracking-[3px] text-[#8E8E93] block mb-2">
-                  PRINCIPLES
+            {/* Left Side: Indicator & Vertical branding detail */}
+            <div className="lg:col-span-4 flex flex-col md:flex-row justify-between items-start gap-8 self-stretch">
+              <div className="flex-grow">
+                <span className="font-space-grotesk text-[11px] font-semibold uppercase tracking-[3px] text-[#8E8E93] block mb-3 font-mono">
+                  04 // EARLY ACCESS
                 </span>
-                <h2 className="font-space-grotesk text-[26px] md:text-[34px] font-semibold uppercase tracking-[1px] text-black m-0">
-                  WHY VAYU GALAXY
+                <h2 className="font-space-grotesk text-[28px] md:text-[38px] font-semibold uppercase tracking-[1.5px] leading-tight mb-6 text-black">
+                  REGISTER YOUR<br />INTEREST.
                 </h2>
+                <p className="font-space-grotesk text-[14px] text-[#555555] leading-relaxed mb-3 font-normal max-w-[300px]">
+                  Be among the first to know what Vayu Galaxy is building next.
+                </p>
+                <p className="font-space-grotesk text-[13px] text-[#8E8E93] leading-relaxed font-normal max-w-[280px]">
+                  Register your interest and we&apos;ll keep you informed about relevant updates, launches and opportunities.
+                </p>
               </div>
-              <span className="font-space-grotesk text-[32px] font-light text-black/10 tracking-[1px] select-none hidden md:block">
-                03
-              </span>
-            </div>
-
-            {/* Principles List Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
               
-              {/* Principle 01 */}
-              <div className="border-t border-black/10 pt-6">
-                <span className="font-space-grotesk text-[14px] font-bold text-[#DFCFB7] tracking-[2px] block mb-2">
-                  01 — INNOVATION
+              {/* Technical branding detail */}
+              <div className="hidden md:flex flex-col items-center gap-4 self-stretch border-l border-black/5 pl-8 pt-2 select-none">
+                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#8E8E93] [writing-mode:vertical-lr] rotate-180 h-28">
+                  EARLY ACCESS
                 </span>
-                <p className="font-space-grotesk text-[15px] text-[#333333] leading-relaxed text-justify">
-                  Exploring new possibilities for future-oriented living and technology, challenging conventional infrastructure limitations.
-                </p>
-              </div>
-
-              {/* Principle 02 */}
-              <div className="border-t border-black/10 pt-6">
-                <span className="font-space-grotesk text-[14px] font-bold text-[#DFCFB7] tracking-[2px] block mb-2">
-                  02 — TECHNOLOGY
+                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#8E8E93] [writing-mode:vertical-lr] rotate-180">
+                  VAYU GALAXY
                 </span>
-                <p className="font-space-grotesk text-[15px] text-[#333333] leading-relaxed text-justify">
-                  Connecting intelligent systems, sustainable high-altitude mobility, and modular infrastructures in harmony.
-                </p>
-              </div>
-
-              {/* Principle 03 */}
-              <div className="border-t border-black/10 pt-6">
-                <span className="font-space-grotesk text-[14px] font-bold text-[#DFCFB7] tracking-[2px] block mb-2">
-                  03 — HUMAN EXPERIENCE
-                </span>
-                <p className="font-space-grotesk text-[15px] text-[#333333] leading-relaxed text-justify">
-                  Designing ideas around how people live, move, communicate, and interact within advanced futuristic townships.
-                </p>
-              </div>
-
-              {/* Principle 04 */}
-              <div className="border-t border-black/10 pt-6">
-                <span className="font-space-grotesk text-[14px] font-bold text-[#DFCFB7] tracking-[2px] block mb-2">
-                  04 — VISION
-                </span>
-                <p className="font-space-grotesk text-[15px] text-[#333333] leading-relaxed text-justify">
-                  Thinking beyond conventional urban planning limits to shape the atmosphere, aerospace mobility, and architectural horizons.
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* Section 5: WHO CAN CONNECT — dark */}
-        <section className="bg-[#0a0a0a] text-white py-28 px-6 md:px-[10%] border-b border-white/5">
-          <div className="max-w-[1200px] mx-auto">
-            
-            <div className="mb-16 border-b border-white/10 pb-6 flex justify-between items-end">
-              <div>
-                <span className="font-space-grotesk text-[13px] font-semibold uppercase tracking-[3px] text-[#DFCFB7] block mb-2">
-                  ENGAGEMENT
-                </span>
-                <h2 className="font-space-grotesk text-[26px] md:text-[34px] font-semibold uppercase tracking-[1px] text-[#FAFAFA] m-0">
-                  WHO CAN CONNECT WITH US
-                </h2>
-              </div>
-              <span className="font-space-grotesk text-[32px] font-light text-white/10 tracking-[1px] select-none hidden md:block">
-                04
-              </span>
-            </div>
-
-            {/* List Row Layout (Replacing standard card grid) */}
-            <div className="divide-y divide-white/10 border-t border-b border-white/10">
-              {connectReasons.map((reason) => (
-                <div 
-                  key={reason.title} 
-                  className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-white/[0.02] px-4 transition-all duration-300"
-                >
-                  <div className="md:w-1/3">
-                    <span className="font-space-grotesk text-[14px] font-semibold uppercase tracking-[2px] text-[#DFCFB7]">
-                      {reason.title}
-                    </span>
-                  </div>
-                  <div className="md:w-1/2">
-                    <p className="font-space-grotesk text-[14px] text-[#A0A0A0] leading-relaxed m-0 text-justify">
-                      {reason.description}
-                    </p>
-                  </div>
-                  <div className="md:w-1/6 flex md:justify-end">
-                    <button 
-                      onClick={scrollToForm}
-                      className="text-[12px] font-bold uppercase tracking-[2px] text-[#FAFAFA] hover:text-[#5AAC4E] transition-all border-b border-white/20 hover:border-[#5AAC4E] pb-1"
-                    >
-                      INQUIRE
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-          </div>
-        </section>
-
-        {/* Section 6: CONTACT INFORMATION + FORM — white background */}
-        <section className="bg-white text-[#111111] py-28 px-6 md:px-[10%] border-b border-black/5">
-          <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-            
-            {/* Info Cards Column */}
-            <div className="lg:col-span-5 flex flex-col justify-between gap-12">
-              <div>
-                <span className="font-space-grotesk text-[14px] font-semibold uppercase tracking-[3px] text-[#8E8E93] mb-6 block">
-                  CONNECT WITH VAYU GALAXY
-                </span>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* PHONE */}
-                  <div className="border border-black/10 rounded-lg p-5 bg-[#FAFAFA] hover:border-[#DFCFB7] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.01)] flex flex-col justify-between min-h-[120px]">
-                    <span className="text-[12px] font-bold tracking-[2px] uppercase text-[#8E8E93] mb-2 block">
-                      PHONE
-                    </span>
-                    <a
-                      href={`tel:${contactPlaceholderInfo.phone.replace(/\s+/g, "")}`}
-                      className="text-[16px] font-semibold text-[#111111] hover:text-[#5AAC4E] transition-all font-space-grotesk"
-                    >
-                      {contactPlaceholderInfo.phone}
-                    </a>
-                  </div>
-
-                  {/* EMAIL */}
-                  <div className="border border-black/10 rounded-lg p-5 bg-[#FAFAFA] hover:border-[#DFCFB7] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.01)] flex flex-col justify-between min-h-[120px]">
-                    <span className="text-[12px] font-bold tracking-[2px] uppercase text-[#8E8E93] mb-2 block">
-                      EMAIL
-                    </span>
-                    <a
-                      href={`mailto:${contactPlaceholderInfo.email}`}
-                      className="text-[16px] font-semibold text-[#111111] hover:text-[#5AAC4E] transition-all font-space-grotesk break-all"
-                    >
-                      {contactPlaceholderInfo.email}
-                    </a>
-                  </div>
-
-                  {/* LOCATION */}
-                  <div className="border border-black/10 rounded-lg p-5 bg-[#FAFAFA] hover:border-[#DFCFB7] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.01)] flex flex-col justify-between min-h-[120px]">
-                    <span className="text-[12px] font-bold tracking-[2px] uppercase text-[#8E8E93] mb-2 block">
-                      LOCATION
-                    </span>
-                    <p className="text-[16px] font-semibold text-[#111111] m-0 font-space-grotesk">
-                      {contactPlaceholderInfo.location}
-                    </p>
-                  </div>
-
-                  {/* HOURS */}
-                  <div className="border border-black/10 rounded-lg p-5 bg-[#FAFAFA] hover:border-[#DFCFB7] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.01)] flex flex-col justify-between min-h-[120px]">
-                    <span className="text-[12px] font-bold tracking-[2px] uppercase text-[#8E8E93] mb-2 block">
-                      WORKING HOURS
-                    </span>
-                    <p className="text-[14px] font-semibold text-[#111111] leading-tight m-0 font-space-grotesk">
-                      {contactPlaceholderInfo.hours}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative coordinate marker block */}
-              <div className="border-l-2 border-black/10 pl-6 hidden lg:block text-[#8E8E93] font-space-grotesk text-[12px] uppercase tracking-[2px] space-y-2">
-                <div>[ VAYU GALAXY NETWORKS ]</div>
-                <div>[ REGISTRY KEY: PLACEHOLDER ]</div>
+                <span className="font-mono text-[18px] font-light text-black/25">2026 &rarr;</span>
               </div>
             </div>
 
-            {/* Form Column */}
-            <div className="lg:col-span-7">
-              {isSubmitted ? (
-                <div className="flex flex-col items-center justify-center text-center p-12 border border-black/10 rounded-lg bg-[#FAFAFA] shadow-[0_8px_30px_rgb(0,0,0,0.02)] min-h-[500px]">
-                  <div className="w-20 h-20 bg-black text-white flex items-center justify-center rounded-full text-[32px] mb-6 shadow-md shadow-black/15">
-                    ✓
-                  </div>
-                  <h3 className="text-[24px] font-semibold text-[#111111] uppercase tracking-[2px] mb-3">
-                    THANK YOU
+            {/* Right Side: Underline Form Experience */}
+            <div className="lg:col-span-8">
+              {isSubmitted && !submissionFailed ? (
+                <div className="flex flex-col items-center justify-center text-center p-12 border border-black/10 bg-[#FAFAFA] min-h-[360px] rounded-none">
+                  <svg className="w-12 h-12 text-[#DFCFB7] mb-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <h3 className="font-space-grotesk text-[22px] font-medium text-black uppercase tracking-[2px] mb-3">
+                    THANK YOU.
                   </h3>
-                  <p className="text-[#333333] leading-relaxed max-w-[360px] mb-8 font-space-grotesk">
-                    Your enquiry has been received. Our team will review the details and get back to you.
+                  <p className="text-[#555555] leading-relaxed max-w-[420px] mb-8 font-space-grotesk text-sm font-normal">
+                    Your interest has been registered. We&apos;ll keep you informed about what&apos;s coming next.
                   </p>
                   <button
-                    onClick={() => setIsSubmitted(false)}
-                    className="text-[13px] font-semibold uppercase tracking-[2px] text-black/50 hover:text-black border-b border-black/20 hover:border-black transition-all pb-1 cursor-pointer"
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setFormData({
+                        fullName: "",
+                        email: "",
+                        phone: "",
+                        city: "",
+                        interestedIn: "Vayu Galaxy",
+                      });
+                    }}
+                    className="group bg-black text-white hover:text-[#DFCFB7] border border-transparent hover:border-[#DFCFB7]/30 font-space-grotesk py-3 px-6 rounded-none uppercase font-semibold tracking-[2px] text-[10px] transition-all duration-300 cursor-pointer select-none inline-flex items-center gap-2"
                   >
-                    Send Another Enquiry
+                    Register Another Interest
+                  </button>
+                </div>
+              ) : isSubmitted && submissionFailed ? (
+                <div className="flex flex-col items-center justify-center text-center p-12 border border-red-500/20 bg-[#FFF5F5] min-h-[360px] rounded-none">
+                  <svg className="w-12 h-12 text-red-500 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <h3 className="font-space-grotesk text-[22px] font-medium text-red-600 uppercase tracking-[2px] mb-3">
+                    REGISTRATION COULD NOT BE COMPLETED.
+                  </h3>
+                  <p className="text-[#777777] leading-relaxed max-w-[420px] mb-8 font-space-grotesk text-sm font-normal font-sans">
+                    Something went wrong. Please try again.
+                  </p>
+                  <button
+                    onClick={handleTryAgain}
+                    className="group bg-black text-white hover:text-[#DFCFB7] border border-transparent hover:border-[#DFCFB7]/30 font-space-grotesk py-3 px-6 rounded-none uppercase font-semibold tracking-[2px] text-[10px] transition-all duration-300 cursor-pointer select-none inline-flex items-center gap-2"
+                  >
+                    TRY AGAIN &rarr;
                   </button>
                 </div>
               ) : (
-                <form
-                  ref={formRef}
-                  onSubmit={handleSubmit}
-                  className="border border-black/10 rounded-lg p-8 md:p-10 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.02)]"
-                  noValidate
-                >
-                  <span className="font-space-grotesk text-[14px] font-semibold uppercase tracking-[3px] text-[#8E8E93] mb-8 block">
-                    CONTACT FORM
-                  </span>
-                  
-                  <div className="space-y-6">
+                <form onSubmit={handleRegSubmit} className="space-y-8" noValidate>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                     {/* Full Name */}
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="name" className="text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111111]">
-                        Full Name <span className="text-red-500">*</span>
+                    <div className="flex flex-col gap-1.5 group">
+                      <label htmlFor="reg_fullName" className={labelClass}>
+                        Full Name *
                       </label>
                       <input
                         type="text"
-                        name="name"
-                        id="name"
-                        required
+                        name="fullName"
+                        id="reg_fullName"
+                        disabled={isSubmitting}
                         placeholder="John Doe"
-                        value={formData.name}
+                        value={formData.fullName}
                         onChange={handleInputChange}
-                        className="w-full bg-[#FAFAFA] border border-black/10 rounded-md py-3 px-4 font-space-grotesk text-[#333333] placeholder-black/30 focus:outline-none focus:border-black/40 focus:ring-1 focus:ring-black/40 transition-all"
+                        className={`w-full bg-transparent border-0 border-b ${errors.fullName ? "border-red-500" : "border-black/10"} py-2 font-space-grotesk text-base font-semibold text-black placeholder-black/35 focus:outline-none focus:ring-0 focus:border-[#DFCFB7] transition-colors duration-300`}
                       />
+                      {errors.fullName && (
+                        <span className="text-red-500 text-[10px] mt-1 font-mono uppercase tracking-wider">{errors.fullName}</span>
+                      )}
                     </div>
 
-                    {/* Email */}
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="email" className="text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111111]">
-                        Email Address <span className="text-red-500">*</span>
+                    {/* Email Address */}
+                    <div className="flex flex-col gap-1.5 group">
+                      <label htmlFor="reg_email" className={labelClass}>
+                        Email Address *
                       </label>
                       <input
                         type="email"
                         name="email"
-                        id="email"
-                        required
+                        id="reg_email"
+                        disabled={isSubmitting}
                         placeholder="john@example.com"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full bg-[#FAFAFA] border border-black/10 rounded-md py-3 px-4 font-space-grotesk text-[#333333] placeholder-black/30 focus:outline-none focus:border-black/40 focus:ring-1 focus:ring-black/40 transition-all"
+                        className={`w-full bg-transparent border-0 border-b ${errors.email ? "border-red-500" : "border-black/10"} py-2 font-space-grotesk text-base font-semibold text-black placeholder-black/35 focus:outline-none focus:ring-0 focus:border-[#DFCFB7] transition-colors duration-300`}
                       />
+                      {errors.email && (
+                        <span className="text-red-500 text-[10px] mt-1 font-mono uppercase tracking-wider">{errors.email}</span>
+                      )}
                     </div>
 
-                    {/* Phone */}
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="phone" className="text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111111]">
+                    {/* Phone Number */}
+                    <div className="flex flex-col gap-1.5 group">
+                      <label htmlFor="reg_phone" className={labelClass}>
                         Phone Number
                       </label>
                       <input
                         type="tel"
                         name="phone"
-                        id="phone"
+                        id="reg_phone"
+                        disabled={isSubmitting}
                         placeholder="+91 98765 43210"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full bg-[#FAFAFA] border border-black/10 rounded-md py-3 px-4 font-space-grotesk text-[#333333] placeholder-black/30 focus:outline-none focus:border-black/40 focus:ring-1 focus:ring-black/40 transition-all"
+                        className="w-full bg-transparent border-0 border-b border-black/10 py-2 font-space-grotesk text-base font-semibold text-black placeholder-black/35 focus:outline-none focus:ring-0 focus:border-[#DFCFB7] transition-colors duration-300"
                       />
                     </div>
 
-                    {/* Enquiry Type Dropdown */}
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="enquiryType" className="text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111111]">
-                        Enquiry Type
+                    {/* City / Location */}
+                    <div className="flex flex-col gap-1.5 group">
+                      <label htmlFor="reg_city" className={labelClass}>
+                        City / Location
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        id="reg_city"
+                        disabled={isSubmitting}
+                        placeholder="Delhi NCR"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        className="w-full bg-transparent border-0 border-b border-black/10 py-2 font-space-grotesk text-base font-semibold text-black placeholder-black/35 focus:outline-none focus:ring-0 focus:border-[#DFCFB7] transition-colors duration-300"
+                      />
+                    </div>
+
+                    {/* I'M INTERESTED IN */}
+                    <div className="flex flex-col gap-1.5 group col-span-1 md:col-span-2">
+                      <label htmlFor="reg_interestedIn" className={labelClass}>
+                        I&apos;M INTERESTED IN *
                       </label>
                       <div className="relative">
                         <select
-                          name="enquiryType"
-                          id="enquiryType"
-                          value={formData.enquiryType}
+                          name="interestedIn"
+                          id="reg_interestedIn"
+                          disabled={isSubmitting}
+                          value={formData.interestedIn}
                           onChange={handleInputChange}
-                          className="w-full bg-[#FAFAFA] border border-black/10 rounded-md py-3 px-4 font-space-grotesk text-[#333333] focus:outline-none focus:border-black/40 focus:ring-1 focus:ring-black/40 transition-all appearance-none cursor-pointer"
+                          className="w-full bg-transparent border-0 border-b border-black/10 py-2 font-space-grotesk text-base font-semibold text-black focus:outline-none focus:ring-0 focus:border-[#DFCFB7] transition-colors duration-300 appearance-none cursor-pointer pr-8"
                         >
-                          {enquiryTypes.map((type) => (
-                            <option key={type} value={type}>
-                              {type}
-                            </option>
-                          ))}
+                          <option value="Vayu Galaxy">Vayu Galaxy</option>
+                          <option value="Devi Drone">Devi Drone</option>
+                          <option value="Proto">Proto</option>
+                          <option value="SPD T1">SPD T1</option>
+                          <option value="Future Projects">Future Projects</option>
+                          <option value="General Updates">General Updates</option>
                         </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-black/50 text-[12px]">
-                          ▼
-                        </div>
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-black/40 text-[9px] pointer-events-none">▼</span>
                       </div>
-                    </div>
-
-                    {/* Message */}
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="message" className="text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111111]">
-                        Message <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        name="message"
-                        id="message"
-                        required
-                        rows={6}
-                        placeholder="Write your query here..."
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        className="w-full bg-[#FAFAFA] border border-black/10 rounded-md py-3 px-4 font-space-grotesk text-[#333333] placeholder-black/30 focus:outline-none focus:border-black/40 focus:ring-1 focus:ring-black/40 transition-all resize-y"
-                      ></textarea>
+                      {errors.interestedIn && (
+                        <span className="text-red-500 text-[10px] mt-1 font-mono uppercase tracking-wider">{errors.interestedIn}</span>
+                      )}
                     </div>
                   </div>
 
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    className="w-full bg-black text-white hover:bg-[#120c2e] font-space-grotesk py-4 px-6 rounded-[50px] uppercase font-semibold tracking-[2px] transition-all duration-300 mt-8 shadow-sm cursor-pointer select-none"
-                  >
-                    SEND ENQUIRY
-                  </button>
+                  {/* Submit CTA & Privacy */}
+                  <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="group bg-black text-white hover:text-[#DFCFB7] border border-transparent hover:border-[#DFCFB7]/30 font-space-grotesk py-4 px-8 rounded-none uppercase font-semibold tracking-[2.5px] text-[11px] transition-all duration-300 cursor-pointer select-none inline-flex items-center gap-2"
+                    >
+                      {isSubmitting ? "REGISTERING..." : (
+                        <>
+                          REGISTER MY INTEREST{" "}
+                          <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                            &rarr;
+                          </span>
+                        </>
+                      )}
+                    </button>
+                    <p className="text-[10px] text-[#8E8E93] m-0 max-w-[340px] leading-normal font-space-grotesk font-normal">
+                      Your information will only be used for Vayu Galaxy updates and related opportunities.
+                    </p>
+                  </div>
                 </form>
               )}
             </div>
@@ -503,39 +605,76 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Section 7: PARTNERSHIP CTA — dark */}
-        <section className="bg-[#0a0a0a] py-32 px-6 md:px-[10%] relative overflow-hidden flex flex-col items-center justify-center text-center border-b border-white/5">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none"></div>
-          
-          <div className="relative z-10 max-w-[800px] w-full flex flex-col items-center gap-8">
-            <h2 className="font-space-grotesk text-[32px] md:text-[45px] font-semibold uppercase tracking-[2px] leading-tight text-white m-0">
-              HAVE A BIGGER IDEA?
-            </h2>
-            <p className="font-space-grotesk text-[15px] md:text-[17px] text-[#A0A0A0] leading-relaxed max-w-[620px] mx-auto text-justify md:text-center m-0">
-              Vayu Galaxy is built around ideas that challenge conventional thinking. If you see an opportunity to collaborate, build, invest, or contribute to the vision, we&apos;d like to hear from you.
-            </p>
-            <button
-              onClick={scrollToForm}
-              className="border border-[#DFCFB7] hover:border-white bg-transparent hover:bg-white text-white hover:text-black font-space-grotesk text-[13px] font-semibold uppercase tracking-[2px] py-4 px-8 rounded-[50px] transition-all duration-300 cursor-pointer select-none"
-            >
-              START A CONVERSATION
-            </button>
+        {/* SECTION 06: LOCATION / PRESENCE — blueprint map */}
+        <section className="bg-white text-black py-28 px-6 md:px-[10%] border-b border-black/5">
+          <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Address */}
+            <div className="lg:col-span-5 border-l-2 border-[#DFCFB7] pl-6 md:pl-8">
+              <span className="font-space-grotesk text-[11px] font-semibold uppercase tracking-[3px] text-[#8E8E93] block mb-2 font-mono">
+                05 // FIND US
+              </span>
+              <h2 className="font-space-grotesk text-[28px] md:text-[38px] font-medium uppercase tracking-[1px] leading-tight mb-6">
+                WHERE WE ARE.
+              </h2>
+              <p className="font-space-grotesk text-lg font-medium text-black tracking-wide uppercase mb-1">
+                Vayu Galaxy Headquarters
+              </p>
+              <p className="font-space-grotesk text-[15px] text-[#555555] leading-relaxed font-normal">
+                {contactPlaceholderInfo.location}
+              </p>
+            </div>
+
+            {/* Premium map visualization */}
+            <div className="lg:col-span-7 border border-black/10 p-2">
+              <div className="bg-[#FAFAFA] border border-black/5 w-full h-[280px] overflow-hidden flex items-center justify-center relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src="/assets/location.png" 
+                  alt="Vayu Galaxy physical presence location overview schematic"
+                  className="w-full h-full object-cover opacity-85 hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            </div>
+
           </div>
         </section>
 
-        {/* Section 8: FINAL INFORMATION STRIP — dark */}
-        <section className="bg-black py-16 px-6 md:px-[10%] border-b border-white/5 relative z-10">
-          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8 font-space-grotesk text-[11px] md:text-[12px] text-white/50 tracking-[3px] uppercase">
-            <div className="text-center md:text-left">
-              VAYU GALAXY <span className="text-white/20 mx-2">|</span> THE FUTURE OF LIVING
-            </div>
-            <div className="text-center">
-              DELHI NCR, INDIA
-            </div>
-            <div className="flex gap-6 justify-center">
-              <span className="hover:text-white transition-all cursor-pointer" onClick={scrollToForm}>CONTACT</span>
-              <span className="hover:text-white transition-all cursor-pointer" onClick={scrollToForm}>PARTNERSHIP</span>
-              <Link href="/#navigation" className="hover:text-white transition-all text-white/50 no-underline">PROJECTS</Link>
+        {/* SECTION 07: BIG IDEA CTA — open invitation */}
+        <section className="bg-[#0a0a0a] py-32 px-6 md:px-[10%] relative overflow-hidden flex flex-col items-center justify-center text-center border-b border-white/5">
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0"></div>
+          
+          <div className="relative z-10 max-w-[800px] w-full flex flex-col items-center gap-8">
+            <span className="font-space-grotesk text-[11px] font-semibold uppercase tracking-[4px] text-[#DFCFB7] block font-mono">
+              06 // OPEN INVITATION
+            </span>
+            <h2 className="font-space-grotesk text-[32px] md:text-[45px] font-semibold uppercase tracking-[2px] leading-tight text-white m-0">
+              HAVE A BIGGER IDEA?
+            </h2>
+            <p className="font-space-grotesk text-[15px] md:text-[17px] text-[#A0A0A0] leading-relaxed max-w-[600px] mx-auto m-0 font-normal">
+              Some of the best ideas begin with a conversation. Let&apos;s talk about the future.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <a
+                href={`mailto:${contactPlaceholderInfo.email}?subject=${encodeURIComponent("Open Invitation Inquiry — Vayu Galaxy")}`}
+                className="group bg-[#FAFAFA] text-black hover:bg-white font-space-grotesk py-4 px-8 rounded-none uppercase font-semibold tracking-[2.5px] text-[11px] transition-all duration-300 inline-flex items-center gap-2 cursor-pointer"
+              >
+                EMAIL VAYU GALAXY{" "}
+                <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                  &rarr;
+                </span>
+              </a>
+              <a
+                href="#projects"
+                onClick={scrollToProjects}
+                className="group border border-white/20 hover:border-[#DFCFB7] text-white hover:text-[#DFCFB7] bg-transparent font-space-grotesk py-4 px-8 rounded-none uppercase font-semibold tracking-[2.5px] text-[11px] transition-all duration-300 inline-flex items-center gap-2 cursor-pointer"
+              >
+                EXPLORE OUR PROJECTS{" "}
+                <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                  &rarr;
+                </span>
+              </a>
             </div>
           </div>
         </section>
