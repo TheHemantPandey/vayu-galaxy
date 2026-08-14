@@ -747,32 +747,7 @@ export default function BookingFormContainer() {
 
         </div>
 
-        {/* Contact Strip */}
-        <div className="mt-20 pt-10 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <span className="text-xs font-mono tracking-widest text-cyan-400 uppercase block mb-1">
-              HAVE A DIFFERENT QUESTION?
-            </span>
-            <p className="text-xs text-zinc-400 font-light">
-              For press inquiries, custom partnerships or general questions:{" "}
-              <a
-                href="mailto:info@vayugalaxy.com"
-                className="text-white underline hover:text-cyan-400 transition-colors"
-              >
-                info@vayugalaxy.com
-              </a>
-            </p>
-          </div>
-          <Link
-            href="/contact"
-            className="border border-white/20 hover:border-cyan-400 text-white hover:text-cyan-400 hover:bg-cyan-950/20 px-6 py-2.5 rounded-xl text-xs font-mono tracking-wider uppercase transition-all duration-300 flex items-center gap-2 group select-none shrink-0"
-          >
-            CONTACT US{" "}
-            <span className="transition-transform duration-300 ease-out group-hover:translate-x-1">
-              →
-            </span>
-          </Link>
-        </div>
+
 
       </main>
 
