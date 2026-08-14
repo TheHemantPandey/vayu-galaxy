@@ -11,10 +11,13 @@ export default function BookingFormContainer() {
     email: "",
     phone: "",
     city: "",
-    bookingType: "General Visit / Enquiry",
-    preferredDate: "",
-    preferredTime: "Morning (09:00 - 12:00)",
-    numberOfPeople: "1",
+    ageGroup: "",
+    interestLevel: "",
+    referralSource: "",
+    referralOther: "",
+    occupation: "",
+    timeline: "",
+    questions: "",
     message: "",
   });
 
@@ -22,14 +25,11 @@ export default function BookingFormContainer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submissionFailed, setSubmissionFailed] = useState(false);
-  const isSubmittingRef = useRef(false);
+  
+  // Requirement: First FAQ item MUST be open by default
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  // Calculate minimum date dynamically (today's date in YYYY-MM-DD)
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, "0");
-  const dd = String(today.getDate()).padStart(2, "0");
-  const minDate = `${yyyy}-${mm}-${dd}`;
+  const isSubmittingRef = useRef(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -37,7 +37,6 @@ export default function BookingFormContainer() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error for the field being edited
     if (errors[name]) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -56,49 +55,37 @@ export default function BookingFormContainer() {
 
     const validationErrors: Record<string, string> = {};
 
-    // 1. Full Name
     if (!formData.fullName.trim()) {
-      validationErrors.fullName = "Please enter your name.";
+      validationErrors.fullName = "Please enter your full name.";
     }
 
-    // 2. Email Validation
     if (!formData.email.trim()) {
       validationErrors.email = "Please enter your email address.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       validationErrors.email = "Please enter a valid email address.";
     }
 
-    // 3. Phone Validation
     if (!formData.phone.trim()) {
       validationErrors.phone = "Please enter your phone number.";
     } else if (!/^\+?[0-9\s\-()]{7,15}$/.test(formData.phone.trim())) {
       validationErrors.phone = "Please enter a valid phone number.";
     }
 
-    // 4. City
     if (!formData.city.trim()) {
       validationErrors.city = "Please enter your city / location.";
     }
 
-    // 5. Booking Type
-    if (!formData.bookingType) {
-      validationErrors.bookingType = "Please select a booking option.";
-    }
-
-    // 6. Preferred Date Validation (Must not be in the past)
-    if (!formData.preferredDate) {
-      validationErrors.preferredDate = "Please select your preferred date.";
-    } else {
-      const selectedDate = new Date(formData.preferredDate);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (selectedDate < today) {
-        validationErrors.preferredDate = "Date cannot be in the past.";
-      }
+    if (formData.referralSource === "Other" && !formData.referralOther.trim()) {
+      validationErrors.referralOther = "Please specify how you heard about us.";
     }
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      const firstErrorField = Object.keys(validationErrors)[0];
+      const errorElement = document.getElementsByName(firstErrorField)[0];
+      if (errorElement) {
+        errorElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       return;
     }
 
@@ -112,16 +99,19 @@ export default function BookingFormContainer() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "BOOKING_REQUEST",
+          type: "EARLY_REGISTRATION",
           fullName: formData.fullName,
           email: formData.email,
           phone: formData.phone,
           city: formData.city,
-          bookingType: formData.bookingType,
-          preferredDate: formData.preferredDate,
-          preferredTime: formData.preferredTime,
-          numberOfPeople: formData.numberOfPeople,
-          message: formData.message,
+          ageGroup: formData.ageGroup || undefined,
+          interestLevel: formData.interestLevel || undefined,
+          referralSource: formData.referralSource || undefined,
+          referralOther: formData.referralSource === "Other" ? formData.referralOther : undefined,
+          occupation: formData.occupation || undefined,
+          timeline: formData.timeline || undefined,
+          questions: formData.questions || undefined,
+          message: formData.message || undefined,
         }),
       });
 
@@ -144,362 +134,630 @@ export default function BookingFormContainer() {
     setIsSubmitted(false);
   };
 
-  const inputClass = (fieldName: string) => {
-    const base = "w-full bg-transparent border-0 border-b py-2.5 font-space-grotesk text-base font-semibold focus:outline-none focus:ring-0 transition-colors duration-300 disabled:opacity-50";
-    const errorColor = errors[fieldName] ? "border-red-500 text-white" : "border-white/10 text-white focus:border-[#DFCFB7]";
-    return `${base} ${errorColor}`;
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
   };
 
-  const labelClass = "font-space-grotesk text-[10px] font-semibold uppercase tracking-[2px] text-[#8E8E93] font-mono block";
+  const inputStyle = (fieldName: string) => {
+    const hasError = !!errors[fieldName];
+    return `w-full bg-white/[0.03] border ${
+      hasError ? "border-red-500 focus:border-red-400 focus:ring-red-400" : "border-white/15 focus:border-cyan-400 focus:ring-cyan-400"
+    } rounded-xl px-4 py-3 font-space-grotesk text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-1 transition-all duration-200 disabled:opacity-50`;
+  };
+
+  const labelStyle = "font-space-grotesk text-xs font-semibold uppercase tracking-wider text-zinc-300 block mb-2";
+
+  const faqs = [
+    {
+      q: "What makes early access with Vayu Galaxy a game-changer for me?",
+      a: "Early access puts you right at the front lines of the future! By registering today, you gain exclusive first-in-line access to revolutionary township updates, private prototype testing invitations, and direct founder briefings—all with zero financial commitment or hidden fees.",
+    },
+    {
+      q: "Is there any financial commitment required?",
+      a: "None at all! Early registration is 100% free with no deposit, reservation fee, or credit card required.",
+    },
+    {
+      q: "When will Cohort 2026 onboarding begin?",
+      a: "Cohort 2026 invitations and initial tech briefings will roll out in phases throughout 2026. Registered members will receive early notification prior to public announcements.",
+    },
+    {
+      q: "How will my data and privacy be handled?",
+      a: "Your privacy is our utmost priority. Your information is encrypted, securely stored, and strictly used to deliver Vayu Galaxy updates and private early-access privileges.",
+    },
+  ];
 
   return (
-    <div className="bg-[#050505] min-h-screen text-[#FAFAFA] flex flex-col justify-between">
-      {/* CSS file links */}
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      />
+    <div className="bg-[#050505] min-h-screen text-[#FAFAFA] flex flex-col justify-between relative overflow-hidden">
+      {/* Ambient background glows */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-500/10 blur-[140px] pointer-events-none rounded-full z-0" />
+      <div className="absolute top-[600px] right-0 w-[500px] h-[500px] bg-blue-600/10 blur-[160px] pointer-events-none rounded-full z-0" />
 
       <Header />
 
-      <main className="flex-grow pt-32 pb-24 px-6 md:px-[10%] max-w-[1200px] mx-auto w-full">
-        {/* Compact Hero Section */}
-        <div className="mb-16">
-          <span className="text-[10px] font-mono tracking-[0.3em] text-[#DFCFB7] mb-2 uppercase block select-none">
-            BOOK NOW / VAYU GALAXY
-          </span>
-          <h1 className="text-3xl md:text-5xl font-semibold uppercase tracking-[1px] mb-4 text-white select-none">
-            BOOK YOUR VISIT.
+      <main className="flex-grow pt-32 pb-24 px-6 md:px-[8%] max-w-[1340px] mx-auto w-full relative z-10">
+        
+        {/* Header Section */}
+        <div className="mb-12 text-left">
+          {/* Breadcrumb / Badge */}
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(34,211,238,0.15)]">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            VAYU GALAXY // EARLY ACCESS
+          </div>
+
+          {/* Main Title */}
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-white uppercase font-space-grotesk leading-tight mb-4">
+            BOOK YOUR PLACE IN <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">WHAT&apos;S NEXT.</span>
           </h1>
-          <p className="text-sm text-[#8E8E93] max-w-[600px] leading-relaxed font-light select-none">
-            Tell us a little about yourself and what you&apos;d like to explore. Booking
-            is completely free and our team will get back to you with the next steps.
+
+          {/* Subtitle */}
+          <p className="text-base md:text-lg text-zinc-400 max-w-[720px] font-light leading-relaxed">
+            Join the next frontier of aerial townships and advanced robotics.
           </p>
         </div>
 
-        {/* Form and info split container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start border-t border-white/5 pt-12">
-          {/* Left Column: Request details */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
-            <div>
-              <span className="text-[10px] font-mono tracking-[0.3em] text-[#8E8E93] uppercase block mb-3 select-none">
-                01 // REQUEST
-              </span>
-              <h2 className="text-xl md:text-2xl font-semibold uppercase tracking-[1px] mb-4 text-white select-none">
-                PLAN YOUR VISIT.
-              </h2>
-              <p className="text-xs text-[#8E8E93] leading-relaxed mb-6 font-light select-none">
-                This request is completely free. No credit card or payment information is required at any step.
-              </p>
-              <div className="border border-[#DFCFB7]/30 text-[#DFCFB7] px-4 py-1.5 rounded-full text-[10px] font-mono tracking-wider uppercase w-fit select-none">
-                FREE BOOKING
-              </div>
-            </div>
+        {/* Main 2-Column Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          {/* Left Column (col-span-5) */}
+          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
+            
+            {/* Value Proposition Card */}
+            <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/20 transition-all duration-500" />
 
-            {/* Technical branding details */}
-            <div className="hidden lg:flex flex-col items-start gap-4 border-l border-white/5 pl-8 mt-6 select-none">
-              <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#8E8E93]/40">
-                OFFICIAL BOOKING SYSTEM
-              </span>
-              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#8E8E93]/40">
-                VAYU GALAXY
-              </span>
-              <span className="font-mono text-base font-light text-white/20">
-                2026 &rarr;
-              </span>
-            </div>
-          </div>
-
-          {/* Right Column: Interactive form / states */}
-          <div className="lg:col-span-8">
-            {isSubmitted && !submissionFailed ? (
-              <div className="flex flex-col items-center justify-center text-center p-12 border border-white/10 bg-white/[0.01] min-h-[380px] rounded-none">
-                <i className="far fa-circle-check text-4xl text-[#DFCFB7] mb-6"></i>
-                <h3 className="text-xl font-medium text-white uppercase tracking-[2px] mb-3 select-none">
-                  BOOKING REQUEST RECEIVED.
+              <div className="flex items-center gap-3 border-b border-white/10 pb-4">
+                <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                  </svg>
+                </div>
+                <h3 className="font-space-grotesk text-lg font-bold uppercase tracking-wider text-white">
+                  WHY REGISTER EARLY?
                 </h3>
-                <p className="text-[#8E8E93] leading-relaxed max-w-[460px] mb-8 text-sm font-light select-none">
-                  Thank you. Your free booking request has been received. Our team will review your request and contact you with the next steps.
-                </p>
-                <button
-                  onClick={() => {
-                    setIsSubmitted(false);
-                    setFormData({
-                      fullName: "",
-                      email: "",
-                      phone: "",
-                      city: "",
-                      bookingType: "General Visit / Enquiry",
-                      preferredDate: "",
-                      preferredTime: "Morning (09:00 - 12:00)",
-                      numberOfPeople: "1",
-                      message: "",
-                    });
-                  }}
-                  className="bg-white text-black hover:text-[#DFCFB7] hover:bg-black hover:border-[#DFCFB7]/30 border border-transparent font-mono py-3 px-6 rounded-none uppercase font-semibold tracking-[2px] text-xs transition-all duration-300 cursor-pointer select-none"
-                >
-                  BOOK ANOTHER VISIT
-                </button>
               </div>
-            ) : isSubmitted && submissionFailed ? (
-              <div className="flex flex-col items-center justify-center text-center p-12 border border-red-500/20 bg-red-500/[0.02] min-h-[380px] rounded-none">
-                <i className="fas fa-triangle-exclamation text-4xl text-red-500 mb-6 animate-pulse"></i>
-                <h3 className="text-xl font-medium text-red-500 uppercase tracking-[2px] mb-3 select-none">
-                  WE COULDN&apos;T SUBMIT YOUR REQUEST.
-                </h3>
-                <p className="text-[#8E8E93] leading-relaxed max-w-[440px] mb-8 text-sm font-light select-none">
-                  Please check your connection and configuration or try again.
-                </p>
-                <button
-                  onClick={handleTryAgain}
-                  className="bg-red-500/10 text-red-400 hover:text-white hover:bg-red-500 border border-red-500/30 py-3 px-6 rounded-none uppercase font-mono font-semibold tracking-[2px] text-xs transition-all duration-300 cursor-pointer select-none"
-                >
-                  TRY AGAIN &rarr;
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleFormSubmit} className="space-y-8" noValidate>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-                  {/* Full Name */}
-                  <div className="flex flex-col gap-1.5 group">
-                    <label htmlFor="booking_fullName" className={labelClass}>
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="fullName"
-                      id="booking_fullName"
-                      disabled={isSubmitting}
-                      placeholder="John Doe"
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      className={inputClass("fullName")}
-                      required
-                    />
-                    {errors.fullName && (
-                      <span className="text-red-400 text-[10px] mt-1 font-mono uppercase tracking-wider">
-                        {errors.fullName}
-                      </span>
-                    )}
-                  </div>
 
-                  {/* Email Address */}
-                  <div className="flex flex-col gap-1.5 group">
-                    <label htmlFor="booking_email" className={labelClass}>
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="booking_email"
-                      disabled={isSubmitting}
-                      placeholder="john@example.com"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className={inputClass("email")}
-                      required
-                    />
-                    {errors.email && (
-                      <span className="text-red-400 text-[10px] mt-1 font-mono uppercase tracking-wider">
-                        {errors.email}
-                      </span>
-                    )}
+              {/* 4 Feature Benefits */}
+              <div className="space-y-4">
+                {/* Feature 1: Priority Access to Project Drops */}
+                <div className="flex items-start gap-3.5 group/item">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover/item:border-cyan-400/50 transition-colors">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                    </svg>
                   </div>
-
-                  {/* Phone Number */}
-                  <div className="flex flex-col gap-1.5 group">
-                    <label htmlFor="booking_phone" className={labelClass}>
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      id="booking_phone"
-                      disabled={isSubmitting}
-                      placeholder="+91 98765 43210"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={inputClass("phone")}
-                      required
-                    />
-                    {errors.phone && (
-                      <span className="text-red-400 text-[10px] mt-1 font-mono uppercase tracking-wider">
-                        {errors.phone}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* City / Location */}
-                  <div className="flex flex-col gap-1.5 group">
-                    <label htmlFor="booking_city" className={labelClass}>
-                      City / Location *
-                    </label>
-                    <input
-                      type="text"
-                      name="city"
-                      id="booking_city"
-                      disabled={isSubmitting}
-                      placeholder="Delhi NCR"
-                      value={formData.city}
-                      onChange={handleInputChange}
-                      className={inputClass("city")}
-                      required
-                    />
-                    {errors.city && (
-                      <span className="text-red-400 text-[10px] mt-1 font-mono uppercase tracking-wider">
-                        {errors.city}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Booking Category */}
-                  <div className="flex flex-col gap-1.5 group">
-                    <label htmlFor="booking_bookingType" className={labelClass}>
-                      What would you like to book? *
-                    </label>
-                    <div className="relative">
-                      <select
-                        name="bookingType"
-                        id="booking_bookingType"
-                        disabled={isSubmitting}
-                        value={formData.bookingType}
-                        onChange={handleInputChange}
-                        className="w-full bg-transparent border-0 border-b border-white/10 py-2.5 font-space-grotesk text-base font-semibold text-white focus:outline-none focus:ring-0 focus:border-[#DFCFB7] transition-colors duration-300 appearance-none cursor-pointer pr-8"
-                      >
-                        <option value="General Visit / Enquiry" className="bg-[#050505] text-white">General Visit / Enquiry</option>
-                        <option value="Vayu Galaxy Space Concept" className="bg-[#050505] text-white">Vayu Galaxy Space Concept</option>
-                        <option value="Devi Drone Exhibition" className="bg-[#050505] text-white">Devi Drone Exhibition</option>
-                        <option value="Proto Robot Demonstration" className="bg-[#050505] text-white">Proto Robot Demonstration</option>
-                        <option value="SPD T1 Prototype Tour" className="bg-[#050505] text-white">SPD T1 Prototype Tour</option>
-                        <option value="Lord Vishnu Monument Site" className="bg-[#050505] text-white">Lord Vishnu Monument Site</option>
-                      </select>
-                      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 text-[9px] pointer-events-none">&#9660;</span>
-                    </div>
-                  </div>
-
-                  {/* Preferred Date */}
-                  <div className="flex flex-col gap-1.5 group">
-                    <label htmlFor="booking_preferredDate" className={labelClass}>
-                      Preferred Date *
-                    </label>
-                    <input
-                      type="date"
-                      name="preferredDate"
-                      id="booking_preferredDate"
-                      min={minDate}
-                      disabled={isSubmitting}
-                      value={formData.preferredDate}
-                      onChange={handleInputChange}
-                      className={inputClass("preferredDate")}
-                      required
-                    />
-                    {errors.preferredDate && (
-                      <span className="text-red-400 text-[10px] mt-1 font-mono uppercase tracking-wider">
-                        {errors.preferredDate}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Preferred Time (Optional select) */}
-                  <div className="flex flex-col gap-1.5 group">
-                    <label htmlFor="booking_preferredTime" className={labelClass}>
-                      Preferred Time Slot
-                    </label>
-                    <div className="relative">
-                      <select
-                        name="preferredTime"
-                        id="booking_preferredTime"
-                        disabled={isSubmitting}
-                        value={formData.preferredTime}
-                        onChange={handleInputChange}
-                        className="w-full bg-transparent border-0 border-b border-white/10 py-2.5 font-space-grotesk text-base font-semibold text-white focus:outline-none focus:ring-0 focus:border-[#DFCFB7] transition-colors duration-300 appearance-none cursor-pointer pr-8"
-                      >
-                        <option value="Morning (09:00 - 12:00)" className="bg-[#050505] text-white">Morning (09:00 - 12:00)</option>
-                        <option value="Afternoon (12:00 - 15:00)" className="bg-[#050505] text-white">Afternoon (12:00 - 15:00)</option>
-                        <option value="Evening (15:00 - 18:00)" className="bg-[#050505] text-white">Evening (15:00 - 18:00)</option>
-                      </select>
-                      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 text-[9px] pointer-events-none">&#9660;</span>
-                    </div>
-                  </div>
-
-                  {/* Number of People */}
-                  <div className="flex flex-col gap-1.5 group">
-                    <label htmlFor="booking_numberOfPeople" className={labelClass}>
-                      Number of People
-                    </label>
-                    <input
-                      type="number"
-                      name="numberOfPeople"
-                      id="booking_numberOfPeople"
-                      min="1"
-                      disabled={isSubmitting}
-                      value={formData.numberOfPeople}
-                      onChange={handleInputChange}
-                      className={inputClass("numberOfPeople")}
-                    />
-                  </div>
-
-                  {/* Additional Requirements */}
-                  <div className="flex flex-col gap-1.5 group col-span-1 md:col-span-2">
-                    <label htmlFor="booking_message" className={labelClass}>
-                      Additional Requirements
-                    </label>
-                    <textarea
-                      name="message"
-                      id="booking_message"
-                      rows={4}
-                      disabled={isSubmitting}
-                      placeholder="Tell us anything else you'd like us to know..."
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      className="w-full bg-transparent border-0 border-b border-white/10 py-2.5 font-space-grotesk text-base font-semibold text-white focus:outline-none focus:ring-0 focus:border-[#DFCFB7] transition-colors duration-300 disabled:opacity-50 resize-none"
-                    />
+                  <div>
+                    <h4 className="font-space-grotesk text-sm font-semibold text-white tracking-wide">Priority Access to Project Drops</h4>
+                    <p className="text-xs text-zinc-400 font-light leading-relaxed">Be first in line to receive announcements and reservations for upcoming site launches and technical releases.</p>
                   </div>
                 </div>
 
-                {/* Submit button and trust strip */}
-                <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-                  <div className="w-full sm:w-auto">
+                {/* Feature 2: Exclusive Beta Testing & Simulators */}
+                <div className="flex items-start gap-3.5 group/item">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover/item:border-cyan-400/50 transition-colors">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-space-grotesk text-sm font-semibold text-white tracking-wide">Exclusive Beta Testing &amp; Simulators</h4>
+                    <p className="text-xs text-zinc-400 font-light leading-relaxed">Get early invitations to test simulation software, virtual site tours, and prototype hardware demos.</p>
+                  </div>
+                </div>
+
+                {/* Feature 3: Direct Founder & Tech Team AMAs */}
+                <div className="flex items-start gap-3.5 group/item">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover/item:border-cyan-400/50 transition-colors">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-space-grotesk text-sm font-semibold text-white tracking-wide">Direct Founder &amp; Tech Team AMAs</h4>
+                    <p className="text-xs text-zinc-400 font-light leading-relaxed">Connect directly with Vayu Galaxy founders, engineers, and urban planners in private sessions.</p>
+                  </div>
+                </div>
+
+                {/* Feature 4: Community Whitelist Privileges */}
+                <div className="flex items-start gap-3.5 group/item">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover/item:border-cyan-400/50 transition-colors">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a5.97 5.97 0 00-.942 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-space-grotesk text-sm font-semibold text-white tracking-wide">Community Whitelist Privileges</h4>
+                    <p className="text-xs text-zinc-400 font-light leading-relaxed">Secure whitelist standing for early membership access, special event passes, and cohort benefits.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Live Counter / Status Pill Card */}
+            <div className="bg-zinc-900/40 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-4 flex items-center justify-between shadow-lg">
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                </span>
+                <div>
+                  <span className="font-space-grotesk text-xs font-semibold text-white tracking-wider block uppercase">Cohort 2026 Registration Open</span>
+                  <span className="text-[10px] text-cyan-400 font-mono tracking-widest uppercase">100% FREE &amp; NO PAYMENT REQUIRED</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive FAQ Accordion */}
+            <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
+              <h4 className="font-space-grotesk text-xs font-bold uppercase tracking-widest text-zinc-400">
+                FREQUENTLY ASKED QUESTIONS
+              </h4>
+              <div className="divide-y divide-white/5">
+                {faqs.map((faq, idx) => (
+                  <div key={idx} className="py-3">
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(idx)}
+                      className="w-full text-left font-space-grotesk text-xs font-medium text-zinc-200 hover:text-cyan-400 transition-colors flex items-center justify-between gap-2 cursor-pointer focus:outline-none"
+                    >
+                      <span>{faq.q}</span>
+                      <span className="text-cyan-400 text-sm font-mono shrink-0">{openFaq === idx ? "−" : "+"}</span>
+                    </button>
+                    {openFaq === idx && (
+                      <p className="mt-2 text-xs text-zinc-300 font-light leading-relaxed animate-fadeIn bg-cyan-950/20 border-l-2 border-cyan-400 p-3 rounded-r-lg">
+                        {faq.a}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column (col-span-7) — Glassmorphic Form Container */}
+          <div className="lg:col-span-7">
+            <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl space-y-10 relative overflow-hidden">
+              
+              {isSubmitted && !submissionFailed ? (
+                <div className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-6">
+                  <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <h3 className="font-space-grotesk text-2xl md:text-3xl font-bold uppercase tracking-wider text-white">
+                      YOU&apos;RE IN.
+                    </h3>
+                    <p className="text-zinc-400 text-sm max-w-md mx-auto font-light leading-relaxed">
+                      Your early registration interest for Vayu Galaxy has been recorded. Our team will keep you informed on upcoming cohorts and tech previews.
+                    </p>
+                  </div>
+
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono tracking-widest uppercase">
+                    FREE EARLY REGISTRATION
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setFormData({
+                        fullName: "",
+                        email: "",
+                        phone: "",
+                        city: "",
+                        ageGroup: "",
+                        interestLevel: "",
+                        referralSource: "",
+                        referralOther: "",
+                        occupation: "",
+                        timeline: "",
+                        questions: "",
+                        message: "",
+                      });
+                    }}
+                    className="mt-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-space-grotesk py-3 px-8 rounded-xl uppercase font-semibold text-xs tracking-wider transition-all duration-300 cursor-pointer"
+                  >
+                    REGISTER ANOTHER INTEREST
+                  </button>
+                </div>
+              ) : isSubmitted && submissionFailed ? (
+                <div className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-6">
+                  <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                    </svg>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <h3 className="font-space-grotesk text-xl md:text-2xl font-bold uppercase tracking-wider text-red-400">
+                      SUBMISSION COULD NOT BE COMPLETED
+                    </h3>
+                    <p className="text-zinc-400 text-sm max-w-md mx-auto font-light leading-relaxed">
+                      Please check your connection and configuration or try submitting again.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleTryAgain}
+                    className="bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 font-space-grotesk py-3 px-8 rounded-xl uppercase font-semibold text-xs tracking-wider transition-all duration-300 cursor-pointer"
+                  >
+                    TRY AGAIN &rarr;
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleFormSubmit} className="space-y-10" noValidate>
+                  
+                  {/* Step 1: 01 // ABOUT YOU */}
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3 border-b border-white/10 pb-3">
+                      <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest">01 //</span>
+                      <h3 className="font-space-grotesk text-base font-bold uppercase tracking-wider text-white">
+                        ABOUT YOU
+                      </h3>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Full Name */}
+                      <div>
+                        <label htmlFor="fullName" className={labelStyle}>
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          name="fullName"
+                          id="fullName"
+                          disabled={isSubmitting}
+                          placeholder="John Doe"
+                          value={formData.fullName}
+                          onChange={handleInputChange}
+                          className={inputStyle("fullName")}
+                          required
+                        />
+                        {errors.fullName && (
+                          <span className="text-red-400 text-xs mt-1.5 font-mono block">
+                            {errors.fullName}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Email Address */}
+                      <div>
+                        <label htmlFor="email" className={labelStyle}>
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          id="email"
+                          disabled={isSubmitting}
+                          placeholder="john@example.com"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className={inputStyle("email")}
+                          required
+                        />
+                        {errors.email && (
+                          <span className="text-red-400 text-xs mt-1.5 font-mono block">
+                            {errors.email}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Phone Number */}
+                      <div>
+                        <label htmlFor="phone" className={labelStyle}>
+                          Phone Number *
+                        </label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          id="phone"
+                          disabled={isSubmitting}
+                          placeholder="+91 98765 43210"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          className={inputStyle("phone")}
+                          required
+                        />
+                        {errors.phone && (
+                          <span className="text-red-400 text-xs mt-1.5 font-mono block">
+                            {errors.phone}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* City / Location */}
+                      <div>
+                        <label htmlFor="city" className={labelStyle}>
+                          City / Location *
+                        </label>
+                        <input
+                          type="text"
+                          name="city"
+                          id="city"
+                          disabled={isSubmitting}
+                          placeholder="Delhi NCR, India"
+                          value={formData.city}
+                          onChange={handleInputChange}
+                          className={inputStyle("city")}
+                          required
+                        />
+                        {errors.city && (
+                          <span className="text-red-400 text-xs mt-1.5 font-mono block">
+                            {errors.city}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Age Group Full Width */}
+                    <div>
+                      <label htmlFor="ageGroup" className={labelStyle}>
+                        Age Group (Optional)
+                      </label>
+                      <div className="relative">
+                        <select
+                          name="ageGroup"
+                          id="ageGroup"
+                          disabled={isSubmitting}
+                          value={formData.ageGroup}
+                          onChange={handleInputChange}
+                          className={`${inputStyle("ageGroup")} appearance-none cursor-pointer pr-10 text-white`}
+                        >
+                          <option value="" className="bg-zinc-900 text-zinc-400">Select Age Group</option>
+                          <option value="Under 18" className="bg-zinc-900 text-white">Under 18</option>
+                          <option value="18–25" className="bg-zinc-900 text-white">18–25</option>
+                          <option value="26–35" className="bg-zinc-900 text-white">26–35</option>
+                          <option value="36–45" className="bg-zinc-900 text-white">36–45</option>
+                          <option value="46–60" className="bg-zinc-900 text-white">46–60</option>
+                          <option value="60+" className="bg-zinc-900 text-white">60+</option>
+                        </select>
+                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 text-xs pointer-events-none">&#9660;</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 2: 02 // YOUR INTEREST */}
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3 border-b border-white/10 pb-3">
+                      <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest">02 //</span>
+                      <h3 className="font-space-grotesk text-base font-bold uppercase tracking-wider text-white">
+                        YOUR INTEREST
+                      </h3>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Interest Level */}
+                      <div>
+                        <label htmlFor="interestLevel" className={labelStyle}>
+                          Interest Level
+                        </label>
+                        <div className="relative">
+                          <select
+                            name="interestLevel"
+                            id="interestLevel"
+                            disabled={isSubmitting}
+                            value={formData.interestLevel}
+                            onChange={handleInputChange}
+                            className={`${inputStyle("interestLevel")} appearance-none cursor-pointer pr-10 text-white`}
+                          >
+                            <option value="" className="bg-zinc-900 text-zinc-400">Select Interest Category</option>
+                            <option value="Investor" className="bg-zinc-900 text-white">Investor</option>
+                            <option value="Tech Enthusiast" className="bg-zinc-900 text-white">Tech Enthusiast</option>
+                            <option value="Media" className="bg-zinc-900 text-white">Media</option>
+                            <option value="Partner" className="bg-zinc-900 text-white">Partner</option>
+                          </select>
+                          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 text-xs pointer-events-none">&#9660;</span>
+                        </div>
+                      </div>
+
+                      {/* How Did You Hear About Us */}
+                      <div>
+                        <label htmlFor="referralSource" className={labelStyle}>
+                          How Did You Hear About Us?
+                        </label>
+                        <div className="relative">
+                          <select
+                            name="referralSource"
+                            id="referralSource"
+                            disabled={isSubmitting}
+                            value={formData.referralSource}
+                            onChange={handleInputChange}
+                            className={`${inputStyle("referralSource")} appearance-none cursor-pointer pr-10 text-white`}
+                          >
+                            <option value="" className="bg-zinc-900 text-zinc-400">Select Source</option>
+                            <option value="Instagram" className="bg-zinc-900 text-white">Instagram</option>
+                            <option value="YouTube" className="bg-zinc-900 text-white">YouTube</option>
+                            <option value="LinkedIn" className="bg-zinc-900 text-white">LinkedIn</option>
+                            <option value="Friend / Referral" className="bg-zinc-900 text-white">Friend / Referral</option>
+                            <option value="Event" className="bg-zinc-900 text-white">Event</option>
+                            <option value="Search Engine" className="bg-zinc-900 text-white">Search Engine</option>
+                            <option value="Other" className="bg-zinc-900 text-white">Other</option>
+                          </select>
+                          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 text-xs pointer-events-none">&#9660;</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {formData.referralSource === "Other" && (
+                      <div className="animate-fadeIn">
+                        <label htmlFor="referralOther" className={labelStyle}>
+                          Please Specify Where *
+                        </label>
+                        <input
+                          type="text"
+                          name="referralOther"
+                          id="referralOther"
+                          placeholder="e.g. Tech Newsletter, Conference, etc."
+                          disabled={isSubmitting}
+                          value={formData.referralOther}
+                          onChange={handleInputChange}
+                          className={inputStyle("referralOther")}
+                          required
+                        />
+                        {errors.referralOther && (
+                          <span className="text-red-400 text-xs mt-1.5 font-mono block">
+                            {errors.referralOther}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Step 3: 03 // TELL US MORE */}
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3 border-b border-white/10 pb-3">
+                      <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest">03 //</span>
+                      <h3 className="font-space-grotesk text-base font-bold uppercase tracking-wider text-white">
+                        TELL US MORE
+                      </h3>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Occupation / Profession */}
+                      <div>
+                        <label htmlFor="occupation" className={labelStyle}>
+                          Occupation / Profession
+                        </label>
+                        <div className="relative">
+                          <select
+                            name="occupation"
+                            id="occupation"
+                            disabled={isSubmitting}
+                            value={formData.occupation}
+                            onChange={handleInputChange}
+                            className={`${inputStyle("occupation")} appearance-none cursor-pointer pr-10 text-white`}
+                          >
+                            <option value="" className="bg-zinc-900 text-zinc-400">Select Occupation</option>
+                            <option value="Student" className="bg-zinc-900 text-white">Student</option>
+                            <option value="Working Professional" className="bg-zinc-900 text-white">Working Professional</option>
+                            <option value="Entrepreneur / Business Owner" className="bg-zinc-900 text-white">Entrepreneur / Business Owner</option>
+                            <option value="Investor" className="bg-zinc-900 text-white">Investor</option>
+                            <option value="Researcher" className="bg-zinc-900 text-white">Researcher</option>
+                            <option value="Other" className="bg-zinc-900 text-white">Other</option>
+                          </select>
+                          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 text-xs pointer-events-none">&#9660;</span>
+                        </div>
+                      </div>
+
+                      {/* Expected Timeline */}
+                      <div>
+                        <label htmlFor="timeline" className={labelStyle}>
+                          Expected Timeline
+                        </label>
+                        <div className="relative">
+                          <select
+                            name="timeline"
+                            id="timeline"
+                            disabled={isSubmitting}
+                            value={formData.timeline}
+                            onChange={handleInputChange}
+                            className={`${inputStyle("timeline")} appearance-none cursor-pointer pr-10 text-white`}
+                          >
+                            <option value="" className="bg-zinc-900 text-zinc-400">Select Timeline</option>
+                            <option value="Just Exploring" className="bg-zinc-900 text-white">Just Exploring</option>
+                            <option value="Within 1 Year" className="bg-zinc-900 text-white">Within 1 Year</option>
+                            <option value="1–3 Years" className="bg-zinc-900 text-white">1–3 Years</option>
+                            <option value="3+ Years" className="bg-zinc-900 text-white">3+ Years</option>
+                            <option value="Not Sure Yet" className="bg-zinc-900 text-white">Not Sure Yet</option>
+                          </select>
+                          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 text-xs pointer-events-none">&#9660;</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Textarea 1: What would you like to know */}
+                    <div>
+                      <label htmlFor="questions" className={labelStyle}>
+                        What would you like to know about Vayu Galaxy?
+                      </label>
+                      <textarea
+                        name="questions"
+                        id="questions"
+                        rows={3}
+                        disabled={isSubmitting}
+                        placeholder="Tell us what you'd like to know about Vayu Galaxy..."
+                        value={formData.questions}
+                        onChange={handleInputChange}
+                        className={`${inputStyle("questions")} resize-none`}
+                      />
+                    </div>
+
+                    {/* Textarea 2: Additional Notes */}
+                    <div>
+                      <label htmlFor="message" className={labelStyle}>
+                        Additional Notes
+                      </label>
+                      <textarea
+                        name="message"
+                        id="message"
+                        rows={3}
+                        disabled={isSubmitting}
+                        placeholder="Share anything else you'd like us to know..."
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        className={`${inputStyle("message")} resize-none`}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Submit Section */}
+                  <div className="pt-4 space-y-4 border-t border-white/10">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group bg-[#FAFAFA] text-black hover:text-[#DFCFB7] border border-transparent hover:border-[#DFCFB7]/30 hover:bg-black font-space-grotesk py-4 px-8 rounded-none uppercase font-semibold tracking-[2.5px] text-[11px] transition-all duration-300 cursor-pointer select-none inline-flex items-center gap-2"
+                      className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-blue-500 text-black font-space-grotesk font-bold py-4 px-8 rounded-xl uppercase tracking-widest text-xs transition-all duration-300 shadow-[0_0_25px_rgba(34,211,238,0.25)] hover:shadow-[0_0_35px_rgba(34,211,238,0.4)] flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-50 select-none"
                     >
                       {isSubmitting ? (
-                        "SUBMITTING..."
+                        <span className="flex items-center gap-2">
+                          <svg className="animate-spin h-4 w-4 text-black" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                          </svg>
+                          REGISTERING...
+                        </span>
                       ) : (
                         <>
-                          BOOK NOW{" "}
-                          <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                          REGISTER MY INTEREST
+                          <span className="transition-transform duration-300 ease-out group-hover:translate-x-1.5">
                             &rarr;
                           </span>
                         </>
                       )}
                     </button>
-                    <span className="text-[10px] text-[#DFCFB7]/60 tracking-widest font-mono uppercase mt-3.5 block select-none">
-                      FREE BOOKING · NO PAYMENT REQUIRED
-                    </span>
+
+                    {/* Data Privacy Disclaimer */}
+                    <div className="flex items-center justify-center gap-2 text-center text-[11px] text-zinc-400 font-mono tracking-wider">
+                      <svg className="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                      </svg>
+                      <span>FREE EARLY REGISTRATION • NO PAYMENT REQUIRED</span>
+                    </div>
                   </div>
-                  <p className="text-[10px] text-[#8E8E93] m-0 max-w-[340px] leading-normal font-light select-none">
-                    Your request does not guarantee immediate slot availability. Our team will verify schedules and contact you directly.
-                  </p>
-                </div>
-              </form>
-            )}
+
+                </form>
+              )}
+
+            </div>
           </div>
+
         </div>
 
-        {/* Contact/Support Strip */}
-        <div className="mt-28 pt-12 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        {/* Contact Strip */}
+        <div className="mt-20 pt-10 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div>
-            <span className="text-[10px] font-mono tracking-[0.3em] text-[#8E8E93] uppercase block mb-2 select-none">
-              NEED SOMETHING ELSE?
+            <span className="text-xs font-mono tracking-widest text-cyan-400 uppercase block mb-1">
+              HAVE A DIFFERENT QUESTION?
             </span>
-            <p className="text-xs text-[#8E8E93] m-0 font-light select-none">
-              For general questions or support:{" "}
+            <p className="text-xs text-zinc-400 font-light">
+              For press inquiries, custom partnerships or general questions:{" "}
               <a
                 href="mailto:info@vayugalaxy.com"
-                className="text-white hover:text-[#DFCFB7] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#DFCFB7]"
+                className="text-white underline hover:text-cyan-400 transition-colors"
               >
                 info@vayugalaxy.com
               </a>
@@ -507,14 +765,15 @@ export default function BookingFormContainer() {
           </div>
           <Link
             href="/contact"
-            className="border border-white/15 hover:border-[#DFCFB7] text-[#FAFAFA] hover:text-[#050505] hover:bg-[#DFCFB7] px-6 py-2.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all duration-300 flex items-center gap-1.5 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#DFCFB7] select-none"
+            className="border border-white/20 hover:border-cyan-400 text-white hover:text-cyan-400 hover:bg-cyan-950/20 px-6 py-2.5 rounded-xl text-xs font-mono tracking-wider uppercase transition-all duration-300 flex items-center gap-2 group select-none shrink-0"
           >
             CONTACT US{" "}
-            <span className="transition-transform duration-300 ease-out group-hover:translate-x-1 motion-reduce:transform-none">
+            <span className="transition-transform duration-300 ease-out group-hover:translate-x-1">
               →
             </span>
           </Link>
         </div>
+
       </main>
 
       <Footer />

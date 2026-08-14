@@ -15,7 +15,15 @@ export async function POST(request: Request) {
       preferredDate, 
       preferredTime, 
       numberOfPeople, 
-      message 
+      message,
+      ageGroup,
+      lookingFor,
+      interestLevel,
+      referralSource,
+      referralOther,
+      occupation,
+      timeline,
+      questions
     } = body;
 
     // Validate payload type
@@ -28,9 +36,17 @@ export async function POST(request: Request) {
 
     // Server-side validation
     if (type === "EARLY_REGISTRATION") {
-      if (!fullName?.trim() || !email?.trim() || !interestedIn?.trim()) {
+      if (!fullName?.trim() || !email?.trim()) {
         return NextResponse.json(
           { error: "Missing required fields" },
+          { status: 400 }
+        );
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        return NextResponse.json(
+          { error: "Invalid email address" },
           { status: 400 }
         );
       }
@@ -121,13 +137,33 @@ export async function POST(request: Request) {
 
     let mailOptions;
     if (type === "EARLY_REGISTRATION") {
-      mailOptions = {
-        from: `"${fullName}" <${smtpUser}>`, // Sent from the authorized SMTP user
-        to: "info@vayugalaxy.com",
-        replyTo: email, // Set reply-to to the registrant's email
-        subject: "Early Registration — Vayu Galaxy",
-        text: `EARLY REGISTRATION — VAYU GALAXY\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "N/A"}\nCity / Location: ${city || "N/A"}\nInterested In: ${interestedIn}\n\nSubmission Time: ${timestamp}`,
-      };
+      const isDetailed = Array.isArray(interestedIn) || !!lookingFor;
+
+      if (isDetailed) {
+        const interestsText = Array.isArray(interestedIn) ? interestedIn.join(", ") : interestedIn;
+        const lookingForText = Array.isArray(lookingFor) ? lookingFor.join(", ") : "N/A";
+        
+        let referralText = referralSource || "N/A";
+        if (referralSource === "Other" && referralOther) {
+          referralText = `Other (${referralOther})`;
+        }
+
+        mailOptions = {
+          from: `"${fullName}" <${smtpUser}>`,
+          to: "info@vayugalaxy.com",
+          replyTo: email,
+          subject: "New Vayu Galaxy Early Registration",
+          text: `NEW VAYU GALAXY EARLY REGISTRATION\n\n--------------------------------\nPERSONAL INFORMATION\n--------------------------------\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "N/A"}\nCity / Location: ${city || "N/A"}\nAge Group: ${ageGroup || "N/A"}\n\n--------------------------------\nINTEREST\n--------------------------------\n\nInterested In: ${interestsText}\nWhat They're Looking For: ${lookingForText}\nInterest Level: ${interestLevel || "N/A"}\nHow They Heard About Vayu Galaxy: ${referralText}\n\n--------------------------------\nBACKGROUND\n--------------------------------\n\nOccupation: ${occupation || "N/A"}\nExpected Timeline: ${timeline || "N/A"}\n\n--------------------------------\nQUESTIONS / MESSAGE\n--------------------------------\n\nWhat They'd Like To Know:\n${questions || "None"}\n\nAdditional Message:\n${message || "None"}\n\n--------------------------------\n\nSubmission Time:\n${timestamp}`,
+        };
+      } else {
+        mailOptions = {
+          from: `"${fullName}" <${smtpUser}>`, // Sent from the authorized SMTP user
+          to: "info@vayugalaxy.com",
+          replyTo: email, // Set reply-to to the registrant's email
+          subject: "New Vayu Galaxy Early Registration",
+          text: `NEW VAYU GALAXY EARLY REGISTRATION\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "N/A"}\nCity / Location: ${city || "N/A"}\n\nInterest:\n${interestedIn}\n\nMessage:\n${message || "None"}\n\nSubmission Time:\n${timestamp}`,
+        };
+      }
     } else if (type === "NEWSLETTER_SUBSCRIPTION") {
       mailOptions = {
         from: `"Vayu Galaxy Newsletter" <${smtpUser}>`,

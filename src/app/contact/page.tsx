@@ -143,7 +143,7 @@ export default function ContactPage() {
     "text-xs font-bold uppercase tracking-[0.2em] text-black/75 group-focus-within:text-[#DFCFB7] transition-colors duration-300 font-mono";
 
   return (
-    <div className="contact-page-wrapper bg-[#050505] text-white min-h-screen flex flex-col justify-between select-none">
+    <div className="contact-page-wrapper bg-[#050505] text-white min-h-screen flex flex-col justify-between">
       {/* FontAwesome style icons */}
       <link
         rel="stylesheet"

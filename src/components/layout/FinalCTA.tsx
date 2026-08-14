@@ -11,7 +11,7 @@ export default function FinalCTA() {
   const yVal = shouldReduceMotion ? 0 : 15;
 
   return (
-    <section className="bg-black w-full border-t border-white/5 py-20 md:py-28 text-[#FAFAFA] relative z-10 overflow-hidden select-none">
+    <section className="bg-black w-full border-t border-white/5 py-20 md:py-28 text-[#FAFAFA] relative z-10 overflow-hidden">
       {/* Subtle background overlay */}
       <div className="absolute inset-0 footer-grid-bg pointer-events-none opacity-30 z-0" />
 
@@ -41,11 +41,11 @@ export default function FinalCTA() {
           </span>
 
           <h2 className="text-3xl md:text-5xl font-light uppercase tracking-tight leading-tight select-none text-center">
-            LET&apos;S WORK TOGETHER.
+            BUILD WHAT&apos;S NEXT.
           </h2>
 
           <p className="text-[#8E8E93] text-sm md:text-base font-light leading-relaxed max-w-xl select-none text-center">
-            Have an idea, want to connect with Vayu Galaxy, or want to book a free visit?
+            Want to connect with Vayu Galaxy or register your interest in what we&apos;re building?
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4 w-full sm:w-auto">
@@ -71,6 +71,10 @@ export default function FinalCTA() {
               </span>
             </Link>
           </div>
+
+          <span className="text-[10px] font-mono tracking-[0.2em] text-[#8E8E93]/60 uppercase select-none mt-2">
+            FREE EARLY REGISTRATION
+          </span>
         </motion.div>
       </div>
     </section>

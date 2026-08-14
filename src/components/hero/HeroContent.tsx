@@ -15,7 +15,7 @@ export default function HeroContent({ contentRef }: HeroContentProps) {
       ref={contentRef}
       className="relative z-10 flex flex-col items-start max-w-4xl w-full"
     >
-      <h1 className="font-display leading-[0.82] uppercase tracking-[-0.03em] flex flex-col select-none">
+      <h1 className="font-display leading-[0.82] uppercase tracking-[-0.03em] flex flex-col">
         {/* Overflow hidden containers support clean GSAP clipping slide entries */}
         <div className="overflow-hidden py-1 -my-1">
           <span className="block text-[clamp(3.2rem,3.8vw+2.5rem,7.5rem)] font-light text-[#FAFAFA] hero-title-vayu">
