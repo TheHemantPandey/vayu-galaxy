@@ -1,6 +1,35 @@
-"use client";
-
+import type { Metadata } from "next";
 import React from "react";
+import { SITE_URL } from "@/lib/seo-config";
+
+export const metadata: Metadata = {
+  title: "Proto — High-Speed AI Rolling Robot for Emergency Response & Logistics",
+  description:
+    "Proto is an advanced AI-powered rolling robot engineered for high-speed emergency response, medicine delivery, and smart logistics automation. Capable of 120 km/h and 10 kg payload. Designed by Vayu Galaxy.",
+  alternates: {
+    canonical: `${SITE_URL}/proto`,
+  },
+  openGraph: {
+    title: "Proto — High-Speed AI Rolling Robot for Emergency Response & Logistics",
+    description:
+      "Proto is an advanced AI-powered rolling robot engineered for high-speed emergency response, medicine delivery, and smart logistics automation. Capable of 120 km/h and 10 kg payload. Designed by Vayu Galaxy.",
+    url: `${SITE_URL}/proto`,
+    images: [
+      {
+        url: "/assets/protoimg1.png",
+        width: 1200,
+        height: 630,
+        alt: "Proto rolling robot concept design by Vayu Galaxy",
+      },
+    ],
+  },
+  twitter: {
+    title: "Proto — High-Speed AI Rolling Robot for Emergency Response & Logistics",
+    description:
+      "Proto is an advanced AI-powered rolling robot engineered for high-speed emergency response, medicine delivery, and smart logistics automation.",
+    images: ["/assets/protoimg1.png"],
+  },
+};
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";

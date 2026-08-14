@@ -1,6 +1,35 @@
-"use client";
-
+import type { Metadata } from "next";
 import React from "react";
+import { SITE_URL } from "@/lib/seo-config";
+
+export const metadata: Metadata = {
+  title: "Vayu Galaxy — Future Living, Technology & Innovation",
+  description:
+    "Vayu Galaxy is pioneering the next era of living — introducing high-altitude architectural ecosystems, the Devi Drone UAV, the Proto high-speed robot, and the SPD T1 atmospheric engineering concept. Early access open.",
+  alternates: {
+    canonical: `${SITE_URL}/`,
+  },
+  openGraph: {
+    title: "Vayu Galaxy — Future Living, Technology & Innovation",
+    description:
+      "Vayu Galaxy is pioneering the next era of living — introducing high-altitude architectural ecosystems, the Devi Drone UAV, the Proto high-speed robot, and the SPD T1 atmospheric engineering concept.",
+    url: `${SITE_URL}/`,
+    images: [
+      {
+        url: "/assets/about.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Vayu Galaxy future-living architectural concept",
+      },
+    ],
+  },
+  twitter: {
+    title: "Vayu Galaxy — Future Living, Technology & Innovation",
+    description:
+      "Vayu Galaxy is pioneering the next era of living — introducing high-altitude architectural ecosystems, the Devi Drone UAV, the Proto high-speed robot, and the SPD T1 atmospheric engineering concept.",
+    images: ["/assets/about.jpeg"],
+  },
+};
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";

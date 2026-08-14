@@ -1,6 +1,35 @@
-"use client";
-
+import type { Metadata } from "next";
 import React from "react";
+import { SITE_URL } from "@/lib/seo-config";
+
+export const metadata: Metadata = {
+  title: "About Vayu Galaxy — Our Mission, Vision & Founder",
+  description:
+    "Learn about Vayu Galaxy's mission to redefine future living through high-altitude architectural design, autonomous robotics, and breakthrough atmospheric engineering. Meet our founder, Mr. Raushan Kumar.",
+  alternates: {
+    canonical: `${SITE_URL}/about`,
+  },
+  openGraph: {
+    title: "About Vayu Galaxy — Our Mission, Vision & Founder",
+    description:
+      "Learn about Vayu Galaxy's mission to redefine future living through high-altitude architectural design, autonomous robotics, and breakthrough atmospheric engineering.",
+    url: `${SITE_URL}/about`,
+    images: [
+      {
+        url: "/assets/aboutheader.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Vayu Galaxy architectural vision concept",
+      },
+    ],
+  },
+  twitter: {
+    title: "About Vayu Galaxy — Our Mission, Vision & Founder",
+    description:
+      "Learn about Vayu Galaxy's mission to redefine future living through high-altitude architectural design, autonomous robotics, and breakthrough atmospheric engineering.",
+    images: ["/assets/aboutheader.jpg"],
+  },
+};
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";

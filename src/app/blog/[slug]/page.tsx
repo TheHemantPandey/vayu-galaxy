@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";
 import BlogCard from "@/components/blog/BlogCard";
 import { blogPosts } from "@/data/blog";
+import { SITE_URL, SITE_NAME } from "@/lib/seo-config";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -25,18 +26,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: "Article Not Found | Vayu Galaxy Journal",
     };
   }
+  const canonicalUrl = `${SITE_URL}/blog/${post.slug}`;
   return {
     title: `${post.title} | Vayu Galaxy Journal`,
     description: post.excerpt,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
+      type: "article",
+      url: canonicalUrl,
       title: post.title,
       description: post.excerpt,
-      images: [{ url: post.image, alt: post.imageAlt }],
+      siteName: SITE_NAME,
+      images: [{ url: post.image, width: 1200, height: 630, alt: post.imageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image],
     },
   };
 }
 
 export default async function BlogPostPage({ params }: Props) {
+  // Resolve params first so structured data can use them
   const { slug } = await params;
   const post = blogPosts.find((p) => p.slug === slug);
 
@@ -65,8 +80,52 @@ export default async function BlogPostPage({ params }: Props) {
     .filter((p) => p.slug !== slug)
     .slice(0, 3);
 
+  // JSON-LD: BlogPosting
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image,
+    datePublished: post.date,
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blog/${post.slug}`,
+    },
+  };
+
+  // JSON-LD: BreadcrumbList
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Journal", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
+    ],
+  };
+
   return (
     <div className="blog-detail-wrapper bg-[#050505] text-[#FAFAFA] min-h-screen flex flex-col justify-between">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* FontAwesome style icons */}
       <link
         rel="stylesheet"

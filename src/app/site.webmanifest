@@ -1,6 +1,7 @@
 {
   "name": "Vayu Galaxy",
-  "short_name": "Vayu",
+  "short_name": "Vayu Galaxy",
+  "description": "Vayu Galaxy — Future Living, Technology & Innovation",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +16,8 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  "theme_color": "#09090b",
+  "background_color": "#09090b",
+  "display": "standalone",
+  "start_url": "/"
 }

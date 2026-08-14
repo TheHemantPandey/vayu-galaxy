@@ -1,6 +1,35 @@
-"use client";
-
+import type { Metadata } from "next";
 import React from "react";
+import { SITE_URL } from "@/lib/seo-config";
+
+export const metadata: Metadata = {
+  title: "SPD T1 — Atmospheric Solar Defense Technology Concept",
+  description:
+    "SPD T1 is a first-of-its-kind atmospheric defense technology concept designed to regulate excessive solar radiation, combat global warming, and protect Earth's climate through high-altitude aerospace engineering. A Vayu Galaxy innovation.",
+  alternates: {
+    canonical: `${SITE_URL}/spdt1`,
+  },
+  openGraph: {
+    title: "SPD T1 — Atmospheric Solar Defense Technology Concept",
+    description:
+      "SPD T1 is a first-of-its-kind atmospheric defense technology concept designed to regulate excessive solar radiation, combat global warming, and protect Earth's climate through high-altitude aerospace engineering.",
+    url: `${SITE_URL}/spdt1`,
+    images: [
+      {
+        url: "/assets/spdt1.png",
+        width: 1200,
+        height: 630,
+        alt: "SPD T1 atmospheric solar defense technology concept",
+      },
+    ],
+  },
+  twitter: {
+    title: "SPD T1 — Atmospheric Solar Defense Technology Concept",
+    description:
+      "SPD T1 is a first-of-its-kind atmospheric defense technology concept designed to regulate excessive solar radiation and combat global warming.",
+    images: ["/assets/spdt1.png"],
+  },
+};
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";

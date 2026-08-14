@@ -1,6 +1,35 @@
-"use client";
-
+import type { Metadata } from "next";
 import React from "react";
+import { SITE_URL } from "@/lib/seo-config";
+
+export const metadata: Metadata = {
+  title: "Devi Drone — Autonomous UAV for Surveillance, Emergency & Logistics",
+  description:
+    "Devi Drone is a cutting-edge modular UAV designed for security surveillance, emergency medical logistics, disaster management, and autonomous operations. Engineered by Vayu Galaxy in India.",
+  alternates: {
+    canonical: `${SITE_URL}/devi`,
+  },
+  openGraph: {
+    title: "Devi Drone — Autonomous UAV for Surveillance, Emergency & Logistics",
+    description:
+      "Devi Drone is a cutting-edge modular UAV designed for security surveillance, emergency medical logistics, disaster management, and autonomous operations. Engineered by Vayu Galaxy in India.",
+    url: `${SITE_URL}/devi`,
+    images: [
+      {
+        url: "/assets/drone1.png",
+        width: 1200,
+        height: 630,
+        alt: "Devi Drone autonomous UAV concept",
+      },
+    ],
+  },
+  twitter: {
+    title: "Devi Drone — Autonomous UAV for Surveillance, Emergency & Logistics",
+    description:
+      "Devi Drone is a cutting-edge modular UAV designed for security surveillance, emergency medical logistics, disaster management, and autonomous operations.",
+    images: ["/assets/drone1.png"],
+  },
+};
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";
