@@ -19,18 +19,29 @@ export default function Header() {
             Vayu Galaxy
           </Link>
         </div>
-        <ul className="hidden md:flex list-none gap-5 ml-auto px-4 md:px-[50px] m-0 items-center">
-          {headerLinks.map((link) => (
-            <li key={link.label} className="inline">
-              <Link
-                href={link.href}
-                className="text-white no-underline text-[15px] pr-[30px] uppercase tracking-[2px] font-normal transition-all hover:font-bold"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden md:flex items-center gap-2">
+          <ul className="flex list-none gap-2 m-0 items-center">
+            {headerLinks.map((link) => (
+              <li key={link.label} className="inline">
+                <Link
+                  href={link.href}
+                  className="text-white no-underline text-[15px] pr-[20px] uppercase tracking-[2px] font-normal transition-all hover:font-bold hover:text-[#DFCFB7]"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href="/book-now"
+            className="border border-[#DFCFB7]/30 hover:border-[#DFCFB7] text-[#DFCFB7] hover:text-[#050505] hover:bg-[#DFCFB7] px-4 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all duration-300 flex items-center gap-1 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#DFCFB7] select-none"
+          >
+            BOOK NOW{" "}
+            <span className="transition-transform duration-300 ease-out group-hover:translate-x-1 motion-reduce:transform-none">
+              →
+            </span>
+          </Link>
+        </div>
         <div
           className="md:hidden block text-[24px] cursor-pointer fixed top-[15px] right-[20px] z-[1100] text-white select-none"
           onClick={toggleMenu}
@@ -49,11 +60,21 @@ export default function Header() {
             key={link.label}
             href={link.href}
             onClick={toggleMenu}
-            className="text-white no-underline text-[20px] my-[15px] uppercase tracking-[2px] hover:text-white/80"
+            className="text-white no-underline text-[20px] my-[15px] uppercase tracking-[2px] hover:text-[#DFCFB7]"
           >
             {link.label}
           </Link>
         ))}
+        <Link
+          href="/book-now"
+          onClick={toggleMenu}
+          className="border border-[#DFCFB7]/30 hover:border-[#DFCFB7] text-[#DFCFB7] hover:text-[#050505] hover:bg-[#DFCFB7] px-8 py-3 rounded-full text-sm font-mono tracking-wider uppercase transition-all duration-300 flex items-center gap-1.5 mt-8 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#DFCFB7] select-none"
+        >
+          BOOK NOW{" "}
+          <span>
+            →
+          </span>
+        </Link>
       </div>
     </>
   );

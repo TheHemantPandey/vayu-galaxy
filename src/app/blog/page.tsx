@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FinalCTA from "@/components/layout/FinalCTA";
 import BlogHero from "@/components/blog/BlogHero";
 import BlogCard from "@/components/blog/BlogCard";
 import { blogPosts } from "@/data/blog";
@@ -178,6 +179,7 @@ export default function BlogIndexPage() {
 
       </main>
 
+      <FinalCTA />
       <Footer />
     </div>
   );

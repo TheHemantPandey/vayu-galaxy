@@ -3,6 +3,7 @@
 import React from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FinalCTA from "@/components/layout/FinalCTA";
 import ProjectHero from "@/components/projects/ProjectHero";
 import AboutSection from "@/components/home/AboutSection";
 import FounderSection from "@/components/home/FounderSection";
@@ -119,6 +120,7 @@ export default function Spdt1Page() {
         />
       </main>
 
+      <FinalCTA />
       <Footer />
     </div>
   );

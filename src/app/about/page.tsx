@@ -3,6 +3,7 @@
 import React from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FinalCTA from "@/components/layout/FinalCTA";
 import AboutSection from "@/components/home/AboutSection";
 import ProjectGrid from "@/components/home/ProjectGrid";
 import FounderSection from "@/components/home/FounderSection";
@@ -66,6 +67,7 @@ export default function AboutPage() {
         />
       </main>
 
+      <FinalCTA />
       <Footer />
     </div>
   );

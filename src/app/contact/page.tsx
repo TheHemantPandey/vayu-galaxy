@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FinalCTA from "@/components/layout/FinalCTA";
 import { contactPlaceholderInfo, contactProjects } from "@/data/contact";
 
 export default function ContactPage() {
@@ -692,6 +693,7 @@ export default function ContactPage() {
 
       </main>
 
+      <FinalCTA />
       <Footer />
     </div>
   );

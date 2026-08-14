@@ -7,6 +7,7 @@ import { projectItems } from "@/data/projects";
 import { useLenis } from "@/hooks/useLenis";
 import { socialLinks } from "@/data/footer";
 import { motion, useReducedMotion } from "framer-motion";
+import NewsletterSignup from "./NewsletterSignup";
 
 export default function Footer() {
   const lenis = useLenis();
@@ -59,12 +60,12 @@ export default function Footer() {
         shouldReduceMotion
           ? {}
           : {
-              borderTopColor: [
-                "rgba(255, 255, 255, 0.05)",
-                "rgba(223, 207, 183, 0.15)",
-                "rgba(255, 255, 255, 0.05)",
-              ],
-            }
+            borderTopColor: [
+              "rgba(255, 255, 255, 0.05)",
+              "rgba(223, 207, 183, 0.15)",
+              "rgba(255, 255, 255, 0.05)",
+            ],
+          }
       }
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 2.0, ease: "easeInOut" }}
@@ -80,22 +81,22 @@ export default function Footer() {
         </div>
       )}
 
-      <footer className="max-w-7xl mx-auto px-6 sm:px-8 py-12 font-space-grotesk text-[#FAFAFA] relative z-10">
-        
+      <footer className="max-w-7xl mx-auto px-6 sm:px-8 pt-6 pb-12 font-space-grotesk text-[#FAFAFA] relative z-10">
+
         {/* Subtle top HUD / technical metadata detail */}
-        <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-10 text-[10px] font-mono tracking-[0.25em] text-[#8E8E93]/60 uppercase">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0 border-b border-white/5 pb-4 mb-10 text-[10px] font-mono tracking-[0.25em] text-[#8E8E93]/60 uppercase">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-[#DFCFB7] rounded-full inline-block animate-pulse"></span>
             <span>SYSTEM: VAYU GALAXY</span>
           </div>
-          <div className="hidden sm:block">
-            <span>INIT_SEQUENCE // EST. 2026</span>
+          <div className="w-full sm:w-auto">
+            <NewsletterSignup />
           </div>
         </div>
 
         {/* Main 4-Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16">
-          
+
           {/* COLUMN 1 — BRAND */}
           <motion.div
             initial={{ opacity: opacityVal, y: yVal }}

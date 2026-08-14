@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FinalCTA from "@/components/layout/FinalCTA";
 import BlogCard from "@/components/blog/BlogCard";
 import { blogPosts } from "@/data/blog";
 
@@ -188,6 +189,7 @@ export default async function BlogPostPage({ params }: Props) {
 
       </main>
 
+      <FinalCTA />
       <Footer />
     </div>
   );

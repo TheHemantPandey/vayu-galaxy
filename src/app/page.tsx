@@ -3,6 +3,7 @@
 import React from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FinalCTA from "@/components/layout/FinalCTA";
 import Hero from "@/components/home/Hero";
 import AboutSection from "@/components/home/AboutSection";
 import VideoSection from "@/components/home/VideoSection";
@@ -100,6 +101,7 @@ export default function HomePage() {
         />
       </main>
 
+      <FinalCTA />
       <Footer />
     </div>
   );
