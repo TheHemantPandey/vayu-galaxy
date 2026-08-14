@@ -1,20 +1,28 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { sendEmail, DESTINATION_EMAIL } from "@/lib/mailer";
+import {
+  generateContactEmail,
+  generateEarlyRegistrationEmail,
+  generateNewsletterEmail,
+  generateBookingRequestEmail,
+} from "@/lib/email-templates";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { 
-      type, 
-      fullName, 
-      email, 
-      phone, 
-      city, 
-      interestedIn, 
-      bookingType, 
-      preferredDate, 
-      preferredTime, 
-      numberOfPeople, 
+    const {
+      type,
+      fullName,
+      email,
+      phone,
+      city,
+      organization,
+      subject: customSubject,
+      interestedIn,
+      bookingType,
+      preferredDate,
+      preferredTime,
+      numberOfPeople,
       message,
       ageGroup,
       lookingFor,
@@ -23,171 +31,194 @@ export async function POST(request: Request) {
       referralOther,
       occupation,
       timeline,
-      questions
+      questions,
     } = body;
 
-    // Validate payload type
-    if (type !== "EARLY_REGISTRATION" && type !== "NEWSLETTER_SUBSCRIPTION" && type !== "BOOKING_REQUEST") {
+    const normalizedType = type === "CONTACT_QUERY" ? "CONTACT_FORM" : type;
+
+    // Validate submission type
+    if (
+      normalizedType !== "EARLY_REGISTRATION" &&
+      normalizedType !== "NEWSLETTER_SUBSCRIPTION" &&
+      normalizedType !== "CONTACT_FORM" &&
+      normalizedType !== "BOOKING_REQUEST"
+    ) {
       return NextResponse.json(
         { error: "Invalid submission type" },
         { status: 400 }
       );
     }
 
-    // Server-side validation
-    if (type === "EARLY_REGISTRATION") {
-      if (!fullName?.trim() || !email?.trim()) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // 1. CONTACT FORM / QUERY VALIDATION & DISPATCH
+    if (normalizedType === "CONTACT_FORM") {
+      if (!fullName?.trim() || !email?.trim() || !message?.trim()) {
         return NextResponse.json(
-          { error: "Missing required fields" },
+          { error: "Missing required fields (Full Name, Email, and Message are required)." },
           { status: 400 }
         );
       }
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email.trim())) {
         return NextResponse.json(
-          { error: "Invalid email address" },
+          { error: "Invalid email address format." },
           { status: 400 }
         );
       }
-    } else if (type === "NEWSLETTER_SUBSCRIPTION") {
+
+      const { subject, html, text } = generateContactEmail({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone?.trim(),
+        organization: organization?.trim(),
+        subject: customSubject?.trim(),
+        message: message.trim(),
+      });
+
+      await sendEmail({
+        to: DESTINATION_EMAIL,
+        fromName: fullName.trim(),
+        replyTo: email.trim(),
+        subject,
+        text,
+        html,
+      });
+
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
+    // 2. EARLY REGISTRATION VALIDATION & DISPATCH
+    if (normalizedType === "EARLY_REGISTRATION") {
+      if (!fullName?.trim() || !email?.trim()) {
+        return NextResponse.json(
+          { error: "Missing required fields (Full Name and Email are required)." },
+          { status: 400 }
+        );
+      }
+
+      if (!emailRegex.test(email.trim())) {
+        return NextResponse.json(
+          { error: "Invalid email address format." },
+          { status: 400 }
+        );
+      }
+
+      const { subject, html, text } = generateEarlyRegistrationEmail({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone?.trim(),
+        city: city?.trim(),
+        ageGroup,
+        interestedIn,
+        lookingFor,
+        interestLevel,
+        referralSource,
+        referralOther: referralOther?.trim(),
+        occupation: occupation?.trim(),
+        timeline,
+        questions: questions?.trim(),
+        message: message?.trim(),
+      });
+
+      await sendEmail({
+        to: DESTINATION_EMAIL,
+        fromName: fullName.trim(),
+        replyTo: email.trim(),
+        subject,
+        text,
+        html,
+      });
+
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
+    // 3. NEWSLETTER SUBSCRIPTION VALIDATION & DISPATCH
+    if (normalizedType === "NEWSLETTER_SUBSCRIPTION") {
       if (!email?.trim()) {
         return NextResponse.json(
-          { error: "Missing email address" },
+          { error: "Missing email address." },
           { status: 400 }
         );
       }
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
       if (!emailRegex.test(email.trim())) {
         return NextResponse.json(
-          { error: "Invalid email address" },
+          { error: "Invalid email address format." },
           { status: 400 }
         );
       }
-    } else if (type === "BOOKING_REQUEST") {
+
+      const { subject, html, text } = generateNewsletterEmail({
+        email: email.trim(),
+      });
+
+      await sendEmail({
+        to: DESTINATION_EMAIL,
+        fromName: "Vayu Galaxy Newsletter",
+        replyTo: email.trim(),
+        subject,
+        text,
+        html,
+      });
+
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
+    // 4. BOOKING REQUEST VALIDATION & DISPATCH
+    if (normalizedType === "BOOKING_REQUEST") {
       if (
-        !fullName?.trim() || 
-        !email?.trim() || 
-        !phone?.trim() || 
-        !city?.trim() || 
-        !bookingType?.trim() || 
+        !fullName?.trim() ||
+        !email?.trim() ||
+        !phone?.trim() ||
+        !city?.trim() ||
+        !bookingType?.trim() ||
         !preferredDate?.trim()
       ) {
         return NextResponse.json(
-          { error: "Missing required fields" },
+          { error: "Missing required booking fields." },
           { status: 400 }
         );
       }
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email.trim())) {
         return NextResponse.json(
-          { error: "Invalid email address" },
+          { error: "Invalid email address format." },
           { status: 400 }
         );
       }
 
-      // Server-side date validation (must not be in the past)
-      const dateObj = new Date(preferredDate);
-      if (isNaN(dateObj.getTime())) {
-        return NextResponse.json(
-          { error: "Invalid preferred date" },
-          { status: 400 }
-        );
-      }
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (dateObj < today) {
-        return NextResponse.json(
-          { error: "Preferred date cannot be in the past" },
-          { status: 400 }
-        );
-      }
-    }
+      const { subject, html, text } = generateBookingRequestEmail({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        city: city.trim(),
+        bookingType: bookingType.trim(),
+        preferredDate: preferredDate.trim(),
+        preferredTime: preferredTime?.trim(),
+        numberOfPeople: numberOfPeople?.trim(),
+        message: message?.trim(),
+      });
 
-    // SMTP configuration from environment variables
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpPort = process.env.SMTP_PORT;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-
-    // If SMTP environment variables are missing, fail the request (which shows the user failure UI)
-    if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
-      console.error(
-        "SMTP Configuration missing in environment variables. Please provide SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASS."
-      );
-      return NextResponse.json(
-        { error: "Mail system misconfigured. SMTP credentials missing." },
-        { status: 500 }
-      );
-    }
-
-    // Create transporter
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: parseInt(smtpPort, 10),
-      secure: smtpPort === "465", // true for 465, false for other ports
-      auth: {
-        user: smtpUser,
-        pass: smtpPass,
-      },
-    });
-
-    const timestamp = new Date().toLocaleString("en-US", { timeZone: "UTC" }) + " UTC";
-
-    let mailOptions;
-    if (type === "EARLY_REGISTRATION") {
-      const isDetailed = Array.isArray(interestedIn) || !!lookingFor;
-
-      if (isDetailed) {
-        const interestsText = Array.isArray(interestedIn) ? interestedIn.join(", ") : interestedIn;
-        const lookingForText = Array.isArray(lookingFor) ? lookingFor.join(", ") : "N/A";
-        
-        let referralText = referralSource || "N/A";
-        if (referralSource === "Other" && referralOther) {
-          referralText = `Other (${referralOther})`;
-        }
-
-        mailOptions = {
-          from: `"${fullName}" <${smtpUser}>`,
-          to: "info@vayugalaxy.com",
-          replyTo: email,
-          subject: "New Vayu Galaxy Early Registration",
-          text: `NEW VAYU GALAXY EARLY REGISTRATION\n\n--------------------------------\nPERSONAL INFORMATION\n--------------------------------\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "N/A"}\nCity / Location: ${city || "N/A"}\nAge Group: ${ageGroup || "N/A"}\n\n--------------------------------\nINTEREST\n--------------------------------\n\nInterested In: ${interestsText}\nWhat They're Looking For: ${lookingForText}\nInterest Level: ${interestLevel || "N/A"}\nHow They Heard About Vayu Galaxy: ${referralText}\n\n--------------------------------\nBACKGROUND\n--------------------------------\n\nOccupation: ${occupation || "N/A"}\nExpected Timeline: ${timeline || "N/A"}\n\n--------------------------------\nQUESTIONS / MESSAGE\n--------------------------------\n\nWhat They'd Like To Know:\n${questions || "None"}\n\nAdditional Message:\n${message || "None"}\n\n--------------------------------\n\nSubmission Time:\n${timestamp}`,
-        };
-      } else {
-        mailOptions = {
-          from: `"${fullName}" <${smtpUser}>`, // Sent from the authorized SMTP user
-          to: "info@vayugalaxy.com",
-          replyTo: email, // Set reply-to to the registrant's email
-          subject: "New Vayu Galaxy Early Registration",
-          text: `NEW VAYU GALAXY EARLY REGISTRATION\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "N/A"}\nCity / Location: ${city || "N/A"}\n\nInterest:\n${interestedIn}\n\nMessage:\n${message || "None"}\n\nSubmission Time:\n${timestamp}`,
-        };
-      }
-    } else if (type === "NEWSLETTER_SUBSCRIPTION") {
-      mailOptions = {
-        from: `"Vayu Galaxy Newsletter" <${smtpUser}>`,
-        to: "info@vayugalaxy.com",
+      await sendEmail({
+        to: DESTINATION_EMAIL,
+        fromName: fullName.trim(),
         replyTo: email.trim(),
-        subject: "Newsletter Subscription — Vayu Galaxy",
-        text: `NEW NEWSLETTER SUBSCRIPTION\n\nEmail: ${email.trim()}\n\nSubmission Time: ${timestamp}`,
-      };
-    } else {
-      mailOptions = {
-        from: `"${fullName}" <${smtpUser}>`,
-        to: "info@vayugalaxy.com",
-        replyTo: email.trim(),
-        subject: "New Free Booking Request — Vayu Galaxy",
-        text: `NEW FREE BOOKING REQUEST\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone}\nCity / Location: ${city}\n\nBooking Type: ${bookingType}\n\nPreferred Date: ${preferredDate}\nPreferred Time: ${preferredTime || "N/A"}\n\nNumber of People: ${numberOfPeople || "1"}\n\nAdditional Requirements:\n${message || "None"}\n\nSubmission Time:\n${timestamp}`,
-      };
+        subject,
+        text,
+        html,
+      });
+
+      return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    await transporter.sendMail(mailOptions);
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { error: "Invalid request payload" },
+      { status: 400 }
+    );
   } catch (error) {
     const err = error as Error;
-    console.error("Backend registration email error:", err);
+    console.error("Backend form processing error:", err);
     return NextResponse.json(
       { error: err?.message || "Internal server error" },
       { status: 500 }

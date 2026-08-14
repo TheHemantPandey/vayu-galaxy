@@ -74,9 +74,9 @@ export default function NewsletterSignup() {
 
   if (isSubmitted) {
     return (
-      <div className="flex items-center justify-end gap-2 text-[#DFCFB7] font-mono text-xs tracking-[0.25em] uppercase select-none">
+      <div className="flex items-center justify-end gap-2 text-[#DFCFB7] font-mono text-xs tracking-[0.15em] uppercase select-none">
         <span className="w-1.5 h-1.5 bg-[#DFCFB7] rounded-full inline-block animate-pulse"></span>
-        <span>{"YOU'RE IN"}</span>
+        <span>{"YOU'RE IN. You'll hear from us when there's something worth sharing."}</span>
       </div>
     );
   }

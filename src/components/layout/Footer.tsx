@@ -49,7 +49,7 @@ export default function Footer() {
 
       if (response.ok) {
         setNewsletterStatus("success");
-        setNewsletterMessage("Subscribed successfully!");
+        setNewsletterMessage("YOU'RE IN. You'll hear from us when there's something worth sharing.");
         setNewsletterEmail("");
       } else {
         setNewsletterStatus("error");

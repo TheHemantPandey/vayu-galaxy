@@ -372,10 +372,10 @@ export default function BookingFormContainer() {
                   
                   <div className="space-y-2">
                     <h3 className="font-space-grotesk text-xl md:text-2xl font-bold uppercase tracking-wider text-red-400">
-                      SUBMISSION COULD NOT BE COMPLETED
+                      REGISTRATION COULD NOT BE COMPLETED
                     </h3>
                     <p className="text-zinc-400 text-sm max-w-md mx-auto font-light leading-relaxed">
-                      Please check your connection and configuration or try submitting again.
+                      Please try again.
                     </p>
                   </div>
 

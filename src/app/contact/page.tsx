@@ -300,10 +300,10 @@ export default function ContactPage() {
                     </div>
                     <div className="space-y-2 max-w-md mx-auto">
                       <h3 className="text-2xl font-bold text-white uppercase tracking-wider">
-                        MESSAGE TRANSMITTED.
+                        MESSAGE SENT.
                       </h3>
                       <p className="text-sm text-zinc-300 font-light leading-relaxed">
-                        Thank you for reaching out to Vayu Galaxy. Our team has received your message and will respond within 24 hours.
+                        Thank you for reaching out. We&apos;ve received your message and will get back to you.
                       </p>
                     </div>
                     <button
@@ -444,7 +444,7 @@ export default function ContactPage() {
 
                     {submissionFailed && (
                       <div className="p-3.5 rounded-xl bg-red-950/50 border border-red-500/40 text-red-400 text-xs font-mono">
-                        Submission failed. Please check your network and try again.
+                        UNABLE TO SEND. Please try again.
                       </div>
                     )}
 
