@@ -47,10 +47,10 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 w-full z-[1000] transition-all duration-300 ease-in-out font-space-grotesk ${
+        className={`fixed top-0 left-0 right-0 w-full z-[1000] transition-all duration-300 ease-in-out font-space-grotesk border-b-0 ${
           isScrolled
-            ? "bg-zinc-950/90 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/50 py-3.5"
-            : "bg-gradient-to-b from-black/80 via-black/40 to-transparent border-b border-transparent py-6"
+            ? "bg-zinc-950/90 backdrop-blur-md shadow-lg shadow-black/50 py-3.5"
+            : "bg-gradient-to-b from-black/80 via-black/40 to-transparent py-6"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
