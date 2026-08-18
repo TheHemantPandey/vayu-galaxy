@@ -84,7 +84,7 @@ export default function Footer() {
       <div className="absolute bottom-0 left-1/4 w-[500px] h-[300px] bg-cyan-500/5 blur-[150px] pointer-events-none rounded-full z-0" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[250px] bg-blue-600/5 blur-[150px] pointer-events-none rounded-full z-0" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-16 pb-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-16 pb-28 lg:pb-12 relative z-10">
 
         {/* 1. Top Interactive CTA Banner */}
         <motion.div

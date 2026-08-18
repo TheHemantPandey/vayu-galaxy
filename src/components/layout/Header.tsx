@@ -229,6 +229,26 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Mobile/Tablet Bottom Action Bar */}
+      {!isMenuOpen && (
+        <div className="fixed bottom-0 left-0 right-0 z-[990] bg-zinc-950/95 backdrop-blur-md border-t border-white/10 pt-3.5 pb-4 pb-[calc(14px+env(safe-area-inset-bottom))] px-4 lg:hidden">
+          <div className="flex gap-4 w-full max-w-xl mx-auto">
+            <Link
+              href="/contact"
+              className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white border border-white/15 font-space-grotesk font-bold py-3.5 px-4 text-[10px] sm:text-xs tracking-widest uppercase text-center rounded-sm flex items-center justify-center transition-all duration-300"
+            >
+              CONTACT US
+            </Link>
+            <Link
+              href="/book-now"
+              className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white border border-white/15 font-space-grotesk font-bold py-3.5 px-4 text-[10px] sm:text-xs tracking-widest uppercase text-center rounded-sm flex items-center justify-center transition-all duration-300"
+            >
+              BOOK NOW
+            </Link>
+          </div>
+        </div>
+      )}
     </>
   );
 }
