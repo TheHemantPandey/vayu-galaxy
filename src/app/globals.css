@@ -275,6 +275,13 @@ li::marker, ::marker {
   }
 }
 
+/* Defensive safeguard wrapper for homepage */
+.home-page-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 
 
 

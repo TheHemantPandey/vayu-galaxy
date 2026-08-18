@@ -44,8 +44,8 @@ export default function FounderSection({
   const paragraphsToUse = (!descriptionParagraphs || isGenericText) ? defaultParagraphs : descriptionParagraphs;
 
   return (
-    <section id="founder" className="w-full bg-[#050505] text-[#F4F2ED] py-20 md:py-32 px-6 sm:px-12 lg:px-16 relative border-t border-white/[0.04]">
-      <div className="max-w-[90rem] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+    <section id="founder" className="w-full bg-[#050505] text-[#F4F2ED] py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-8 md:px-12 lg:px-16 relative border-t border-white/[0.04]">
+      <div className="max-w-[90rem] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-20 items-center">
         
         {/* Large Editorial Portrait (Left) */}
         <motion.div
@@ -53,15 +53,15 @@ export default function FounderSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="col-span-12 lg:col-span-5 flex justify-center w-full"
+          className="col-span-1 lg:col-span-5 flex justify-center w-full"
         >
-          <div className="relative w-full aspect-[3/4] max-w-[420px] lg:max-w-none overflow-hidden rounded-xl bg-white/[0.02] border border-white/[0.08] shadow-2xl">
+          <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] lg:max-w-none overflow-hidden rounded-xl bg-white/[0.02] border border-white/[0.08] shadow-2xl">
             <Image
               src="/assets/raushan.png"
               alt="Mr. Raushan Kumar - Designer and Visionary behind Vayu Galaxy"
               fill
-              sizes="(min-width: 1024px) 35vw, 90vw"
-              className="object-cover"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 35vw"
+              className="object-cover object-top sm:object-center"
               priority
             />
           </div>
@@ -73,39 +73,39 @@ export default function FounderSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-          className="col-span-12 lg:col-span-7 flex flex-col text-left font-sans"
+          className="col-span-1 lg:col-span-7 flex flex-col text-left font-sans w-full"
         >
           {/* Label Eyebrow */}
-          <span className="block text-[0.7rem] sm:text-[0.75rem] font-sans tracking-[0.25em] text-[#B7A27A] uppercase mb-3">
+          <span className="block text-[0.65rem] sm:text-[0.75rem] font-sans tracking-[0.2em] sm:tracking-[0.25em] text-[#B7A27A] uppercase mb-2 sm:mb-3">
             {title}
           </span>
 
           {/* Large Headline */}
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#F4F2ED] mb-6 leading-tight tracking-tight uppercase">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#F4F2ED] mb-4 sm:mb-6 leading-tight tracking-tight uppercase break-words">
             THE THINKING BEHIND VAYU GALAXY
           </h2>
 
           {/* Visionary Name */}
-          <h4 className="text-lg md:text-xl font-medium text-[#F4F2ED] mb-6 uppercase tracking-wider font-mono">
+          <h4 className="text-base sm:text-lg md:text-xl font-medium text-[#F4F2ED] mb-4 sm:mb-6 uppercase tracking-wider font-mono">
             {name}
           </h4>
 
           {/* Narrative Body Copy */}
-          <div className="space-y-6 mb-8 text-[#A09F9A] text-base md:text-lg font-light leading-relaxed max-w-xl">
+          <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8 text-[#A09F9A] text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-xl">
             {paragraphsToUse.map((p, idx) => (
               <p key={idx}>{p}</p>
             ))}
           </div>
 
           {/* Social Platforms Links */}
-          <div className="flex gap-6 items-center">
+          <div className="flex flex-wrap gap-5 sm:gap-6 items-center">
             {socialLinks.map((social, index) => (
               <a
                 key={index}
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xl text-[#A09F9A] hover:text-[#B7A27A] transition-colors duration-300 transform hover:scale-110"
+                className="text-lg sm:text-xl text-[#A09F9A] hover:text-[#B7A27A] transition-colors duration-300 transform hover:scale-110"
                 aria-label={`Visit Mr. Raushan Kumar on social link ${index + 1}`}
               >
                 <i className={social.iconClass}></i>

@@ -36,8 +36,8 @@ export default function MapView({ id = "location" }: MapViewProps) {
         </div>
 
         {/* Full-bleed Widescreen Visual Plate (16:9 aspect locks native layout) */}
-        <div className="w-screen relative left-1/2 right-1/2 -translate-x-1/2 overflow-hidden bg-black/5 aspect-[16/9] border-y border-black/[0.06]">
-          <Parallax speed={0.02} className="w-full h-full relative">
+        <div className="w-full relative overflow-hidden bg-black/5 aspect-[16/9] border-y border-black/[0.06]">
+          <Parallax speed={0.02} className="w-full h-full relative" innerClassName="relative w-full h-full">
             <Image
               src="/assets/location.png"
               alt="Geographic location map of Vayu Galaxy"
@@ -73,8 +73,8 @@ export default function MapView({ id = "location" }: MapViewProps) {
         </div>
 
         {/* Full-bleed Widescreen Visual Plate (16:9 aspect locks native layout) */}
-        <div className="w-screen relative left-1/2 right-1/2 -translate-x-1/2 overflow-hidden bg-black/5 aspect-[16/9] border-y border-black/[0.06]">
-          <Parallax speed={0.02} className="w-full h-full relative">
+        <div className="w-full relative overflow-hidden bg-black/5 aspect-[16/9] border-y border-black/[0.06]">
+          <Parallax speed={0.02} className="w-full h-full relative" innerClassName="relative w-full h-full">
             <Image
               src="/assets/map.png"
               alt="Site masterplan layout and spatial matrix"

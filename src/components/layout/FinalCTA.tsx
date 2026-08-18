@@ -34,7 +34,7 @@ export default function FinalCTA() {
           </span>
 
           {/* Large display headline */}
-          <h2 className="text-4xl md:text-6xl font-display font-bold text-[#F4F2ED] uppercase leading-tight tracking-tight max-w-3xl">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold text-[#F4F2ED] uppercase leading-tight tracking-tight max-w-3xl">
             THE FUTURE OF HUMAN HABITATION STARTS WITH A VISION.
           </h2>
 
