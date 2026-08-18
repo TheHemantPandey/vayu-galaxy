@@ -27,7 +27,7 @@ interface AboutSectionProps {
 }
 
 /**
- * AboutSection — Premium Editorial Layout.
+ * AboutSection — Clean White Editorial Layout.
  * Supports:
  * 1. Text-Only Monograph with Specifications Sidebar (homepage redesign)
  * 2. Widescreen & Portrait Image Monographs (fallback layouts)
@@ -35,7 +35,6 @@ interface AboutSectionProps {
  */
 export default function AboutSection({
   id,
-  theme = "light",
   title,
   paragraphs,
   imageSrc,
@@ -47,7 +46,6 @@ export default function AboutSection({
   layoutType = "left-text",
   specifications,
 }: AboutSectionProps) {
-  const isLight = theme === "light";
   const hasSpecs = specifications && specifications.length > 0;
 
   if (hasSpecs) {
@@ -58,11 +56,7 @@ export default function AboutSection({
     return (
       <section
         id={id}
-        className={`w-full py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t ${
-          isLight
-            ? "bg-[#F4F2ED] text-[#1A1A1A] border-black/[0.05]"
-            : "bg-[#050505] text-[#F4F2ED] border-white/[0.04]"
-        }`}
+        className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk"
       >
         <div className="max-w-[1200px] w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-start">
 
@@ -72,7 +66,7 @@ export default function AboutSection({
             <div className="overflow-hidden py-0.5 -my-0.5 mb-3 sm:mb-4">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
                 {chapterNumber && (
-                  <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.2em] sm:tracking-[0.3em] text-[#B7A27A] uppercase hero-label break-words">
+                  <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.2em] sm:tracking-[0.3em] text-[#9E824C] uppercase hero-label break-words">
                     {chapterNumber} &mdash; {chapterLabel}
                   </span>
                 )}
@@ -82,11 +76,7 @@ export default function AboutSection({
             {/* Section Title */}
             <div className="mb-6 sm:mb-8">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.15}>
-                <h2
-                  className={`font-display font-medium tracking-tight uppercase leading-[1.15] sm:leading-[1.1] text-[20px] sm:text-[28px] md:text-[36px] lg:text-[44px] break-words ${
-                    isLight ? "text-[#1A1A1A]" : "text-[#F4F2ED]"
-                  }`}
-                >
+                <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] sm:leading-[1.1] text-[20px] sm:text-[28px] md:text-[36px] lg:text-[44px] break-words text-[#111111]">
                   {title}
                 </h2>
               </Reveal>
@@ -96,11 +86,7 @@ export default function AboutSection({
             {leadParagraph && (
               <div className="mb-6 sm:mb-8">
                 <Reveal style="fade" direction="up" duration={0.8} delay={0.2}>
-                  <p
-                    className={`text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-[1.6] sm:leading-[1.65] font-sans font-light text-left ${
-                      isLight ? "text-[#3A3A36]" : "text-[#E4E2DC]"
-                    }`}
-                  >
+                  <p className="text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-[1.6] sm:leading-[1.65] font-sans font-light text-left text-[#2A2A28]">
                     {leadParagraph}
                   </p>
                 </Reveal>
@@ -109,7 +95,7 @@ export default function AboutSection({
 
             {/* Columns of Smaller Body Copy */}
             {bodyParagraphs.length > 0 && (
-              <div className="border-t border-black/[0.08] dark:border-white/[0.08] pt-6 sm:pt-8 mt-2 sm:mt-4">
+              <div className="border-t border-black/[0.08] pt-6 sm:pt-8 mt-2 sm:mt-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
                   {bodyParagraphs.map((p, idx) => (
                     <Reveal
@@ -119,11 +105,7 @@ export default function AboutSection({
                       duration={0.8}
                       delay={0.3 + idx * 0.15}
                     >
-                      <p
-                        className={`text-[0.875rem] sm:text-[0.925rem] md:text-[0.975rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left ${
-                          isLight ? "text-[#555550]" : "text-[#B7B5AF]"
-                        }`}
-                      >
+                      <p className="text-[0.875rem] sm:text-[0.925rem] md:text-[0.975rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left text-[#555550]">
                         {p}
                       </p>
                     </Reveal>
@@ -134,26 +116,22 @@ export default function AboutSection({
           </div>
 
           {/* Specs Sidebar */}
-          <div className="col-span-1 lg:col-span-4 xl:col-span-3 lg:col-start-9 xl:col-start-10 flex flex-col border-t border-black/[0.08] dark:border-white/[0.08] pt-6 mt-4 lg:mt-0 lg:border-t-0 lg:pt-0 w-full">
+          <div className="col-span-1 lg:col-span-4 xl:col-span-3 lg:col-start-9 xl:col-start-10 flex flex-col border-t border-black/[0.08] pt-6 mt-4 lg:mt-0 lg:border-t-0 lg:pt-0 w-full">
             <Reveal style="fade" direction="up" duration={0.8} delay={0.25} className="w-full">
-              <span className="block text-[0.6rem] sm:text-[0.65rem] font-mono tracking-[0.25em] text-[#8E8E93] uppercase mb-4 sm:mb-6 select-none">
+              <span className="block text-[0.6rem] sm:text-[0.65rem] font-mono tracking-[0.25em] text-[#71717A] uppercase mb-4 sm:mb-6 select-none">
                 SPECIFICATIONS
               </span>
 
-              <ul className="grid grid-cols-2 gap-x-8 gap-y-6 sm:gap-y-8 m-0 p-0 list-none w-full">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-col lg:space-y-5 gap-4 sm:gap-6 lg:gap-0 m-0 p-0 list-none w-full">
                 {specifications.map((spec, idx) => (
                   <li
                     key={idx}
-                    className="border-b border-black/[0.04] dark:border-white/[0.04] pb-3 sm:pb-4 flex flex-col gap-1 sm:gap-1.5 list-none"
+                    className="border-b border-black/[0.06] pb-3 sm:pb-4 flex flex-col gap-1 sm:gap-1.5 list-none"
                   >
-                    <span className="text-[0.55rem] sm:text-[0.6rem] font-mono tracking-[0.2em] text-[#B7A27A] uppercase select-none">
+                    <span className="text-[0.55rem] sm:text-[0.6rem] font-mono tracking-[0.2em] text-[#9E824C] uppercase select-none">
                       {spec.label}
                     </span>
-                    <span
-                      className={`text-[0.8rem] sm:text-[0.85rem] md:text-[0.9rem] font-sans font-light text-left break-words ${
-                        isLight ? "text-[#1A1A1A]" : "text-[#F4F2ED]"
-                      }`}
-                    >
+                    <span className="text-[0.8rem] sm:text-[0.85rem] md:text-[0.9rem] font-sans font-light text-left break-words text-[#111111]">
                       {spec.value}
                     </span>
                   </li>
@@ -176,11 +154,7 @@ export default function AboutSection({
     return (
       <section
         id={id}
-        className={`w-full py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t ${
-          isLight
-            ? "bg-[#F4F2ED] text-[#1A1A1A] border-black/[0.05]"
-            : "bg-[#050505] text-[#F4F2ED] border-white/[0.04]"
-        }`}
+        className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk"
       >
         <div className="max-w-[1400px] w-full flex flex-col items-center">
 
@@ -188,15 +162,11 @@ export default function AboutSection({
           <div className="w-full max-w-3xl text-center mb-8 sm:mb-12 md:mb-16 px-2 sm:px-0">
             <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
               {chapterNumber && (
-                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] sm:tracking-[0.3em] text-[#B7A27A] uppercase mb-2.5 sm:mb-3 hero-label">
+                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] sm:tracking-[0.3em] text-[#9E824C] uppercase mb-2.5 sm:mb-3 hero-label">
                   {chapterNumber} &mdash; {chapterLabel}
                 </span>
               )}
-              <h2
-                className={`font-display font-medium tracking-tight uppercase leading-[1.15] sm:leading-[1.1] text-[20px] sm:text-[28px] md:text-[36px] lg:text-[44px] mb-4 sm:mb-6 break-words ${
-                  isLight ? "text-[#1A1A1A]" : "text-[#F4F2ED]"
-                }`}
-              >
+              <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] sm:leading-[1.1] text-[20px] sm:text-[28px] md:text-[36px] lg:text-[44px] mb-4 sm:mb-6 break-words text-[#111111]">
                 {title}
               </h2>
             </Reveal>
@@ -210,11 +180,7 @@ export default function AboutSection({
                   duration={0.8}
                   delay={0.2 + idx * 0.15}
                 >
-                  <p
-                    className={`text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-center ${
-                      isLight ? "text-[#444440]" : "text-[#C4C2BC]"
-                    }`}
-                  >
+                  <p className="text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-center text-[#444440]">
                     {p}
                   </p>
                 </Reveal>
@@ -226,7 +192,7 @@ export default function AboutSection({
           <div className="w-full relative flex flex-col items-center">
             <Parallax speed={0.03} className="w-full relative flex flex-col items-center">
               <Reveal style="fade" duration={1.2} delay={0.3} className="w-full flex flex-col items-center">
-                <div className="w-full relative overflow-hidden rounded-sm bg-black/5 aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] max-w-[1200px]">
+                <div className="w-full relative overflow-hidden rounded-xl bg-black/5 aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] max-w-[1200px] border border-black/[0.08] shadow-lg">
                   <Image
                     src={imageSrc}
                     alt={imageAlt || ""}
@@ -238,7 +204,7 @@ export default function AboutSection({
                 </div>
 
                 {imageCaption && (
-                  <span className="block mt-3 sm:mt-4 text-[0.55rem] sm:text-[0.6rem] font-mono tracking-[0.2em] text-[#8E8E93] uppercase text-center max-w-[600px] px-4 select-none">
+                  <span className="block mt-3 sm:mt-4 text-[0.55rem] sm:text-[0.6rem] font-mono tracking-[0.2em] text-[#71717A] uppercase text-center max-w-[600px] px-4 select-none">
                     {imageCaption}
                   </span>
                 )}
@@ -256,26 +222,18 @@ export default function AboutSection({
     return (
       <section
         id={id}
-        className={`w-full py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t ${
-          isLight
-            ? "bg-[#F4F2ED] text-[#1A1A1A] border-black/[0.05]"
-            : "bg-[#050505] text-[#F4F2ED] border-white/[0.04]"
-        }`}
+        className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk"
       >
         <div className="max-w-[1200px] w-full grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
 
           {/* Mobile Title */}
           <div className="block md:hidden order-1 w-full text-center">
             {chapterNumber && (
-              <span className="block text-[0.65rem] font-mono tracking-[0.25em] text-[#B7A27A] uppercase mb-2 hero-label">
+              <span className="block text-[0.65rem] font-mono tracking-[0.25em] text-[#9E824C] uppercase mb-2 hero-label">
                 {chapterNumber} / {chapterLabel}
               </span>
             )}
-            <h2
-              className={`font-display font-medium tracking-tight uppercase leading-[1.15] text-[20px] sm:text-[28px] ${
-                isLight ? "text-[#1A1A1A]" : "text-[#F4F2ED]"
-              }`}
-            >
+            <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] text-[20px] sm:text-[28px] text-[#111111]">
               {title}
             </h2>
           </div>
@@ -284,7 +242,7 @@ export default function AboutSection({
           <div className="col-span-1 md:col-span-6 flex flex-col justify-center items-center md:items-start w-full order-2 md:order-none">
             <Parallax speed={0.04} className="w-full relative flex flex-col items-center md:items-start">
               <Reveal style="fade" duration={1.2} delay={0.2} className="w-full flex flex-col items-center md:items-start">
-                <div className="w-full relative overflow-hidden rounded-sm bg-black/5 aspect-[9/16] max-w-[280px] xs:max-w-[320px] sm:max-w-[360px] md:max-w-[440px] shadow-sm">
+                <div className="w-full relative overflow-hidden rounded-xl bg-black/5 aspect-[9/16] max-w-[280px] xs:max-w-[320px] sm:max-w-[360px] md:max-w-[440px] border border-black/[0.08] shadow-lg">
                   <Image
                     src={imageSrc}
                     alt={imageAlt || ""}
@@ -295,7 +253,7 @@ export default function AboutSection({
                 </div>
 
                 {imageCaption && (
-                  <span className="block mt-3 sm:mt-4 text-[0.55rem] sm:text-[0.6rem] font-mono tracking-[0.2em] text-[#8E8E93] uppercase text-center md:text-left select-none max-w-[440px] px-2 sm:px-0">
+                  <span className="block mt-3 sm:mt-4 text-[0.55rem] sm:text-[0.6rem] font-mono tracking-[0.2em] text-[#71717A] uppercase text-center md:text-left select-none max-w-[440px] px-2 sm:px-0">
                     {imageCaption}
                   </span>
                 )}
@@ -307,21 +265,17 @@ export default function AboutSection({
             <div className="hidden md:block mb-6 lg:mb-8">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
                 {chapterNumber && (
-                  <span className="block text-[0.75rem] font-mono tracking-[0.3em] text-[#B7A27A] uppercase mb-3 hero-label">
+                  <span className="block text-[0.75rem] font-mono tracking-[0.3em] text-[#9E824C] uppercase mb-3 hero-label">
                     {chapterNumber} &mdash; {chapterLabel}
                   </span>
                 )}
-                <h2
-                  className={`font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] ${
-                    isLight ? "text-[#1A1A1A]" : "text-[#F4F2ED]"
-                  }`}
-                >
+                <h2 className="font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] text-[#111111]">
                   {title}
                 </h2>
               </Reveal>
             </div>
 
-            <div className="space-y-4 sm:space-y-6 md:pl-6 lg:pl-8 md:border-l border-black/[0.06] dark:border-white/[0.06]">
+            <div className="space-y-4 sm:space-y-6 md:pl-6 lg:pl-8 md:border-l border-black/[0.08]">
               {paragraphs.map((p, idx) => (
                 <Reveal
                   key={idx}
@@ -330,11 +284,7 @@ export default function AboutSection({
                   duration={0.8}
                   delay={0.3 + idx * 0.15}
                 >
-                  <p
-                    className={`text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left ${
-                      isLight ? "text-[#444440]" : "text-[#C4C2BC]"
-                    }`}
-                  >
+                  <p className="text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left text-[#444440]">
                     {p}
                   </p>
                 </Reveal>
@@ -352,21 +302,13 @@ export default function AboutSection({
   return (
     <section
       id={id}
-      className={`w-full py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t ${
-        isLight
-          ? "bg-[#F4F2ED] text-[#1A1A1A] border-black/[0.05]"
-          : "bg-[#050505] text-[#F4F2ED] border-white/[0.04]"
-      }`}
+      className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk"
     >
       <div className="max-w-[1200px] w-full grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
 
         {/* Mobile Title */}
         <div className="block md:hidden order-1 w-full text-center">
-          <h2
-            className={`font-display font-medium tracking-tight uppercase leading-[1.15] text-[20px] sm:text-[28px] ${
-              isLight ? "text-[#1A1A1A]" : "text-[#F4F2ED]"
-            }`}
-          >
+          <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] text-[20px] sm:text-[28px] text-[#111111]">
             {title}
           </h2>
         </div>
@@ -378,22 +320,16 @@ export default function AboutSection({
           } flex flex-col justify-center order-3 md:order-none w-full`}
         >
           <div className="hidden md:block mb-6 lg:mb-8">
-            <h2
-              className={`font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] ${
-                isLight ? "text-[#1A1A1A]" : "text-[#F4F2ED]"
-              }`}
-            >
+            <h2 className="font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] text-[#111111]">
               {title}
             </h2>
           </div>
 
-          <div className="space-y-4 sm:space-y-6 md:pl-6 lg:pl-8 md:border-l border-black/[0.06] dark:border-white/[0.06]">
+          <div className="space-y-4 sm:space-y-6 md:pl-6 lg:pl-8 md:border-l border-black/[0.08]">
             {paragraphs.map((p, idx) => (
               <p
                 key={idx}
-                className={`text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left ${
-                  isLight ? "text-[#444440]" : "text-[#C4C2BC]"
-                }`}
+                className="text-[0.875rem] sm:text-[0.95rem] md:text-[1.025rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left text-[#444440]"
               >
                 {p}
               </p>
@@ -409,7 +345,7 @@ export default function AboutSection({
             } flex flex-col justify-center items-center md:items-start w-full order-2 md:order-none`}
           >
             <div
-              className={`w-full relative overflow-hidden rounded-sm bg-black/5 aspect-square max-w-[300px] xs:max-w-[340px] sm:max-w-[380px] md:max-w-none ${
+              className={`w-full relative overflow-hidden rounded-xl bg-black/5 aspect-square max-w-[300px] xs:max-w-[340px] sm:max-w-[380px] md:max-w-none border border-black/[0.08] shadow-md ${
                 imageMaxWidthClass || "md:max-w-[400px]"
               }`}
             >
