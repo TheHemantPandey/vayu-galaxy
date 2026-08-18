@@ -103,14 +103,12 @@ export default function HomePage() {
             </>
           }
           paragraphs={forsecondpara}
+          imageSrc="/assets/loadvishnu.jpeg"
+          imageAlt="Lord Vishnu"
           chapterNumber="02"
           chapterLabel="CULTURAL MONUMENT"
-          specifications={[
-            { label: "MONUMENT TYPE", value: "Suspended Vedic Monument" },
-            { label: "HEIGHT DETAIL", value: "World's Largest Airborne Statue" },
-            { label: "STRUCTURAL BASIS", value: "High-Altitude Stabilization" },
-            { label: "CULTURAL STATUS", value: "Conceptual Spiritual Beacon" }
-          ]}
+          imageCaption="ARCHITECTURAL MONUMENT VISUALIZATION — ARTISTIC DETAIL"
+          layoutType="right-text"
         />
 
         <FeatureSection
