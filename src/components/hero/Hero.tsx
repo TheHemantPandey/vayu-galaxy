@@ -6,7 +6,6 @@ import { gsap } from "@/animations/gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import HeroVisual from "./HeroVisual";
 import HeroContent from "./HeroContent";
-import HeroMetadata from "./HeroMetadata";
 import HeroScrollIndicator from "./HeroScrollIndicator";
 
 /**
@@ -19,7 +18,6 @@ export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const metadataRef = useRef<HTMLDivElement>(null);
   const indicatorRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -34,13 +32,13 @@ export default function Hero() {
         // Immediate static layout with fast opacity reveals under reduced motion
         tl.fromTo(visualRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 });
         tl.fromTo(
-          [".hero-title-vayu", ".hero-title-galaxy", ".hero-subtitle"],
+          [".hero-label", ".hero-title-vayu", ".hero-title-galaxy", ".hero-subtitle", ".hero-cta"],
           { opacity: 0 },
           { opacity: 1, duration: 0.4, stagger: 0.05 },
           "-=0.2"
         );
         tl.fromTo(
-          [metadataRef.current, indicatorRef.current],
+          indicatorRef.current,
           { opacity: 0 },
           { opacity: 1, duration: 0.3 },
           "-=0.1"
@@ -49,44 +47,57 @@ export default function Hero() {
       }
 
       // Standard cinematic reveal sequence (slow, deliberate, architectural)
+      // Subtle video fade-in
       tl.fromTo(
         visualRef.current,
-        { scale: 1.08, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 2.2, ease: "power3.out" }
+        { scale: 1.04, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 2.5, ease: "power2.out" }
       );
 
+      // "VAYU GALAXY" label fades in
+      tl.fromTo(
+        ".hero-label",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" },
+        "-=1.8"
+      );
+
+      // Headline reveals upward/opacity
       tl.fromTo(
         ".hero-title-vayu",
-        { yPercent: 45, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 1.4 },
-        "-=1.5"
+        { yPercent: 60, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 1.6, ease: "power4.out" },
+        "-=1.4"
       );
 
       tl.fromTo(
         ".hero-title-galaxy",
-        { yPercent: 45, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 1.4 },
+        { yPercent: 60, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 1.6, ease: "power4.out" },
         "-=1.2"
       );
 
+      // Supporting statement appears
       tl.fromTo(
         ".hero-subtitle",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.4, ease: "power3.out" },
+        "-=0.9"
+      );
+
+      // CTA appears
+      tl.fromTo(
+        ".hero-cta",
         { y: 15, opacity: 0 },
-        { y: 0, opacity: 0.65, duration: 1.0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
         "-=0.8"
       );
 
-      tl.fromTo(
-        metadataRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1.0 },
-        "-=0.6"
-      );
-
+      // Subtle scroll indicator animation
       tl.fromTo(
         indicatorRef.current,
-        { y: 10, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.0 },
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
         "-=0.8"
       );
 
@@ -108,24 +119,13 @@ export default function Hero() {
       });
 
       gsap.to(contentRef.current, {
-        yPercent: -5, // subtle typographic upward lift
+        yPercent: -8, // subtle typographic upward lift
         opacity: 0, // typographic fadeout
         ease: "none",
         scrollTrigger: {
           trigger: trigger,
           start: "top top",
-          end: "80% top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(metadataRef.current, {
-        opacity: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: trigger,
-          start: "top top",
-          end: "50% top",
+          end: "70% top",
           scrub: true,
         },
       });
@@ -148,7 +148,7 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-[100svh] lg:h-screen overflow-hidden flex items-center px-[7vw] lg:px-[9vw] bg-[#050505] border-b border-white/[0.03]"
+      className="relative w-full h-[100svh] lg:h-screen overflow-hidden flex flex-col items-center justify-center text-center px-6 sm:px-8 bg-[#050505] border-b border-white/[0.03]"
       aria-label="Vayu Galaxy Entrance Visual"
     >
       {/* Background & Atmospheric Layers */}
@@ -156,9 +156,6 @@ export default function Hero() {
 
       {/* Primary Display Typography */}
       <HeroContent contentRef={contentRef} />
-
-      {/* HUD Telemetry Descriptors */}
-      <HeroMetadata metadataRef={metadataRef} />
 
       {/* Sweep Line Scroll Indicator */}
       <HeroScrollIndicator indicatorRef={indicatorRef} />

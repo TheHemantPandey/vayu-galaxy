@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";
-import Hero from "@/components/home/Hero";
+import Hero from "@/components/hero/Hero";
 import AboutSection from "@/components/home/AboutSection";
 import VideoSection from "@/components/home/VideoSection";
 import CitiesAtRisk from "@/components/home/CitiesAtRisk";
@@ -75,6 +75,7 @@ export default function HomePage() {
         <Hero />
 
         <AboutSection
+          id="about"
           theme="light"
           title="8th World of Wonder, Coming Soon!"
           paragraphs={forfirstpara}
