@@ -44,7 +44,6 @@ import FounderSection from "@/components/home/FounderSection";
 
 const forfirstpara = [
   "Vayu Galaxy represents a bold new chapter in human architecture and conceptual design—introducing the 8th World of Wonder. By combining high-altitude structural engineering with self-sustaining luxury ecosystems, we are designing living spaces that float above the horizon, bridging the gap between Earth and the cosmos.",
-  "Our mission is to establish a premium architectural lifestyle that embraces renewable energy, zero-gravity aesthetics, and autonomous maintenance technologies. This cinematic design concept offers residents panoramic views of the atmosphere, turning space exploration into an everyday reality.",
 ];
 const forsecondpara = [
   "Standing as a monument of absolute engineering marvel and spiritual legacy, Vayu Galaxy introduces the world's largest Lord Vishnu statue suspended in the air. This structure combines ancient Vedic architecture with modern high-altitude stabilization systems, creating a breathtaking spiritual beacon that transcends traditional boundaries.",
@@ -79,9 +78,14 @@ export default function HomePage() {
           theme="light"
           title="8th World of Wonder, Coming Soon!"
           paragraphs={forfirstpara}
-          imageSrc="/assets/about.jpeg"
-          imageAlt="About Us"
-          imageMaxWidthClass="max-w-[400px]"
+          chapterNumber="01"
+          chapterLabel="THE AERIAL TOWNSHIP"
+          specifications={[
+            { label: "PROJECT TYPE", value: "Aerial Urban Township" },
+            { label: "EST. ALTITUDE", value: "1,000 – 5,000 Meters" },
+            { label: "CORE FOCUS", value: "Atmospheric Habitation" },
+            { label: "DEVELOPMENT STATE", value: "Conceptual Monograph" }
+          ]}
         />
 
         <VideoSection />
@@ -99,9 +103,14 @@ export default function HomePage() {
             </>
           }
           paragraphs={forsecondpara}
-          imageSrc="/assets/loadvishnu.jpeg"
-          imageAlt="Lord Vishnu"
-          imageMaxWidthClass="max-w-[400px]"
+          chapterNumber="02"
+          chapterLabel="CULTURAL MONUMENT"
+          specifications={[
+            { label: "MONUMENT TYPE", value: "Suspended Vedic Monument" },
+            { label: "HEIGHT DETAIL", value: "World's Largest Airborne Statue" },
+            { label: "STRUCTURAL BASIS", value: "High-Altitude Stabilization" },
+            { label: "CULTURAL STATUS", value: "Conceptual Spiritual Beacon" }
+          ]}
         />
 
         <FeatureSection
