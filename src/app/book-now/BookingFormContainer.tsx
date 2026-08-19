@@ -140,7 +140,7 @@ export default function BookingFormContainer() {
   const inputStyle = (fieldName: string) => {
     const hasError = !!errors[fieldName];
     return `w-full bg-white/[0.03] border ${
-      hasError ? "border-red-500 focus:border-red-400 focus:ring-red-400" : "border-white/15 focus:border-cyan-400 focus:ring-cyan-400"
+      hasError ? "border-red-500 focus:border-red-400 focus:ring-red-400" : "border-white/15 focus:border-[#B7A27A] focus:ring-[#B7A27A]"
     } rounded-xl px-4 py-3 font-space-grotesk text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-1 transition-all duration-200 disabled:opacity-50`;
   };
 
@@ -148,50 +148,66 @@ export default function BookingFormContainer() {
 
   const faqs = [
     {
-      q: "What makes early access with Vayu Galaxy a game-changer for me?",
-      a: "Early access puts you right at the front lines of the future! By registering today, you gain exclusive first-in-line access to revolutionary township updates, private prototype testing invitations, and direct founder briefings—all with zero financial commitment or hidden fees.",
+      q: "What makes early access with Vayu Galaxy important for me?",
+      a: "Early access connects you directly to our latest announcements. By registering today, you gain early access to township updates, technology developments, and future project previews.",
     },
     {
       q: "Is there any financial commitment required?",
-      a: "None at all! Early registration is 100% free with no deposit, reservation fee, or credit card required.",
+      a: "None at all. Early registration is 100% free with no deposit, reservation fee, or credit card required.",
     },
     {
       q: "When will Cohort 2026 onboarding begin?",
-      a: "Cohort 2026 invitations and initial tech briefings will roll out in phases throughout 2026. Registered members will receive early notification prior to public announcements.",
+      a: "Cohort 2026 announcements and briefings will roll out in phases throughout 2026. Registered members will receive early updates prior to public announcements.",
     },
     {
       q: "How will my data and privacy be handled?",
-      a: "Your privacy is our utmost priority. Your information is encrypted, securely stored, and strictly used to deliver Vayu Galaxy updates and private early-access privileges.",
+      a: "Your privacy is our utmost priority. Your information is securely stored and strictly used to deliver Vayu Galaxy project updates and announcements.",
     },
   ];
 
   return (
     <div className="bg-[#050505] min-h-screen text-[#FAFAFA] flex flex-col justify-between relative overflow-hidden">
       {/* Ambient background glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-500/10 blur-[140px] pointer-events-none rounded-full z-0" />
-      <div className="absolute top-[600px] right-0 w-[500px] h-[500px] bg-blue-600/10 blur-[160px] pointer-events-none rounded-full z-0" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#B7A27A]/5 blur-[140px] pointer-events-none rounded-full z-0" />
+      <div className="absolute top-[600px] right-0 w-[500px] h-[500px] bg-white/[0.01] blur-[160px] pointer-events-none rounded-full z-0" />
 
       <Header />
 
       <main className="flex-grow pt-32 pb-24 px-6 md:px-[8%] max-w-[1340px] mx-auto w-full relative z-10">
         
         {/* Header Section */}
-        <div className="mb-12 text-left">
+        <div className="mb-10 text-left">
           {/* Breadcrumb / Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(34,211,238,0.15)]">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#B7A27A]/10 border border-[#B7A27A]/20 text-[#B7A27A] text-xs font-mono tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(183,162,122,0.05)] select-none">
+            <span className="w-2 h-2 rounded-full bg-[#B7A27A] animate-pulse"></span>
             VAYU GALAXY // EARLY ACCESS
           </div>
 
           {/* Main Title */}
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-white uppercase font-space-grotesk leading-tight mb-4">
-            BOOK YOUR PLACE IN <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">WHAT&apos;S NEXT.</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#F4F2ED] uppercase font-display leading-[1.05] mb-4">
+            BOOK YOUR PLACE IN WHAT&apos;S NEXT.
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base md:text-lg text-zinc-400 max-w-[720px] font-light leading-relaxed">
-            Join the next frontier of aerial townships and advanced robotics.
+          <p className="text-sm sm:text-base md:text-lg text-zinc-400 max-w-[720px] font-light leading-relaxed">
+            Register your interest in Vayu Galaxy and stay connected to the future of human habitation, advanced technology, and next-generation living.
           </p>
+        </div>
+
+        {/* Compact Cinematic Visual Banner */}
+        <div className="relative w-full h-[200px] sm:h-[260px] md:h-[320px] rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] shadow-2xl mb-12 group">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-80 pointer-events-none scale-110"
+          >
+            <source src="/assets/bg.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="absolute inset-0 bg-black/2 z-[1] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10 z-[1] pointer-events-none" />
         </div>
 
         {/* Main 2-Column Grid */}
@@ -201,16 +217,16 @@ export default function BookingFormContainer() {
           <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
             
             {/* Value Proposition Card */}
-            <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/20 transition-all duration-500" />
+            <div className="bg-zinc-900/20 backdrop-blur-md border border-white/5 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#B7A27A]/5 rounded-full blur-2xl pointer-events-none group-hover:bg-[#B7A27A]/10 transition-all duration-500" />
 
               <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-                <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <div className="w-9 h-9 rounded-xl bg-[#B7A27A]/10 border border-[#B7A27A]/20 flex items-center justify-center text-[#B7A27A]">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                   </svg>
                 </div>
-                <h3 className="font-space-grotesk text-lg font-bold uppercase tracking-wider text-white">
+                <h3 className="font-space-grotesk text-sm font-bold uppercase tracking-wider text-white">
                   WHY REGISTER EARLY?
                 </h3>
               </div>
@@ -219,75 +235,75 @@ export default function BookingFormContainer() {
               <div className="space-y-4">
                 {/* Feature 1: Priority Access to Project Drops */}
                 <div className="flex items-start gap-3.5 group/item">
-                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover/item:border-cyan-400/50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.02] border border-white/10 flex items-center justify-center text-[#B7A27A] shrink-0 group-hover/item:border-[#B7A27A]/50 transition-colors">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-space-grotesk text-sm font-semibold text-white tracking-wide">Priority Access to Project Drops</h4>
-                    <p className="text-xs text-zinc-400 font-light leading-relaxed">Be first in line to receive announcements and reservations for upcoming site launches and technical releases.</p>
+                    <h4 className="font-space-grotesk text-xs font-semibold text-white tracking-wide">Priority Access to Project Drops</h4>
+                    <p className="text-[11px] text-zinc-400 font-light leading-relaxed">Be first in line to receive announcements and reservations for upcoming site launches and technical releases.</p>
                   </div>
                 </div>
 
-                {/* Feature 2: Exclusive Beta Testing & Simulators */}
+                {/* Feature 2: Early Project Updates */}
                 <div className="flex items-start gap-3.5 group/item">
-                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover/item:border-cyan-400/50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.02] border border-white/10 flex items-center justify-center text-[#B7A27A] shrink-0 group-hover/item:border-[#B7A27A]/50 transition-colors">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-space-grotesk text-sm font-semibold text-white tracking-wide">Exclusive Beta Testing &amp; Simulators</h4>
-                    <p className="text-xs text-zinc-400 font-light leading-relaxed">Get early invitations to test simulation software, virtual site tours, and prototype hardware demos.</p>
+                    <h4 className="font-space-grotesk text-xs font-semibold text-white tracking-wide">Early Project Updates</h4>
+                    <p className="text-[11px] text-zinc-400 font-light leading-relaxed">Gain insight into advanced technical mockups, project journals, and future township plans before they go public.</p>
                   </div>
                 </div>
 
-                {/* Feature 3: Direct Founder & Tech Team AMAs */}
+                {/* Feature 3: Technology Announcements */}
                 <div className="flex items-start gap-3.5 group/item">
-                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover/item:border-cyan-400/50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.02] border border-white/10 flex items-center justify-center text-[#B7A27A] shrink-0 group-hover/item:border-[#B7A27A]/50 transition-colors">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-space-grotesk text-sm font-semibold text-white tracking-wide">Direct Founder &amp; Tech Team AMAs</h4>
-                    <p className="text-xs text-zinc-400 font-light leading-relaxed">Connect directly with Vayu Galaxy founders, engineers, and urban planners in private sessions.</p>
+                    <h4 className="font-space-grotesk text-xs font-semibold text-white tracking-wide">Technology Announcements</h4>
+                    <p className="text-[11px] text-zinc-400 font-light leading-relaxed">Stay informed on breakthroughs in autonomous robotics, shielding technology, and next-generation architecture.</p>
                   </div>
                 </div>
 
-                {/* Feature 4: Community Whitelist Privileges */}
+                {/* Feature 4: Future Opportunities */}
                 <div className="flex items-start gap-3.5 group/item">
-                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover/item:border-cyan-400/50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.02] border border-white/10 flex items-center justify-center text-[#B7A27A] shrink-0 group-hover/item:border-[#B7A27A]/50 transition-colors">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a5.97 5.97 0 00-.942 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-space-grotesk text-sm font-semibold text-white tracking-wide">Community Whitelist Privileges</h4>
-                    <p className="text-xs text-zinc-400 font-light leading-relaxed">Secure whitelist standing for early membership access, special event passes, and cohort benefits.</p>
+                    <h4 className="font-space-grotesk text-xs font-semibold text-white tracking-wide">Future Opportunities</h4>
+                    <p className="text-[11px] text-zinc-400 font-light leading-relaxed">Receive priority notifications for upcoming cohort opportunities, public events, and community registrations.</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Live Counter / Status Pill Card */}
-            <div className="bg-zinc-900/40 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-4 flex items-center justify-between shadow-lg">
+            <div className="bg-zinc-900/20 backdrop-blur-md border border-[#B7A27A]/20 rounded-xl p-4 flex items-center justify-between shadow-lg">
               <div className="flex items-center gap-3">
                 <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B7A27A] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#B7A27A]"></span>
                 </span>
                 <div>
                   <span className="font-space-grotesk text-xs font-semibold text-white tracking-wider block uppercase">Cohort 2026 Registration Open</span>
-                  <span className="text-[10px] text-cyan-400 font-mono tracking-widest uppercase">100% FREE &amp; NO PAYMENT REQUIRED</span>
+                  <span className="text-[10px] text-[#B7A27A] font-mono tracking-widest uppercase">100% FREE &amp; NO PAYMENT REQUIRED</span>
                 </div>
               </div>
             </div>
 
             {/* Interactive FAQ Accordion */}
-            <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
-              <h4 className="font-space-grotesk text-xs font-bold uppercase tracking-widest text-zinc-400">
+            <div className="bg-zinc-900/20 backdrop-blur-md border border-white/5 rounded-2xl p-6 space-y-4 shadow-xl">
+              <h4 className="font-space-grotesk text-[10px] font-bold uppercase tracking-widest text-zinc-400">
                 FREQUENTLY ASKED QUESTIONS
               </h4>
               <div className="divide-y divide-white/5">
@@ -296,13 +312,13 @@ export default function BookingFormContainer() {
                     <button
                       type="button"
                       onClick={() => toggleFaq(idx)}
-                      className="w-full text-left font-space-grotesk text-xs font-medium text-zinc-200 hover:text-cyan-400 transition-colors flex items-center justify-between gap-2 cursor-pointer focus:outline-none"
+                      className="w-full text-left font-space-grotesk text-xs font-medium text-zinc-200 hover:text-[#B7A27A] transition-colors flex items-center justify-between gap-2 cursor-pointer focus:outline-none"
                     >
                       <span>{faq.q}</span>
-                      <span className="text-cyan-400 text-sm font-mono shrink-0">{openFaq === idx ? "−" : "+"}</span>
+                      <span className="text-[#B7A27A] text-sm font-mono shrink-0">{openFaq === idx ? "−" : "+"}</span>
                     </button>
                     {openFaq === idx && (
-                      <p className="mt-2 text-xs text-zinc-300 font-light leading-relaxed animate-fadeIn bg-cyan-950/20 border-l-2 border-cyan-400 p-3 rounded-r-lg">
+                      <p className="mt-2 text-xs text-zinc-300 font-light leading-relaxed animate-fadeIn bg-white/[0.01] border-l-2 border-[#B7A27A] p-3 rounded-r-lg">
                         {faq.a}
                       </p>
                     )}
@@ -315,11 +331,11 @@ export default function BookingFormContainer() {
 
           {/* Right Column (col-span-7) — Glassmorphic Form Container */}
           <div className="lg:col-span-7">
-            <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl space-y-10 relative overflow-hidden">
+            <div className="bg-zinc-900/10 backdrop-blur-md border border-white/5 rounded-2xl p-6 sm:p-8 md:p-10 shadow-xl relative overflow-hidden">
               
               {isSubmitted && !submissionFailed ? (
                 <div className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-6">
-                  <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                  <div className="w-16 h-16 rounded-2xl bg-[#B7A27A]/10 border border-[#B7A27A]/30 flex items-center justify-center text-[#B7A27A] shadow-[0_0_30px_rgba(183,162,122,0.15)]">
                     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
@@ -334,7 +350,7 @@ export default function BookingFormContainer() {
                     </p>
                   </div>
 
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-mono tracking-widest uppercase">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B7A27A]/10 border border-[#B7A27A]/20 text-[#B7A27A] text-xs font-mono tracking-widest uppercase select-none">
                     FREE EARLY REGISTRATION
                   </div>
 
@@ -357,14 +373,14 @@ export default function BookingFormContainer() {
                         message: "",
                       });
                     }}
-                    className="mt-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-space-grotesk py-3 px-8 rounded-xl uppercase font-semibold text-xs tracking-wider transition-all duration-300 cursor-pointer"
+                    className="mt-4 bg-transparent hover:bg-[#F4F2ED] border border-[#F4F2ED]/30 hover:border-[#F4F2ED] text-[#F4F2ED] hover:text-[#050505] font-mono py-3 px-8 rounded-sm uppercase font-extrabold text-xs tracking-[0.2em] transition-all duration-500 cursor-pointer"
                   >
                     REGISTER ANOTHER INTEREST
                   </button>
                 </div>
               ) : isSubmitted && submissionFailed ? (
                 <div className="flex flex-col items-center justify-center text-center py-12 px-4 space-y-6">
-                  <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
+                  <div className="w-16 h-16 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
                     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
                     </svg>
@@ -382,7 +398,7 @@ export default function BookingFormContainer() {
                   <button
                     type="button"
                     onClick={handleTryAgain}
-                    className="bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 font-space-grotesk py-3 px-8 rounded-xl uppercase font-semibold text-xs tracking-wider transition-all duration-300 cursor-pointer"
+                    className="bg-red-950/20 hover:bg-red-950/40 border border-red-500/30 text-red-400 font-mono py-3 px-8 rounded-sm uppercase font-extrabold text-xs tracking-widest transition-all duration-500 cursor-pointer"
                   >
                     TRY AGAIN &rarr;
                   </button>
@@ -393,7 +409,7 @@ export default function BookingFormContainer() {
                   {/* Step 1: 01 // ABOUT YOU */}
                   <div className="space-y-6">
                     <div className="flex items-center gap-3 border-b border-white/10 pb-3">
-                      <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest">01 //</span>
+                      <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest">01 //</span>
                       <h3 className="font-space-grotesk text-base font-bold uppercase tracking-wider text-white">
                         ABOUT YOU
                       </h3>
@@ -523,7 +539,7 @@ export default function BookingFormContainer() {
                   {/* Step 2: 02 // YOUR INTEREST */}
                   <div className="space-y-6">
                     <div className="flex items-center gap-3 border-b border-white/10 pb-3">
-                      <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest">02 //</span>
+                      <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest">02 //</span>
                       <h3 className="font-space-grotesk text-base font-bold uppercase tracking-wider text-white">
                         YOUR INTEREST
                       </h3>
@@ -610,7 +626,7 @@ export default function BookingFormContainer() {
                   {/* Step 3: 03 // TELL US MORE */}
                   <div className="space-y-6">
                     <div className="flex items-center gap-3 border-b border-white/10 pb-3">
-                      <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest">03 //</span>
+                      <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest">03 //</span>
                       <h3 className="font-space-grotesk text-base font-bold uppercase tracking-wider text-white">
                         TELL US MORE
                       </h3>
@@ -709,11 +725,11 @@ export default function BookingFormContainer() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-blue-500 text-black font-space-grotesk font-bold py-4 px-8 rounded-xl uppercase tracking-widest text-xs transition-all duration-300 shadow-[0_0_25px_rgba(34,211,238,0.25)] hover:shadow-[0_0_35px_rgba(34,211,238,0.4)] flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-50 select-none"
+                      className="w-full bg-[#F4F2ED] text-[#050505] hover:bg-transparent border border-transparent hover:border-[#F4F2ED] hover:text-[#F4F2ED] font-mono py-4 px-8 uppercase tracking-widest text-xs font-extrabold transition-all duration-500 flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-50 select-none rounded-sm"
                     >
                       {isSubmitting ? (
                         <span className="flex items-center gap-2">
-                          <svg className="animate-spin h-4 w-4 text-black" viewBox="0 0 24 24" fill="none">
+                          <svg className="animate-spin h-4 w-4 text-current" viewBox="0 0 24 24" fill="none">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                           </svg>
@@ -731,7 +747,7 @@ export default function BookingFormContainer() {
 
                     {/* Data Privacy Disclaimer */}
                     <div className="flex items-center justify-center gap-2 text-center text-[11px] text-zinc-400 font-mono tracking-wider">
-                      <svg className="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="w-3.5 h-3.5 text-[#B7A27A] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                       </svg>
                       <span>FREE EARLY REGISTRATION • NO PAYMENT REQUIRED</span>

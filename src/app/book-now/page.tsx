@@ -3,39 +3,45 @@ import BookingFormContainer from "./BookingFormContainer";
 import { SITE_URL } from "@/lib/seo-config";
 
 export const metadata: Metadata = {
-  title: "Early Registration — Be the First to Know | Vayu Galaxy",
+  title: "Early Registration | Vayu Galaxy",
   description:
-    "Register your interest in Vayu Galaxy. Be among the first to hear about our future-living concepts, project launches, and exclusive opportunities from our team.",
+    "Register your interest in Vayu Galaxy and stay connected with future-living concepts, advanced technology, project developments, and upcoming opportunities.",
+
   alternates: {
     canonical: `${SITE_URL}/book-now`,
   },
+
   robots: {
     index: true,
     follow: true,
   },
+
   openGraph: {
-    title: "Early Registration — Be the First to Know | Vayu Galaxy",
+    title: "Early Registration | Vayu Galaxy",
     description:
-      "Register your interest in Vayu Galaxy. Be among the first to hear about our future-living concepts, project launches, and exclusive opportunities from our team.",
+      "Register your interest in Vayu Galaxy and stay connected with future-living concepts, advanced technology, project developments, and upcoming opportunities.",
     url: `${SITE_URL}/book-now`,
+    siteName: "Vayu Galaxy",
+    type: "website",
     images: [
       {
-        url: "/assets/about.jpeg",
+        url: `${SITE_URL}/assets/aboutimg.jpeg`,
         width: 1200,
         height: 630,
-        alt: "Vayu Galaxy Early Registration",
+        alt: "Vayu Galaxy — Early Registration",
       },
     ],
   },
+
   twitter: {
-    title: "Early Registration — Be the First to Know | Vayu Galaxy",
+    card: "summary_large_image",
+    title: "Early Registration | Vayu Galaxy",
     description:
-      "Register your interest in Vayu Galaxy. Be among the first to hear about our future-living concepts and project launches.",
-    images: ["/assets/about.jpeg"],
+      "Register your interest in Vayu Galaxy and stay connected with future-living concepts, advanced technology, and project developments.",
+    images: [`${SITE_URL}/assets/aboutimg.jpeg`],
   },
 };
 
-// BreadcrumbList JSON-LD
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -60,8 +66,11 @@ export default function BookNowPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
       />
+
       <BookingFormContainer />
     </>
   );
