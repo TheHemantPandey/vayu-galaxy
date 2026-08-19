@@ -35,6 +35,7 @@ interface AboutSectionProps {
  */
 export default function AboutSection({
   id,
+  theme = "light",
   title,
   paragraphs,
   imageSrc,
@@ -47,6 +48,18 @@ export default function AboutSection({
   specifications,
 }: AboutSectionProps) {
   const hasSpecs = specifications && specifications.length > 0;
+  const isDark = theme === "dark";
+  const bgClass = isDark ? "bg-[#050505]" : "bg-[#FFFFFF]";
+  const textClass = isDark ? "text-[#F4F2ED]" : "text-[#111111]";
+  const headingClass = isDark ? "text-[#F4F2ED]" : "text-[#111111]";
+  const leadParagraphClass = isDark ? "text-zinc-300" : "text-[#2A2A28]";
+  const bodyParagraphClass = isDark ? "text-zinc-400" : "text-[#555550]";
+  const fallbackBodyParagraphClass = isDark ? "text-zinc-400" : "text-[#444440]";
+  const borderClass = isDark ? "border-white/[0.08]" : "border-black/[0.08]";
+  const topBorderClass = isDark ? "border-white/[0.08]" : "border-black/[0.06]";
+  const cardBgClass = isDark ? "bg-white/[0.01]" : "bg-black/5";
+  const cardBorderClass = isDark ? "border-white/[0.08]" : "border-black/[0.08]";
+  const specBorderClass = isDark ? "border-white/[0.06]" : "border-black/[0.06]";
 
   if (hasSpecs) {
     // 1. Text-Only Monograph Layout (No Image, Specs Sidebar, Staggered Columns)
@@ -56,7 +69,7 @@ export default function AboutSection({
     return (
       <section
         id={id}
-        className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk"
+        className={`w-full ${bgClass} ${textClass} py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t ${topBorderClass} relative overflow-hidden font-space-grotesk`}
       >
         <div className="max-w-[1200px] w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-start">
 
@@ -76,7 +89,7 @@ export default function AboutSection({
             {/* Section Title */}
             <div className="mb-6 sm:mb-8">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.15}>
-                <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] sm:leading-[1.1] text-[20px] sm:text-[28px] md:text-[36px] lg:text-[44px] break-words text-[#111111]">
+                <h2 className={`font-display font-medium tracking-tight uppercase leading-[1.15] sm:leading-[1.1] text-[20px] sm:text-[28px] md:text-[36px] lg:text-[44px] break-words ${headingClass}`}>
                   {title}
                 </h2>
               </Reveal>
@@ -86,7 +99,7 @@ export default function AboutSection({
             {leadParagraph && (
               <div className="mb-6 sm:mb-8">
                 <Reveal style="fade" direction="up" duration={0.8} delay={0.2}>
-                  <p className="text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-[1.6] sm:leading-[1.65] font-sans font-light text-left text-[#2A2A28]">
+                  <p className={`text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-[1.6] sm:leading-[1.65] font-sans font-light text-left ${leadParagraphClass}`}>
                     {leadParagraph}
                   </p>
                 </Reveal>
@@ -95,7 +108,7 @@ export default function AboutSection({
 
             {/* Columns of Smaller Body Copy */}
             {bodyParagraphs.length > 0 && (
-              <div className="border-t border-black/[0.08] pt-6 sm:pt-8 mt-2 sm:mt-4">
+              <div className={`border-t ${borderClass} pt-6 sm:pt-8 mt-2 sm:mt-4`}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
                   {bodyParagraphs.map((p, idx) => (
                     <Reveal
@@ -105,7 +118,7 @@ export default function AboutSection({
                       duration={0.8}
                       delay={0.3 + idx * 0.15}
                     >
-                      <p className="text-[0.875rem] sm:text-[0.925rem] md:text-[0.975rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left text-[#555550]">
+                      <p className={`text-[0.875rem] sm:text-[0.925rem] md:text-[0.975rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left ${bodyParagraphClass}`}>
                         {p}
                       </p>
                     </Reveal>
@@ -116,7 +129,7 @@ export default function AboutSection({
           </div>
 
           {/* Specs Sidebar */}
-          <div className="col-span-1 lg:col-span-4 xl:col-span-3 lg:col-start-9 xl:col-start-10 flex flex-col border-t border-black/[0.08] pt-6 mt-4 lg:mt-0 lg:border-t-0 lg:pt-0 w-full">
+          <div className={`col-span-1 lg:col-span-4 xl:col-span-3 lg:col-start-9 xl:col-start-10 flex flex-col border-t ${borderClass} pt-6 mt-4 lg:mt-0 lg:border-t-0 lg:pt-0 w-full`}>
             <Reveal style="fade" direction="up" duration={0.8} delay={0.25} className="w-full">
               <span className="block text-[0.6rem] sm:text-[0.65rem] font-mono tracking-[0.25em] text-[#71717A] uppercase mb-4 sm:mb-6 select-none">
                 SPECIFICATIONS
@@ -126,12 +139,12 @@ export default function AboutSection({
                 {specifications.map((spec, idx) => (
                   <li
                     key={idx}
-                    className="border-b border-black/[0.06] pb-3 sm:pb-4 flex flex-col gap-1 sm:gap-1.5 list-none"
+                    className={`border-b ${specBorderClass} pb-3 sm:pb-4 flex flex-col gap-1 sm:gap-1.5 list-none`}
                   >
                     <span className="text-[0.55rem] sm:text-[0.6rem] font-mono tracking-[0.2em] text-[#9E824C] uppercase select-none">
                       {spec.label}
                     </span>
-                    <span className="text-[0.8rem] sm:text-[0.85rem] md:text-[0.9rem] font-sans font-light text-left break-words text-[#111111]">
+                    <span className={`text-[0.8rem] sm:text-[0.85rem] md:text-[0.9rem] font-sans font-light text-left break-words ${textClass}`}>
                       {spec.value}
                     </span>
                   </li>
@@ -154,7 +167,7 @@ export default function AboutSection({
     return (
       <section
         id={id}
-        className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk"
+        className={`w-full ${bgClass} ${textClass} py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t ${topBorderClass} relative overflow-hidden font-space-grotesk`}
       >
         <div className="max-w-[1400px] w-full flex flex-col items-center">
 
@@ -166,7 +179,7 @@ export default function AboutSection({
                   {chapterNumber} &mdash; {chapterLabel}
                 </span>
               )}
-              <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] sm:leading-[1.1] text-[20px] sm:text-[28px] md:text-[36px] lg:text-[44px] mb-4 sm:mb-6 break-words text-[#111111]">
+              <h2 className={`font-display font-medium tracking-tight uppercase leading-[1.15] sm:leading-[1.1] text-[20px] sm:text-[28px] md:text-[36px] lg:text-[44px] mb-4 sm:mb-6 break-words ${headingClass}`}>
                 {title}
               </h2>
             </Reveal>
@@ -180,7 +193,7 @@ export default function AboutSection({
                   duration={0.8}
                   delay={0.2 + idx * 0.15}
                 >
-                  <p className="text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-center text-[#444440]">
+                  <p className={`text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-center ${fallbackBodyParagraphClass}`}>
                     {p}
                   </p>
                 </Reveal>
@@ -192,7 +205,7 @@ export default function AboutSection({
           <div className="w-full relative flex flex-col items-center">
             <Parallax speed={0.03} className="w-full relative flex flex-col items-center">
               <Reveal style="fade" duration={1.2} delay={0.3} className="w-full flex flex-col items-center">
-                <div className="w-full relative overflow-hidden rounded-xl bg-black/5 aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] max-w-[1200px] border border-black/[0.08] shadow-lg">
+                <div className={`w-full relative overflow-hidden rounded-xl ${cardBgClass} aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] max-w-[1200px] border ${cardBorderClass} shadow-lg`}>
                   <Image
                     src={imageSrc}
                     alt={imageAlt || ""}
@@ -222,7 +235,7 @@ export default function AboutSection({
     return (
       <section
         id={id}
-        className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk"
+        className={`w-full ${bgClass} ${textClass} py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t ${topBorderClass} relative overflow-hidden font-space-grotesk`}
       >
         <div className="max-w-[1200px] w-full grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
 
@@ -233,7 +246,7 @@ export default function AboutSection({
                 {chapterNumber} / {chapterLabel}
               </span>
             )}
-            <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] text-[20px] sm:text-[28px] text-[#111111]">
+            <h2 className={`font-display font-medium tracking-tight uppercase leading-[1.15] text-[20px] sm:text-[28px] ${headingClass}`}>
               {title}
             </h2>
           </div>
@@ -242,7 +255,7 @@ export default function AboutSection({
           <div className="col-span-1 md:col-span-6 flex flex-col justify-center items-center md:items-start w-full order-2 md:order-none">
             <Parallax speed={0.04} className="w-full relative flex flex-col items-center md:items-start">
               <Reveal style="fade" duration={1.2} delay={0.2} className="w-full flex flex-col items-center md:items-start">
-                <div className="w-full relative overflow-hidden rounded-xl bg-black/5 aspect-[9/16] max-w-[280px] xs:max-w-[320px] sm:max-w-[360px] md:max-w-[440px] border border-black/[0.08] shadow-lg">
+                <div className={`w-full relative overflow-hidden rounded-xl ${cardBgClass} aspect-[9/16] max-w-[280px] xs:max-w-[320px] sm:max-w-[360px] md:max-w-[440px] border ${cardBorderClass} shadow-lg`}>
                   <Image
                     src={imageSrc}
                     alt={imageAlt || ""}
@@ -269,13 +282,13 @@ export default function AboutSection({
                     {chapterNumber} &mdash; {chapterLabel}
                   </span>
                 )}
-                <h2 className="font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] text-[#111111]">
+                <h2 className={`font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] ${headingClass}`}>
                   {title}
                 </h2>
               </Reveal>
             </div>
 
-            <div className="space-y-4 sm:space-y-6 md:pl-6 lg:pl-8 md:border-l border-black/[0.08]">
+            <div className={`space-y-4 sm:space-y-6 md:pl-6 lg:pl-8 md:border-l ${borderClass}`}>
               {paragraphs.map((p, idx) => (
                 <Reveal
                   key={idx}
@@ -284,7 +297,7 @@ export default function AboutSection({
                   duration={0.8}
                   delay={0.3 + idx * 0.15}
                 >
-                  <p className="text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left text-[#444440]">
+                  <p className={`text-[0.875rem] sm:text-[0.95rem] md:text-[1.05rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left ${fallbackBodyParagraphClass}`}>
                     {p}
                   </p>
                 </Reveal>
@@ -302,13 +315,13 @@ export default function AboutSection({
   return (
     <section
       id={id}
-      className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk"
+      className={`w-full ${bgClass} ${textClass} py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t ${topBorderClass} relative overflow-hidden font-space-grotesk`}
     >
       <div className="max-w-[1200px] w-full grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
 
         {/* Mobile Title */}
         <div className="block md:hidden order-1 w-full text-center">
-          <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] text-[20px] sm:text-[28px] text-[#111111]">
+          <h2 className={`font-display font-medium tracking-tight uppercase leading-[1.15] text-[20px] sm:text-[28px] ${headingClass}`}>
             {title}
           </h2>
         </div>
@@ -320,16 +333,16 @@ export default function AboutSection({
           } flex flex-col justify-center order-3 md:order-none w-full`}
         >
           <div className="hidden md:block mb-6 lg:mb-8">
-            <h2 className="font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] text-[#111111]">
+            <h2 className={`font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] ${headingClass}`}>
               {title}
             </h2>
           </div>
 
-          <div className="space-y-4 sm:space-y-6 md:pl-6 lg:pl-8 md:border-l border-black/[0.08]">
+          <div className={`space-y-4 sm:space-y-6 md:pl-6 lg:pl-8 md:border-l ${borderClass}`}>
             {paragraphs.map((p, idx) => (
               <p
                 key={idx}
-                className="text-[0.875rem] sm:text-[0.95rem] md:text-[1.025rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left text-[#444440]"
+                className={`text-[0.875rem] sm:text-[0.95rem] md:text-[1.025rem] leading-[1.65] sm:leading-[1.7] font-sans font-light text-left ${fallbackBodyParagraphClass}`}
               >
                 {p}
               </p>
@@ -345,16 +358,14 @@ export default function AboutSection({
             } flex flex-col justify-center items-center md:items-start w-full order-2 md:order-none`}
           >
             <div
-              className={`w-full relative overflow-hidden rounded-xl bg-black/5 aspect-square max-w-[300px] xs:max-w-[340px] sm:max-w-[380px] md:max-w-none border border-black/[0.08] shadow-md ${
-                imageMaxWidthClass || "md:max-w-[400px]"
-              }`}
+              className={`w-full relative overflow-hidden rounded-xl ${cardBgClass} aspect-[4/3] xs:aspect-[16/10] sm:aspect-video md:aspect-[4/3] border ${cardBorderClass} shadow-md`}
             >
               <Image
                 src={imageSrc}
                 alt={imageAlt || ""}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 400px"
-                className="object-cover"
+                className="object-contain p-4 sm:p-6 pointer-events-none"
               />
             </div>
           </div>

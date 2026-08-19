@@ -56,7 +56,7 @@ export default function DeviPage() {
         <ProjectHero videoSrc="/assets/devibg.mp4" />
 
         <AboutSection
-          theme="light"
+          theme="dark"
           title={
             <>
               About <strong>Devi Drone</strong>
