@@ -36,6 +36,8 @@ import FinalCTA from "@/components/layout/FinalCTA";
 import ProjectHero from "@/components/projects/ProjectHero";
 import AboutSection from "@/components/home/AboutSection";
 import FounderSection from "@/components/home/FounderSection";
+import Image from "next/image";
+import { Reveal } from "@/components/animation/Reveal";
 
 export default function DeviPage() {
   return (
@@ -83,18 +85,60 @@ export default function DeviPage() {
           </div>
         </section>
 
-        <AboutSection
-          theme="light"
-          title="How Devi Drone Works?"
-          paragraphs={[
-            "Devi Drone functions through a combination of GPS-based autonomous flight, real-time data processing, and AI-driven obstacle detection. It is equipped with advanced sensors that allow it to map out its surroundings and navigate seamlessly without manual intervention. The drone can be operated in different modes, including fully autonomous flight, semi-autonomous control, and manual operation via a remote control system or a mobile application.",
-            "To ensure precision and safety, Devi Drone uses a sophisticated flight control system that continuously analyzes environmental data, adjusting its path in real time to avoid obstacles. Its high-definition cameras and thermal sensors transmit live footage to operators, providing crucial information for decision-making in applications such as security monitoring or disaster relief.",
-            "The drone is powered by rechargeable lithium-ion batteries or a hybrid fuel system, depending on the model, enabling extended flight durations for long-distance operations. Its modular design allows for quick attachment of specialized equipment, such as spraying mechanisms for agricultural use or payload compartments for medical deliveries. Devi Drone can be programmed to follow specific flight paths, return to base automatically when low on battery, and communicate with other drones in a network for coordinated missions.",
-          ]}
-          imageSrc="/assets/drone2.png"
-          imageAlt="Devi Drone operational view"
-          imageMaxWidthClass="max-w-[550px]"
-        />
+        {/* Custom wrapping floating layout for How Devi Drone Works? */}
+        <section className="w-full bg-[#FFFFFF] text-[#111111] py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-[10%] flex justify-center items-center border-t border-black/[0.06] relative overflow-hidden font-space-grotesk">
+          {/* Subtle blueprint grid line overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000003_1px,transparent_1px),linear-gradient(to_bottom,#00000003_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0 opacity-40" />
+
+          <div className="max-w-[1200px] w-full relative z-10 mx-auto">
+            {/* Section Title */}
+            <div className="mb-6 sm:mb-8 border-b border-black/[0.06] pb-4">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
+                <h2 className="font-display font-medium tracking-tight uppercase leading-[1.1] text-[24px] sm:text-[32px] md:text-[36px] lg:text-[42px] text-[#111111]">
+                  How Devi Drone Works?
+                </h2>
+              </Reveal>
+            </div>
+
+            {/* Float clear wrapper container */}
+            <div className="w-full flow-root">
+              {/* Floated Image Container Card (floats right on desktop, stacks full screen on mobile) */}
+              <div className="w-full md:w-[42%] md:float-right md:ml-10 md:mb-6 mb-8 relative">
+                <Reveal style="fade" direction="up" duration={1.0} delay={0.2} className="w-full">
+                  <div className="relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-video md:aspect-[4/3] overflow-hidden rounded-xl bg-black/5 border border-black/[0.08] shadow-md">
+                    <Image
+                      src="/assets/drone2.png"
+                      alt="Devi Drone operational view"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 450px"
+                      className="object-contain p-4 sm:p-6 pointer-events-none"
+                    />
+                  </div>
+                </Reveal>
+              </div>
+
+              {/* Text monograph content (wraps on left of image on desktop, spans full width below) */}
+              <div className="space-y-4 sm:space-y-6 text-[0.875rem] sm:text-[0.95rem] md:text-[1.025rem] leading-[1.75] font-sans font-light text-[#444440]">
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.25}>
+                  <p>
+                    Devi Drone functions through a combination of GPS-based autonomous flight, real-time data processing, and AI-driven obstacle detection. It is equipped with advanced sensors that allow it to map out its surroundings and navigate seamlessly without manual intervention. The drone can be operated in different modes, including fully autonomous flight, semi-autonomous control, and manual operation via a remote control system or a mobile application.
+                  </p>
+                </Reveal>
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.35}>
+                  <p>
+                    To ensure precision and safety, Devi Drone uses a sophisticated flight control system that continuously analyzes environmental data, adjusting its path in real time to avoid obstacles. Its high-definition cameras and thermal sensors transmit live footage to operators, providing crucial information for decision-making in applications such as security monitoring or disaster relief.
+                  </p>
+                </Reveal>
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.45}>
+                  <p>
+                    The drone is powered by rechargeable lithium-ion batteries or a hybrid fuel system, depending on the model, enabling extended flight durations for long-distance operations. Its modular design allows for quick attachment of specialized equipment, such as spraying mechanisms for agricultural use or payload compartments for medical deliveries. Devi Drone can be programmed to follow specific flight paths, return to base automatically when low on battery, and communicate with other drones in a network for coordinated missions.
+                  </p>
+                </Reveal>
+              </div>
+            </div>
+
+          </div>
+        </section>
 
         {/* Map view 2 */}
         <section className="w-full flex flex-col items-center bg-white">

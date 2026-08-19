@@ -40,7 +40,7 @@ export default function AboutSection({
   paragraphs,
   imageSrc,
   imageAlt,
-  imageMaxWidthClass,
+  imageMaxWidthClass: _imageMaxWidthClass,
   chapterNumber,
   chapterLabel,
   imageCaption,
