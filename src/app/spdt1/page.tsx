@@ -128,9 +128,9 @@ export default function Spdt1Page() {
         </section>
 
         {/* Redesigned About SPD T1 Section */}
-        <section className="w-full bg-[#050505] text-[#F4F2ED] py-20 sm:py-24 md:py-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden border-t border-white/[0.03]">
+        <section className="w-full bg-[#FAFAFA] text-[#050505] py-20 sm:py-24 md:py-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden border-t border-black/[0.04]">
           {/* Subtle blueprint grid line overlay for continuous story styling */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0 opacity-40" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000003_1px,transparent_1px),linear-gradient(to_bottom,#00000003_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0 opacity-40" />
 
           <div className="max-w-[1200px] w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
             
@@ -144,12 +144,12 @@ export default function Spdt1Page() {
                 </span>
 
                 {/* Section Title */}
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F4F2ED] uppercase font-display leading-[1.1] mb-2">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#050505] uppercase font-display leading-[1.1] mb-2">
                   About <span className="font-light">SPD T1</span>
                 </h2>
 
                 {/* Paragraphs with enhanced readability (15-17px on desktop, 14-15px on mobile, spacious line height) */}
-                <div className="space-y-6 text-sm sm:text-base text-zinc-400 font-light leading-[1.75] max-w-xl">
+                <div className="space-y-6 text-sm sm:text-base text-zinc-600 font-light leading-[1.75] max-w-xl">
                   <p>
                     In a world where climate change is accelerating at an unprecedented rate, SPDt1 emerges as a game-changing innovation—a first-of-its-kind atmospheric defense technology designed to protect Earth from excessive solar radiation. By deploying a high-altitude shielding system, SPDt1 aims to regulate the sun’s impact, mitigate the effects of global warming, and create a future where extreme heatwaves and environmental destruction are no longer inevitable.
                   </p>
@@ -168,9 +168,9 @@ export default function Spdt1Page() {
             <div className="lg:col-span-6 w-full flex items-center justify-center">
               <Parallax speed={0.02} className="w-full flex items-center justify-center">
                 <Reveal style="fade" direction="up" duration={1.0} delay={0.25} className="w-full flex items-center justify-center">
-                  <div className="relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-video lg:aspect-[4/3] overflow-hidden rounded-2xl bg-white/[0.01] border border-white/[0.06] shadow-2xl p-6 flex items-center justify-center max-w-[500px]">
+                  <div className="relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-video lg:aspect-[4/3] overflow-hidden rounded-2xl bg-[#050505] border border-white/[0.08] shadow-2xl p-6 flex items-center justify-center max-w-[500px]">
                     {/* Atmospheric glow behind image container */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-red-600/[0.01] via-transparent to-[#B7A27A]/[0.01] pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-red-600/[0.02] via-transparent to-[#B7A27A]/[0.02] pointer-events-none" />
                     
                     <div className="relative w-full h-full min-h-[250px] sm:min-h-[300px]">
                       <Image
@@ -349,83 +349,10 @@ export default function Spdt1Page() {
           </div>
         </section>
 
-        {/* Redesigned Mylar / Material Innovation Section */}
-        <section className="w-full bg-[#050505] text-[#F4F2ED] py-20 sm:py-24 md:py-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden border-t border-white/[0.03] border-b border-white/[0.03]">
-          {/* Subtle blueprint grid line overlay for continuous story styling */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0 opacity-40" />
-
-          <div className="max-w-[1200px] w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-            
-            {/* Left Column: Premium Technical Image Frame (Alternating Visual Rhythm - Image on Left) */}
-            <div className="lg:col-span-7 w-full flex items-center justify-center order-2 lg:order-1">
-              <Parallax speed={0.01} className="w-full flex items-center justify-center">
-                <Reveal style="fade" direction="up" duration={1.0} delay={0.2} className="w-full flex items-center justify-center">
-                  <div className="relative w-full rounded-2xl overflow-hidden bg-white/[0.01] border border-white/[0.06] shadow-2xl p-4 sm:p-6 flex items-center justify-center max-w-[500px]">
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/[0.01] via-transparent to-[#B7A27A]/[0.01] pointer-events-none" />
-                    
-                    <div className="relative w-full h-auto min-h-[250px] sm:min-h-[300px] flex items-center justify-center">
-                      <Image
-                        src="/assets/spdt2.png"
-                        alt="SPD T1 Mylar envelope material layout diagram"
-                        width={600}
-                        height={400}
-                        className="w-full h-auto object-contain pointer-events-none filter brightness-95"
-                      />
-                    </div>
-                  </div>
-                </Reveal>
-              </Parallax>
-            </div>
-
-            {/* Right Column: Technical & Editorial Copy */}
-            <div className="lg:col-span-5 flex flex-col space-y-6 order-1 lg:order-2">
-              <Reveal style="fade" direction="up" duration={0.8} delay={0.3} className="flex flex-col space-y-6">
-                
-                {/* Concept Indicator Label */}
-                <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest block select-none">
-                  04 // MATERIAL
-                </span>
-
-                {/* Heading */}
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F4F2ED] uppercase font-display leading-[1.1]">
-                  How SPDt1 Works?
-                </h2>
-
-                {/* Paragraphs with enhanced readability */}
-                <div className="space-y-6 text-sm sm:text-base text-zinc-400 font-light leading-[1.75] max-w-xl">
-                  <p>
-                    SPDt1 is based on next-generation aerospace technology, using advanced materials that can absorb, deflect, or regulate solar radiation before it reaches the Earth&apos;s surface. Unlike conventional climate solutions that focus on adapting to rising temperatures, SPDt1 proactively prevents excessive heat from ever reaching dangerous levels.
-                  </p>
-                  <p>
-                    SPDt1 isn&apos;t just another climate solution—it is humanity&apos;s first step toward planetary-scale protection. With Earth&apos;s climate rapidly reaching a critical tipping point, this innovation has the power to reshape our future. By merging science, sustainability, and space-age engineering, we are creating a world where the fear of an unlivable planet is replaced with hope, action, and technological mastery.
-                  </p>
-                  <p>
-                    SPDt1 is calling upon scientists, engineers, environmentalists, policymakers, and visionaries to be part of this historic breakthrough. The time to act is now. This isn&apos;t just an idea—it&apos;s the future unfolding before our eyes.
-                  </p>
-                </div>
-
-                {/* Technical Specs Overlay / Metadata */}
-                <div className="pt-6 border-t border-white/10 grid grid-cols-2 gap-6 font-mono text-[9px] sm:text-[10px] tracking-wider text-zinc-500 uppercase">
-                  <div>
-                    <span className="block text-zinc-600 font-semibold mb-1">MATERIAL SYSTEM</span>
-                    <span className="text-zinc-300">MYLAR ENVELOPE</span>
-                  </div>
-                  <div>
-                    <span className="block text-zinc-600 font-semibold mb-1">SHIELD TYPE</span>
-                    <span className="text-zinc-300">SOLAR DEFLECTION</span>
-                  </div>
-                </div>
-
-              </Reveal>
-            </div>
-
-          </div>
-        </section>
-
         {/* Redesigned Docking / Connection System Section */}
-        <section className="w-full bg-[#050505] text-[#F4F2ED] py-20 sm:py-24 md:py-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden border-t border-white/[0.03] border-b border-white/[0.03]">
+        <section className="w-full bg-[#FAFAFA] text-[#050505] py-20 sm:py-24 md:py-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden border-t border-b border-black/[0.04]">
           {/* Subtle blueprint grid line overlay for continuous story styling */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0 opacity-40" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000003_1px,transparent_1px),linear-gradient(to_bottom,#00000003_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0 opacity-40" />
 
           <div className="max-w-[1200px] w-full relative z-10 flex flex-col space-y-12 sm:space-y-16">
             
@@ -435,11 +362,11 @@ export default function Spdt1Page() {
                 <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
                   {/* Concept Indicator Label */}
                   <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest block select-none mb-4">
-                    05 // DOCKING
+                    04 // DOCKING
                   </span>
 
                   {/* Section Title */}
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F4F2ED] uppercase font-display leading-[1.1]">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#050505] uppercase font-display leading-[1.1]">
                     Docking System
                   </h2>
                 </Reveal>
@@ -447,7 +374,7 @@ export default function Spdt1Page() {
 
               <div className="lg:col-span-7">
                 <Reveal style="fade" direction="up" duration={0.8} delay={0.2}>
-                  <div className="space-y-6 text-sm sm:text-base text-zinc-400 font-light leading-[1.75]">
+                  <div className="space-y-6 text-sm sm:text-base text-zinc-600 font-light leading-[1.75]">
                     <p>
                       The docking adapter at the base of the SPD T1 is engineered for secure connection, structural integrity, and automated payload transfer.
                     </p>
@@ -461,7 +388,7 @@ export default function Spdt1Page() {
 
             {/* Middle Row: Centered Widescreen Cinematic Video Frame */}
             <Reveal style="fade" direction="up" duration={1.0} delay={0.3} className="w-full">
-              <div className="w-full relative rounded-2xl overflow-hidden bg-white/[0.01] border border-white/[0.06] shadow-2xl aspect-video max-h-[500px]">
+              <div className="w-full relative rounded-2xl overflow-hidden bg-black/[0.01] border border-black/[0.06] shadow-xl shadow-black/5 aspect-video max-h-[500px]">
                 <video
                   autoPlay
                   loop
@@ -473,28 +400,28 @@ export default function Spdt1Page() {
                   Your browser does not support the video tag.
                 </video>
                 {/* Visual Darkening Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
               </div>
             </Reveal>
 
             {/* Bottom Row: Specs Specs Overlay / Metadata */}
             <Reveal style="fade" direction="up" duration={0.8} delay={0.4}>
-              <div className="pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 font-mono text-[9px] sm:text-[10px] tracking-wider text-zinc-500 uppercase">
+              <div className="pt-8 border-t border-black/[0.06] grid grid-cols-2 md:grid-cols-4 gap-6 font-mono text-[9px] sm:text-[10px] tracking-wider text-zinc-500 uppercase">
                 <div>
-                  <span className="block text-zinc-600 font-semibold mb-1">SYSTEM TYPE</span>
-                  <span className="text-zinc-300">DOCKING INTERFACE</span>
+                  <span className="block text-zinc-500 font-semibold mb-1">SYSTEM TYPE</span>
+                  <span className="text-zinc-800">DOCKING INTERFACE</span>
                 </div>
                 <div>
-                  <span className="block text-zinc-600 font-semibold mb-1">LOCKING TYPE</span>
-                  <span className="text-zinc-300">SECURE ANCHOR</span>
+                  <span className="block text-zinc-500 font-semibold mb-1">LOCKING TYPE</span>
+                  <span className="text-zinc-800">SECURE ANCHOR</span>
                 </div>
                 <div>
-                  <span className="block text-zinc-600 font-semibold mb-1">SYSTEM ORIGIN</span>
-                  <span className="text-zinc-300">VAYU GALAXY</span>
+                  <span className="block text-zinc-500 font-semibold mb-1">SYSTEM ORIGIN</span>
+                  <span className="text-zinc-800">VAYU GALAXY</span>
                 </div>
                 <div>
-                  <span className="block text-zinc-600 font-semibold mb-1">INNOVATION</span>
-                  <span className="text-zinc-300">SPD T1 INNOVATION 05</span>
+                  <span className="block text-zinc-500 font-semibold mb-1">INNOVATION</span>
+                  <span className="text-zinc-800">SPD T1 INNOVATION 05</span>
                 </div>
               </div>
             </Reveal>
@@ -514,7 +441,7 @@ export default function Spdt1Page() {
               <Reveal style="fade" direction="up" duration={0.8} delay={0.1} className="flex flex-col space-y-4">
                 {/* Concept Indicator Label */}
                 <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest block select-none">
-                  06 // EXPERIENCE
+                  05 // EXPERIENCE
                 </span>
 
                 {/* Section Title */}
@@ -574,7 +501,7 @@ export default function Spdt1Page() {
               <Reveal style="fade" direction="up" duration={0.8} delay={0.1} className="flex flex-col space-y-4">
                 {/* Concept Indicator Label */}
                 <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest block select-none">
-                  07 // SYSTEM
+                  06 // SYSTEM
                 </span>
 
                 {/* Section Title */}
@@ -637,7 +564,7 @@ export default function Spdt1Page() {
                     
                     <div className="relative w-full h-auto min-h-[250px] sm:min-h-[300px] flex items-center justify-center">
                       <Image
-                        src="/assets/spdt1.png"
+                        src="/assets/spdt2.png"
                         alt="SPD T1 system concept layout render"
                         width={500}
                         height={500}
@@ -663,7 +590,7 @@ export default function Spdt1Page() {
             <Reveal style="fade" direction="up" duration={0.8} delay={0.1} className="flex flex-col space-y-4 items-center">
               {/* Concept Indicator Label */}
               <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest block select-none">
-                08 // VISION
+                07 // VISION
               </span>
 
               {/* Section Title */}
@@ -735,7 +662,7 @@ export default function Spdt1Page() {
               
               {/* Eyebrow Label */}
               <span className="font-mono text-xs text-[#B7A27A] font-bold uppercase tracking-widest block select-none">
-                10 // THE NEXT HORIZON
+                09 // THE NEXT HORIZON
               </span>
 
               {/* Large display headline */}
