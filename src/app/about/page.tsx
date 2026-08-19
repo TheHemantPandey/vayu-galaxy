@@ -32,12 +32,41 @@ export const metadata: Metadata = {
 };
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import FinalCTA from "@/components/layout/FinalCTA";
-import ProjectGrid from "@/components/home/ProjectGrid";
-import FounderSection from "@/components/home/FounderSection";
 import Image from "next/image";
+import Link from "next/link";
 import { Reveal } from "@/components/animation/Reveal";
 import { Parallax } from "@/components/animation/Parallax";
+
+const projects = [
+  {
+    name: "Proto Robot",
+    category: "EMERGENCY ROBOTICS",
+    description: "Proto explores robotic assistance and emergency logistics for environments where human access is difficult or dangerous.",
+    href: "/proto",
+    image: "/assets/1.png"
+  },
+  {
+    name: "Devi Drone",
+    category: "AEROSPACE SYSTEMS",
+    description: "A high-performance autonomous drone designed for security, thermal scanning, and emergency medical response.",
+    href: "/devi",
+    image: "/assets/2.png"
+  },
+  {
+    name: "Lord Vishnu",
+    category: "CULTURAL MONUMENT",
+    description: "A suspended high-altitude spiritual monument combining ancient Vedic architecture with modern stabilization systems.",
+    href: "/#lord-vishnu",
+    image: "/assets/4.png"
+  },
+  {
+    name: "SPD T1",
+    category: "ATMOSPHERIC DEFENSE",
+    description: "A planetary-scale solar radiation shielding concept engineered to protect human environments for future generations.",
+    href: "/spdt1",
+    image: "/assets/3.png"
+  }
+];
 
 export default function AboutPage() {
   return (
@@ -167,26 +196,284 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Projects Tech Heading */}
-        <section className="h-[20vh] bg-black flex flex-col items-center justify-center text-[#FAFAFA] text-center border-y border-white/5">
-          <h1 className="font-space-grotesk text-[24px] md:text-[28px] font-semibold uppercase tracking-[3px] m-0">
-            Project
-          </h1>
+        {/* Projects Heading & Transition */}
+        <section className="w-full bg-[#050505] text-[#F4F2ED] pt-24 pb-12 sm:pt-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden border-t border-white/[0.04]">
+          {/* Subtle grid lines background overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
+          
+          <div className="max-w-[1200px] w-full text-center relative z-10">
+            <div className="overflow-hidden py-0.5 -my-0.5 mb-4">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
+                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.3em] text-[#B7A27A] uppercase">
+                  THE WORK
+                </span>
+              </Reveal>
+            </div>
+
+            <div className="mb-6 max-w-4xl mx-auto">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.15}>
+                <h2 className="font-display text-[26px] sm:text-[36px] md:text-[44px] lg:text-[50px] font-bold text-[#F4F2ED] leading-[1.15] uppercase">
+                  SELECTED PROJECTS
+                </h2>
+              </Reveal>
+            </div>
+
+            <div className="max-w-2xl mx-auto">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.25}>
+                <p className="text-[0.9rem] sm:text-[0.975rem] md:text-[1.05rem] leading-[1.7] font-sans font-light text-[#A09F9A]">
+                  An overview of Vayu Galaxy&apos;s pioneering concepts across autonomous robotics, high-altitude surveillance, solar shielding, and aerial urbanism.
+                </p>
+              </Reveal>
+            </div>
+          </div>
         </section>
 
-        <ProjectGrid />
+        {/* Projects Grid Section */}
+        <section className="w-full bg-[#050505] text-[#F4F2ED] pb-24 md:pb-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
+          
+          <div className="max-w-[1200px] w-full relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 lg:gap-20">
+            {projects.map((project, index) => {
+              const isExternal = project.href.startsWith("/#") || project.href.startsWith("#");
+              
+              const content = (
+                <>
+                  <div className="relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-video overflow-hidden rounded-xl bg-white/[0.02] border border-white/[0.08] shadow-2xl transition-all duration-300 group-hover:border-[#B7A27A]/50 group-focus-visible:border-[#B7A27A]">
+                    <Parallax speed={0.015} className="w-full h-full relative" innerClassName="relative w-full h-full">
+                      <Image
+                        src={project.image}
+                        alt={project.name}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-103"
+                      />
+                    </Parallax>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                  </div>
 
-        <FounderSection
-          title="Meet Our Founder"
-          name="Mr. Raushan Kumar"
-          descriptionParagraphs={[
-            "Our visionary leader has built Vayu Galaxy with innovation and excellence at its core. Their journey is an inspiration, leading the way in the industry with groundbreaking solutions and a passion for progress.",
-            "Our visionary leader has built Vayu Galaxy with innovation and excellence at its core.",
-          ]}
-        />
+                  {/* Info details below the image */}
+                  <div className="mt-6 flex flex-col items-start text-left w-full">
+                    <span className="text-[0.65rem] sm:text-[0.7rem] font-mono tracking-[0.2em] text-[#B7A27A] uppercase mb-2 select-none">
+                      {project.category}
+                    </span>
+                    
+                    <div className="flex items-center gap-3 group-hover:text-[#B7A27A] transition-colors duration-300">
+                      <h3 className="text-xl sm:text-2xl font-display font-bold text-[#F4F2ED] uppercase tracking-[0.5px]">
+                        {project.name}
+                      </h3>
+                      <span className="text-lg opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                        →
+                      </span>
+                    </div>
+                    
+                    <p className="mt-3 text-sm leading-[1.6] font-sans font-light text-[#A09F9A] max-w-xl">
+                      {project.description}
+                    </p>
+                  </div>
+                </>
+              );
+
+              return (
+                <Reveal
+                  key={project.name}
+                  style="fade"
+                  direction="up"
+                  duration={0.8}
+                  delay={0.1 + (index % 2) * 0.15}
+                  className="group flex flex-col w-full"
+                >
+                  {isExternal ? (
+                    <a href={project.href} className="flex flex-col w-full focus:outline-none">
+                      {content}
+                    </a>
+                  ) : (
+                    <Link href={project.href} className="flex flex-col w-full focus:outline-none">
+                      {content}
+                    </Link>
+                  )}
+                </Reveal>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Redesigned Founder Section */}
+        <section id="founder" className="w-full bg-[#050505] text-[#F4F2ED] py-16 sm:py-24 lg:py-32 px-6 sm:px-8 md:px-12 lg:px-16 relative border-t border-white/[0.04] overflow-hidden">
+          {/* Subtle Background Grid Overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
+
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-20 items-center relative z-10">
+            {/* Left Column: Editorial Content */}
+            <div className="col-span-1 lg:col-span-7 flex flex-col text-left font-sans w-full">
+              {/* Eyebrow Label */}
+              <div className="overflow-hidden py-0.5 -my-0.5 mb-3">
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
+                  <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] text-[#B7A27A] uppercase">
+                    THE VISIONARY
+                  </span>
+                </Reveal>
+              </div>
+
+              {/* Large Headline */}
+              <div className="overflow-hidden py-1 -my-1 mb-4">
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.2}>
+                  <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#F4F2ED] leading-tight tracking-tight uppercase">
+                    THE THINKING BEHIND VAYU GALAXY
+                  </h2>
+                </Reveal>
+              </div>
+
+              {/* Visionary Name */}
+              <div className="overflow-hidden py-0.5 -my-0.5 mb-6">
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.3}>
+                  <h4 className="text-base sm:text-lg md:text-xl font-medium text-[#F4F2ED] uppercase tracking-wider font-mono">
+                    Mr. Raushan Kumar
+                  </h4>
+                </Reveal>
+              </div>
+
+              {/* Narrative Body Copy */}
+              <div className="space-y-4 sm:space-y-6 mb-8 text-[#A09F9A] text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-xl">
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.4}>
+                  <p>
+                    Vayu Galaxy is built upon a philosophy that architecture must shape the entire environment of human life. Envisioning a new layer of habitation requires a synthesis of scale, technology and structural geometry that directly supports human needs.
+                  </p>
+                </Reveal>
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.5}>
+                  <p>
+                    Led by designer and visionary Raushan Kumar, the concept translates monumental design thinking into functional models of protection and resilience. Vayu Galaxy represents a continuation of this spatial exploration—extending the possibilities of scale, form and technology to build a more resilient future.
+                  </p>
+                </Reveal>
+              </div>
+
+              {/* Social Platforms Links */}
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.6}>
+                <div className="flex flex-wrap gap-5 sm:gap-6 items-center">
+                  {[
+                    { href: "https://www.facebook.com/", iconClass: "fab fa-facebook-f", label: "Facebook" },
+                    { href: "https://x.com/", iconClass: "fab fa-twitter", label: "X / Twitter" },
+                    { href: "https://www.instagram.com/", iconClass: "fab fa-instagram", label: "Instagram" },
+                    { href: "https://www.linkedin.com/", iconClass: "fab fa-linkedin-in", label: "LinkedIn" },
+                    { href: "https://www.youtube.com/", iconClass: "fab fa-youtube", label: "YouTube" }
+                  ].map((social, idx) => (
+                    <a
+                      key={idx}
+                      href={social.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-lg sm:text-xl text-[#A09F9A] hover:text-[#B7A27A] transition-colors duration-300 transform hover:scale-110"
+                      aria-label={`Visit Mr. Raushan Kumar on ${social.label}`}
+                    >
+                      <i className={social.iconClass}></i>
+                    </a>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Right Column: Large Editorial Portrait */}
+            <div className="col-span-1 lg:col-span-5 flex justify-center w-full">
+              <Parallax speed={0.02} className="w-full relative flex justify-center lg:justify-end">
+                <Reveal style="fade" duration={1.2} delay={0.3} className="w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] lg:max-w-none">
+                  <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden rounded-xl bg-white/[0.02] border border-white/[0.08] shadow-2xl group">
+                    <Image
+                      src="/assets/raushan.png"
+                      alt="Mr. Raushan Kumar - Designer and Visionary behind Vayu Galaxy"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                      className="object-cover object-top sm:object-center transition-transform duration-700 ease-out group-hover:scale-102"
+                      priority
+                    />
+                  </div>
+                </Reveal>
+              </Parallax>
+            </div>
+          </div>
+        </section>
       </main>
 
-      <FinalCTA />
+      {/* Redesigned Closing CTA Section */}
+      <section className="bg-[#050505] w-full border-t border-white/[0.04] pt-24 pb-16 md:pt-36 md:pb-24 lg:pt-48 lg:pb-32 text-[#F4F2ED] relative z-10 overflow-hidden">
+        {/* Subtle blueprint grid background overlay */}
+        <div className="absolute inset-0 footer-grid-bg pointer-events-none opacity-20 z-0" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center w-full">
+          {/* Left Column: Content & Action Button */}
+          <div className="col-span-1 lg:col-span-7 flex flex-col text-left items-start">
+            {/* Status indicator pill */}
+            <div className="overflow-hidden py-0.5 -my-0.5 mb-4">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.05}>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] font-mono tracking-widest uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                  SYSTEM REGISTRATION ACTIVE
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Eyebrow Label */}
+            <div className="overflow-hidden py-0.5 -my-0.5 mb-4">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.15}>
+                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] text-[#B7A27A] uppercase">
+                  THE NEXT HORIZON
+                </span>
+              </Reveal>
+            </div>
+
+            {/* Display Headline */}
+            <div className="overflow-hidden py-1 -my-1 mb-6">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.25}>
+                <h2 className="text-[clamp(1.8rem,4.5vw+1rem,3.8rem)] font-display font-bold text-[#F4F2ED] uppercase leading-[1.05] tracking-tight max-w-2xl">
+                  THE FUTURE OF HUMAN HABITATION STARTS WITH A VISION.
+                </h2>
+              </Reveal>
+            </div>
+
+            {/* Supporting Copy */}
+            <div className="mb-8 text-[#A09F9A] text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-xl">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.35}>
+                <p>
+                  Vayu Galaxy is an exploration of how architecture, technology and human imagination can come together to create a different possibility for tomorrow.
+                </p>
+              </Reveal>
+            </div>
+
+            {/* Architectural solid button CTA */}
+            <Reveal style="fade" direction="up" duration={0.8} delay={0.45}>
+              <Link
+                href="/book-now"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-[#F4F2ED] text-[#050505] hover:bg-transparent border border-transparent hover:border-[#F4F2ED] hover:text-[#F4F2ED] text-xs font-mono font-extrabold tracking-[0.25em] uppercase transition-all duration-500 rounded-sm group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4F2ED]"
+              >
+                BOOK REGISTRATION
+                <span className="transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
+                  →
+                </span>
+              </Link>
+            </Reveal>
+          </div>
+
+          {/* Right Column: Large Architectural Render */}
+          <div className="col-span-1 lg:col-span-5 flex justify-center w-full">
+            <Parallax speed={0.025} className="w-full relative flex justify-center lg:justify-end">
+              <Reveal style="fade" duration={1.2} delay={0.3} className="w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] lg:max-w-none">
+                <div className="relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-video lg:aspect-[4/3] overflow-hidden rounded-xl bg-white/[0.02] border border-white/[0.08] shadow-2xl group">
+                  <Image
+                    src="/assets/about.jpeg"
+                    alt="Vayu Galaxy architectural landscape render"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-102"
+                    priority
+                  />
+                </div>
+              </Reveal>
+            </Parallax>
+          </div>
+        </div>
+
+        {/* Fine bottom accent line/transition visually leading into footer */}
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      </section>
+
       <Footer />
     </div>
   );
