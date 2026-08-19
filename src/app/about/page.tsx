@@ -39,6 +39,13 @@ import { Parallax } from "@/components/animation/Parallax";
 
 const projects = [
   {
+    name: "Vayu Galaxy",
+    category: "AERIAL TOWNSHIP",
+    description: "Our signature master-planned high-altitude township vision combining drone logistics, solar shielding, and Vedic architectural principles.",
+    href: "/",
+    image: "/assets/about.jpeg"
+  },
+  {
     name: "Proto Robot",
     category: "EMERGENCY ROBOTICS",
     description: "Proto explores robotic assistance and emergency logistics for environments where human access is difficult or dangerous.",
@@ -51,13 +58,6 @@ const projects = [
     description: "A high-performance autonomous drone designed for security, thermal scanning, and emergency medical response.",
     href: "/devi",
     image: "/assets/2.png"
-  },
-  {
-    name: "Lord Vishnu",
-    category: "CULTURAL MONUMENT",
-    description: "A suspended high-altitude spiritual monument combining ancient Vedic architecture with modern stabilization systems.",
-    href: "/#lord-vishnu",
-    image: "/assets/4.png"
   },
   {
     name: "SPD T1",
@@ -142,7 +142,7 @@ export default function AboutPage() {
             {/* Brow */}
             <div className="overflow-hidden py-0.5 -my-0.5 mb-4">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
-                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.3em] text-[#B7A27A] uppercase">
+                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] text-[#B7A27A] uppercase">
                   THE VISION
                 </span>
               </Reveal>
@@ -151,7 +151,7 @@ export default function AboutPage() {
             {/* Section Heading */}
             <div className="mb-6 sm:mb-8 max-w-4xl">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.15}>
-                <h2 className="font-display text-[26px] sm:text-[36px] md:text-[48px] lg:text-[56px] font-bold text-[#F4F2ED] leading-[1.1] uppercase">
+                <h2 className="text-[clamp(1.8rem,4vw+1rem,3.2rem)] font-display font-bold text-[#F4F2ED] leading-[1.1] uppercase tracking-[0.5px]">
                   WHAT IS VAYU GALAXY?
                 </h2>
               </Reveal>
@@ -204,7 +204,7 @@ export default function AboutPage() {
           <div className="max-w-[1200px] w-full text-center relative z-10">
             <div className="overflow-hidden py-0.5 -my-0.5 mb-4">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
-                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.3em] text-[#B7A27A] uppercase">
+                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] text-[#B7A27A] uppercase">
                   THE WORK
                 </span>
               </Reveal>
@@ -212,7 +212,7 @@ export default function AboutPage() {
 
             <div className="mb-6 max-w-4xl mx-auto">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.15}>
-                <h2 className="font-display text-[26px] sm:text-[36px] md:text-[44px] lg:text-[50px] font-bold text-[#F4F2ED] leading-[1.15] uppercase">
+                <h2 className="text-[clamp(1.8rem,4vw+1rem,3.2rem)] font-display font-bold text-[#F4F2ED] leading-[1.1] uppercase tracking-[0.5px]">
                   SELECTED PROJECTS
                 </h2>
               </Reveal>
@@ -238,17 +238,20 @@ export default function AboutPage() {
               
               const content = (
                 <>
-                  <div className="relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-video overflow-hidden rounded-xl bg-white/[0.02] border border-white/[0.08] shadow-2xl transition-all duration-300 group-hover:border-[#B7A27A]/50 group-focus-visible:border-[#B7A27A]">
-                    <Parallax speed={0.015} className="w-full h-full relative" innerClassName="relative w-full h-full">
-                      <Image
-                        src={project.image}
-                        alt={project.name}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-103"
-                      />
-                    </Parallax>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                  <div className="relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-video overflow-hidden rounded-xl bg-[#0c0c0c] border border-white/[0.08] shadow-2xl transition-all duration-300 group-hover:border-[#B7A27A]/50 group-focus-visible:border-[#B7A27A]">
+                    <Image
+                      src={project.image}
+                      alt={project.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+                      className={`${
+                        project.name === "Vayu Galaxy"
+                          ? "object-cover object-center"
+                          : project.name === "Proto Robot"
+                          ? "object-cover object-[50%_80%]"
+                          : "object-contain"
+                      } transition-transform duration-700 ease-out group-hover:scale-102`}
+                    />
                   </div>
 
                   {/* Info details below the image */}
@@ -298,11 +301,11 @@ export default function AboutPage() {
         </section>
 
         {/* Redesigned Founder Section */}
-        <section id="founder" className="w-full bg-[#050505] text-[#F4F2ED] py-16 sm:py-24 lg:py-32 px-6 sm:px-8 md:px-12 lg:px-16 relative border-t border-white/[0.04] overflow-hidden">
+        <section id="founder" className="w-full bg-[#050505] text-[#F4F2ED] py-16 sm:py-24 lg:py-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative border-t border-white/[0.04] overflow-hidden">
           {/* Subtle Background Grid Overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
 
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-20 items-center relative z-10">
+          <div className="max-w-[1200px] w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-20 items-center relative z-10">
             {/* Left Column: Editorial Content */}
             <div className="col-span-1 lg:col-span-7 flex flex-col text-left font-sans w-full">
               {/* Eyebrow Label */}
@@ -317,7 +320,7 @@ export default function AboutPage() {
               {/* Large Headline */}
               <div className="overflow-hidden py-1 -my-1 mb-4">
                 <Reveal style="fade" direction="up" duration={0.8} delay={0.2}>
-                  <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#F4F2ED] leading-tight tracking-tight uppercase">
+                  <h2 className="text-[clamp(1.8rem,4vw+1rem,3.2rem)] font-display font-bold text-[#F4F2ED] leading-[1.1] uppercase tracking-[0.5px]">
                     THE THINKING BEHIND VAYU GALAXY
                   </h2>
                 </Reveal>
@@ -393,11 +396,11 @@ export default function AboutPage() {
       </main>
 
       {/* Redesigned Closing CTA Section */}
-      <section className="bg-[#050505] w-full border-t border-white/[0.04] pt-24 pb-16 md:pt-36 md:pb-24 lg:pt-48 lg:pb-32 text-[#F4F2ED] relative z-10 overflow-hidden">
+      <section className="bg-[#050505] w-full border-t border-white/[0.04] pt-24 pb-16 md:pt-36 md:pb-24 lg:pt-48 lg:pb-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative z-10 overflow-hidden">
         {/* Subtle blueprint grid background overlay */}
         <div className="absolute inset-0 footer-grid-bg pointer-events-none opacity-20 z-0" />
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center w-full">
+        <div className="max-w-[1200px] w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           {/* Left Column: Content & Action Button */}
           <div className="col-span-1 lg:col-span-7 flex flex-col text-left items-start">
             {/* Status indicator pill */}
