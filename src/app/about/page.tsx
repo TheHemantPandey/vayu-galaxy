@@ -88,13 +88,26 @@ export default function AboutPage() {
         <section className="relative w-full h-[55vh] md:h-[60vh] lg:h-[65vh] overflow-hidden flex flex-col items-center justify-center text-center px-6 bg-[#050505] pt-16 border-b border-white/[0.03]">
           {/* Parallax Background */}
           <Parallax speed={0.02} className="absolute inset-0 w-full h-full">
-            <Image
-              src="/assets/headerabout.png"
-              alt="Vayu Galaxy future-living architectural concept"
-              fill
-              className="object-fill opacity-75 pointer-events-none scale-x-[1.2]"
-              priority
-            />
+            {/* Mobile & Tablet Image */}
+            <div className="block md:hidden absolute inset-0 w-full h-full">
+              <Image
+                src="/assets/headerabout1.png"
+                alt="Vayu Galaxy future-living architectural concept mobile"
+                fill
+                className="object-fill opacity-75 pointer-events-none scale-x-[1.2]"
+                priority
+              />
+            </div>
+            {/* Desktop Image */}
+            <div className="hidden md:block absolute inset-0 w-full h-full">
+              <Image
+                src="/assets/headerabout.png"
+                alt="Vayu Galaxy future-living architectural concept"
+                fill
+                className="object-fill opacity-75 pointer-events-none scale-x-[1.2]"
+                priority
+              />
+            </div>
           </Parallax>
 
           {/* Cinematic Overlays */}
@@ -181,7 +194,7 @@ export default function AboutPage() {
                       loop
                       muted
                       playsInline
-                      className="w-full h-full object-cover pointer-events-none"
+                      className="w-full h-full object-fill md:object-cover pointer-events-none"
                     >
                       <source src="/assets/bgvideo.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
