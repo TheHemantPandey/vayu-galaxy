@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/about`,
     images: [
       {
-        url: "/assets/aboutheader.jpg",
+        url: "/assets/headerabout.png",
         width: 1200,
         height: 630,
         alt: "Vayu Galaxy architectural vision concept",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: "About Vayu Galaxy — Our Mission, Vision & Founder",
     description:
       "Learn about Vayu Galaxy's mission to redefine future living through high-altitude architectural design, autonomous robotics, and breakthrough atmospheric engineering.",
-    images: ["/assets/aboutheader.jpg"],
+    images: ["/assets/headerabout.png"],
   },
 };
 import Header from "@/components/layout/Header";
@@ -89,10 +89,10 @@ export default function AboutPage() {
           {/* Parallax Background */}
           <Parallax speed={0.02} className="absolute inset-0 w-full h-full">
             <Image
-              src="/assets/aboutheader.jpg"
+              src="/assets/headerabout.png"
               alt="Vayu Galaxy future-living architectural concept"
               fill
-              className="object-cover opacity-75 pointer-events-none"
+              className="object-fill opacity-75 pointer-events-none scale-x-[1.2]"
               priority
             />
           </Parallax>
@@ -200,7 +200,7 @@ export default function AboutPage() {
         <section className="w-full bg-[#050505] text-[#F4F2ED] pt-24 pb-12 sm:pt-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden border-t border-white/[0.04]">
           {/* Subtle grid lines background overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
-          
+
           <div className="max-w-[1200px] w-full text-center relative z-10">
             <div className="overflow-hidden py-0.5 -my-0.5 mb-4">
               <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
@@ -231,11 +231,11 @@ export default function AboutPage() {
         {/* Projects Grid Section */}
         <section className="w-full bg-[#050505] text-[#F4F2ED] pb-24 md:pb-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
-          
+
           <div className="max-w-[1200px] w-full relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 lg:gap-20">
             {projects.map((project, index) => {
               const isExternal = project.href.startsWith("/#") || project.href.startsWith("#");
-              
+
               const content = (
                 <>
                   <div className="relative w-full aspect-[4/3] xs:aspect-[16/10] sm:aspect-video overflow-hidden rounded-xl bg-[#0c0c0c] border border-white/[0.08] shadow-2xl transition-all duration-300 group-hover:border-[#B7A27A]/50 group-focus-visible:border-[#B7A27A]">
@@ -244,13 +244,12 @@ export default function AboutPage() {
                       alt={project.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
-                      className={`${
-                        project.name === "Vayu Galaxy"
-                          ? "object-cover object-center"
-                          : project.name === "Proto Robot"
-                          ? "object-cover object-[50%_80%]"
-                          : "object-contain"
-                      } transition-transform duration-700 ease-out group-hover:scale-102`}
+                      className={`${project.name === "Proto Robot"
+                          ? "object-cover object-[60%_80%]"
+                          : project.name === "SPD T1"
+                            ? "object-cover object-[60%_60%]"
+                            : "object-cover object-center"
+                        } transition-transform duration-700 ease-out group-hover:scale-102`}
                     />
                   </div>
 
@@ -259,7 +258,7 @@ export default function AboutPage() {
                     <span className="text-[0.65rem] sm:text-[0.7rem] font-mono tracking-[0.2em] text-[#B7A27A] uppercase mb-2 select-none">
                       {project.category}
                     </span>
-                    
+
                     <div className="flex items-center gap-3 group-hover:text-[#B7A27A] transition-colors duration-300">
                       <h3 className="text-xl sm:text-2xl font-display font-bold text-[#F4F2ED] uppercase tracking-[0.5px]">
                         {project.name}
@@ -268,7 +267,7 @@ export default function AboutPage() {
                         →
                       </span>
                     </div>
-                    
+
                     <p className="mt-3 text-sm leading-[1.6] font-sans font-light text-[#A09F9A] max-w-xl">
                       {project.description}
                     </p>

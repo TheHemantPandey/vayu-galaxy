@@ -39,8 +39,7 @@ export default function Header() {
         { label: "Proto Robot", href: "/proto" },
       ],
     },
-    { label: "Township", href: "/about" },
-    { label: "Journal", href: "/blog" },
+    { label: "Blogs", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ];
 
