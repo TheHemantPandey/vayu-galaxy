@@ -215,38 +215,126 @@ export default function DeviPage() {
 
         {/* Tech Header */}
         <section className="h-[20vh] bg-black flex flex-col items-center justify-center text-[#FAFAFA] text-center border-y border-white/5">
-          <h1 className="font-space-grotesk text-[24px] md:text-[28px] font-semibold uppercase tracking-[3px] m-0">
-            Medical Emergency
-          </h1>
+          <Reveal style="fade" direction="up" duration={0.8}>
+            <h1 className="font-space-grotesk text-[24px] md:text-[28px] font-semibold uppercase tracking-[3px] m-0">
+              Medical Emergency
+            </h1>
+          </Reveal>
         </section>
 
-        <ProjectHero videoSrc="/assets/medicalbg.mp4" />
+        {/* Visual 01 (Video) */}
+        <Reveal style="fade" direction="up" duration={1.0} delay={0.1}>
+          <ProjectHero videoSrc="/assets/medicalbg.mp4" />
+        </Reveal>
 
-        {/* Map view 3 */}
-        <section className="w-full flex flex-col items-center bg-white">
-          <div className="w-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/devibg.png"
-              alt="Devi Drone grid layout"
-              className="w-full h-auto object-cover"
-            />
+        {/* Content Block 01 (Left-aligned) */}
+        <section className="w-full bg-[#050505] text-[#FAFAFA] border-t border-white/[0.08] relative overflow-hidden font-space-grotesk">
+          <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-[10%] py-12 sm:py-16 md:py-24">
+            <div className="max-w-[450px] text-left">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
+                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] text-[#DFCFB7] uppercase mb-2">
+                  01 // MEDICAL RESPONSE
+                </span>
+                <h2 className="text-xl sm:text-2xl font-display font-medium text-[#FAFAFA] uppercase mb-4 tracking-tight">
+                  MEDICAL RESPONSE
+                </h2>
+                <p className="text-sm sm:text-base text-zinc-400 font-light leading-[1.75]">
+                  Engineered for rapid deployment in critical situations, delivering medical supplies and cargo autonomously to remote or inaccessible locations.
+                </p>
+              </Reveal>
+            </div>
           </div>
         </section>
 
-        {/* Map view 4 */}
-        <section className="w-full flex flex-col items-center bg-white">
+        {/* Visual 02 (Image) */}
+        <section className="w-full flex flex-col items-center bg-[#050505] border-t border-white/[0.08]">
           <div className="w-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/24x7.png"
-              alt="24x7 Emergency Service"
-              className="w-full h-auto object-cover"
-            />
+            <Reveal style="fade" direction="up" duration={1.0} delay={0.1}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/devibg.png"
+                alt="Devi Drone grid layout"
+                className="w-full h-auto object-cover"
+              />
+            </Reveal>
           </div>
         </section>
 
-        <ProjectHero videoSrc="/assets/devibg2.mp4" />
+        {/* Content Block 02 (Right-aligned) */}
+        <section className="w-full bg-[#050505] text-[#FAFAFA] border-t border-white/[0.08] relative overflow-hidden font-space-grotesk">
+          <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-[10%] py-12 sm:py-16 md:py-24 flex justify-end">
+            <div className="max-w-[450px] text-left w-full">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
+                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] text-[#DFCFB7] uppercase mb-2">
+                  02 // FIELD APPLICATION
+                </span>
+                <h2 className="text-xl sm:text-2xl font-display font-medium text-[#FAFAFA] uppercase mb-4 tracking-tight">
+                  FIELD APPLICATION
+                </h2>
+                <p className="text-sm sm:text-base text-zinc-400 font-light leading-[1.75]">
+                  Designed to operate reliably in diverse environments, utilizing GPS-based navigation and real-time mapping for precise operations.
+                </p>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* Visual 03 (Image) */}
+        <section className="w-full flex flex-col items-center bg-[#050505] border-t border-white/[0.08]">
+          <div className="w-full">
+            <Reveal style="fade" direction="up" duration={1.0} delay={0.1}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/24x7.png"
+                alt="24x7 Emergency Service"
+                className="w-full h-auto object-cover"
+              />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Content Block 03 (Left-aligned with label) */}
+        <section className="w-full bg-[#050505] text-[#FAFAFA] border-t border-white/[0.08] relative overflow-hidden font-space-grotesk">
+          <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-[10%] py-12 sm:py-16 md:py-24 flex flex-col md:flex-row md:justify-between md:items-end gap-8">
+            <div className="max-w-[450px] text-left">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
+                <span className="block text-[0.65rem] sm:text-[0.75rem] font-mono tracking-[0.25em] text-[#DFCFB7] uppercase mb-2">
+                  03 // EMERGENCY RESPONSE
+                </span>
+                <h2 className="text-xl sm:text-2xl font-display font-medium text-[#FAFAFA] uppercase mb-4 tracking-tight">
+                  EMERGENCY RESPONSE
+                </h2>
+                <p className="text-sm sm:text-base text-zinc-400 font-light leading-[1.75]">
+                  Providing continuous operational readiness and 24/7 service capability to assist search-and-rescue teams and local response units.
+                </p>
+              </Reveal>
+            </div>
+            
+            <div className="md:text-right shrink-0">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.25}>
+                <span className="inline-block text-[0.55rem] sm:text-[0.6rem] font-mono tracking-[0.2em] text-[#DFCFB7] uppercase border border-white/10 px-4 py-2 rounded-none bg-[#111111] leading-none select-none">
+                  STATUS: 24/7 ACTIVE
+                </span>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* Visual 04 (Video) */}
+        <section className="w-full bg-[#050505] flex flex-col items-center">
+          <Reveal style="fade" direction="up" duration={1.0} delay={0.1} className="w-full">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-auto block object-contain"
+            >
+              <source src="/assets/devibg2.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </Reveal>
+        </section>
 
         <FounderSection
           title="Meet Our Founder"
