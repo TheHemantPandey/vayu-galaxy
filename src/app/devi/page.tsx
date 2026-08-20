@@ -71,6 +71,7 @@ export default function DeviPage() {
           imageSrc="/assets/drone1.png"
           imageAlt="Devi Drone concept"
           imageMaxWidthClass="max-w-[550px]"
+          imageFill={true}
         />
 
         {/* Map view 1 */}

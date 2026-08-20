@@ -8,7 +8,7 @@ interface BlogCardProps {
 
 export default function BlogCard({ post }: BlogCardProps) {
   return (
-    <Link href={`/blog/${post.slug}`} className="group no-underline block h-full">
+    <Link href={post.customUrl || `/blog/${post.slug}`} className="group no-underline block h-full">
       <article className="border border-[#111111]/10 rounded-lg p-5 bg-white flex flex-col justify-between hover:border-[#DFCFB7] transition-all duration-300 min-h-[460px] h-full shadow-[0_4px_15px_rgba(0,0,0,0.01)]">
         <div>
           {/* Card Image */}
@@ -17,7 +17,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             <img 
               src={post.image} 
               alt={post.imageAlt}
-              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+              className={`w-full h-full ${(post.slug.includes("aerospace") || post.slug.includes("township")) ? "object-cover" : "object-contain"} group-hover:scale-[1.03] transition-transform duration-300`}
             />
           </div>
           

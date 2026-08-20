@@ -12,23 +12,20 @@ import { Reveal } from "@/components/animation/Reveal";
 
 const categories = [
   "ALL",
-  "FUTURE OF LIVING",
-  "AI",
-  "ROBOTICS",
+  "VAYU GALAXY",
+  "INNOVATION",
+  "SPDT1",
   "DRONES",
-  "SMART CITIES",
-  "MOBILITY",
-  "IoT",
+  "ROBOTICS",
+  "FUTURE OF LIVING",
+  "AEROSPACE",
   "SUSTAINABILITY",
-  "GADGETS",
-  "HUMAN + TECHNOLOGY"
+  "TECHNOLOGY",
+  "RESEARCH"
 ];
 
 const matchesCategory = (postCategory: string, filter: string) => {
   if (filter === "ALL") return true;
-  if (filter === "AI" && postCategory === "ARTIFICIAL INTELLIGENCE") return true;
-  if (filter === "MOBILITY" && postCategory === "FUTURE MOBILITY") return true;
-  if (filter === "GADGETS" && postCategory === "FUTURE GADGETS") return true;
   return postCategory.toUpperCase() === filter.toUpperCase();
 };
 
@@ -137,12 +134,12 @@ export default function BlogContent() {
                 {/* Large Image (Left, spans 7 columns on desktop) */}
                 <div className="lg:col-span-7 w-full overflow-hidden border border-black/[0.06]">
                   <Reveal style="fade" duration={1.2} delay={0.2}>
-                    <Link href={`/blog/${featuredPost.slug}`} className="block relative aspect-[16/10] w-full overflow-hidden bg-black/5">
+                    <Link href={featuredPost.customUrl || `/blog/${featuredPost.slug}`} className="block relative aspect-[16/10] w-full overflow-hidden bg-black/5">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
                         src={featuredPost.image} 
                         alt={featuredPost.imageAlt}
-                        className="w-full h-full object-cover hover:scale-[1.01] transition-transform duration-700 ease-out"
+                        className={`w-full h-full ${(featuredPost.slug.includes("aerospace") || featuredPost.slug.includes("township")) ? "object-cover" : "object-contain"} hover:scale-[1.01] transition-transform duration-700 ease-out`}
                       />
                     </Link>
                   </Reveal>
@@ -162,7 +159,7 @@ export default function BlogContent() {
                   {/* Title */}
                   <div>
                     <Reveal style="fade" direction="up" duration={0.8} delay={0.4}>
-                      <Link href={`/blog/${featuredPost.slug}`} className="no-underline text-inherit hover:opacity-90">
+                      <Link href={featuredPost.customUrl || `/blog/${featuredPost.slug}`} className="no-underline text-inherit hover:opacity-90">
                         <h2 className="font-display font-medium tracking-tight uppercase leading-[1.15] text-[22px] sm:text-[28px] md:text-[34px] text-[#111111]">
                           {featuredPost.title}
                         </h2>
@@ -194,7 +191,7 @@ export default function BlogContent() {
                   <div className="pt-2">
                     <Reveal style="fade" direction="up" duration={0.8} delay={0.7}>
                       <Link 
-                        href={`/blog/${featuredPost.slug}`}
+                        href={featuredPost.customUrl || `/blog/${featuredPost.slug}`}
                         className="inline-flex items-center gap-2 font-mono text-[0.65rem] sm:text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#111111] hover:text-[#9E824C] transition-colors group/link"
                       >
                         READ ARTICLE 

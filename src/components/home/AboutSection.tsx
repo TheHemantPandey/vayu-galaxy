@@ -24,6 +24,7 @@ interface AboutSectionProps {
   imageCaption?: string;
   layoutType?: "left-text" | "right-text";
   specifications?: SpecificationItem[];
+  imageFill?: boolean;
 }
 
 /**
@@ -46,6 +47,7 @@ export default function AboutSection({
   imageCaption,
   layoutType = "left-text",
   specifications,
+  imageFill = false,
 }: AboutSectionProps) {
   const hasSpecs = specifications && specifications.length > 0;
   const isDark = theme === "dark";
@@ -365,7 +367,7 @@ export default function AboutSection({
                 alt={imageAlt || ""}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 400px"
-                className="object-contain p-4 sm:p-6 pointer-events-none"
+                className={`${imageFill ? "object-cover" : "object-contain p-4 sm:p-6"} pointer-events-none`}
               />
             </div>
           </div>

@@ -70,6 +70,7 @@ export default function ProtoPage() {
           imageSrc="/assets/protoimg1.png"
           imageAlt="Proto Robot concept design"
           imageMaxWidthClass="max-w-[400px]"
+          imageFill={true}
         />
 
         {/* Map view 1 */}
@@ -104,6 +105,7 @@ export default function ProtoPage() {
           imageSrc="/assets/protoimg3.png"
           imageAlt="Proto Robot functional detail"
           imageMaxWidthClass="max-w-[550px]"
+          imageFill={true}
         />
 
         <FounderSection
