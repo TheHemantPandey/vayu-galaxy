@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";
@@ -456,6 +457,19 @@ export default function ContactContent() {
                     >
                       {isSubmitting ? "SENDING MESSAGE..." : "SEND MESSAGE →"}
                     </button>
+
+                    {/* Legal Links Disclaimer */}
+                    <p className="text-[10px] text-zinc-500 font-mono tracking-wider text-center pt-2 leading-relaxed">
+                      By submitting this form, you acknowledge our{" "}
+                      <Link href="/privacy-policy" className="text-cyan-400 hover:underline underline-offset-2">
+                        Privacy Policy
+                      </Link>{" "}
+                      and{" "}
+                      <Link href="/terms-and-conditions" className="text-cyan-400 hover:underline underline-offset-2">
+                        Terms &amp; Conditions
+                      </Link>
+                      .
+                    </p>
                   </form>
                 )}
               </div>

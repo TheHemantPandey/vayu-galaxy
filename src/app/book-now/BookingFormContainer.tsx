@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
@@ -749,6 +750,19 @@ export default function BookingFormContainer() {
                       </svg>
                       <span>FREE EARLY REGISTRATION • NO PAYMENT REQUIRED</span>
                     </div>
+
+                    {/* Legal Links Disclaimer */}
+                    <p className="text-[10px] text-zinc-500 font-mono tracking-wider text-center pt-2 leading-relaxed">
+                      By submitting this form, you acknowledge our{" "}
+                      <Link href="/privacy-policy" className="text-[#B7A27A] hover:underline underline-offset-2">
+                        Privacy Policy
+                      </Link>{" "}
+                      and{" "}
+                      <Link href="/terms-and-conditions" className="text-[#B7A27A] hover:underline underline-offset-2">
+                        Terms &amp; Conditions
+                      </Link>
+                      .
+                    </p>
                   </div>
                 </form>
               )}

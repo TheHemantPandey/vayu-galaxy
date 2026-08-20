@@ -138,8 +138,8 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* 2. Main Footer Grid (4 Columns) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-12">
+        {/* 2. Main Footer Grid (5 Columns) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 pb-12">
           
           {/* Column 1: Brand & Mission */}
           <motion.div
@@ -303,7 +303,46 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Column 4: Contact & Coordinates */}
+          {/* Column 4: Legal */}
+          <motion.div
+            initial={{ opacity: opacityVal, y: yVal }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.18 }}
+            className="space-y-4"
+          >
+            <h4 className="font-mono text-sm font-bold text-cyan-400 uppercase tracking-widest">
+              LEGAL
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/privacy-policy" className="group inline-flex items-center gap-2 text-base text-zinc-300 hover:text-white font-medium transition-colors">
+                  <span className="group-hover:translate-x-1 transition-transform">Privacy Policy</span>
+                  <span className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/cookie-policy" className="group inline-flex items-center gap-2 text-base text-zinc-300 hover:text-white font-medium transition-colors">
+                  <span className="group-hover:translate-x-1 transition-transform">Cookie Policy</span>
+                  <span className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms-and-conditions" className="group inline-flex items-center gap-2 text-base text-zinc-300 hover:text-white font-medium transition-colors">
+                  <span className="group-hover:translate-x-1 transition-transform">Terms &amp; Conditions</span>
+                  <span className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/disclaimer" className="group inline-flex items-center gap-2 text-base text-zinc-300 hover:text-white font-medium transition-colors">
+                  <span className="group-hover:translate-x-1 transition-transform">Disclaimer</span>
+                  <span className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                </Link>
+              </li>
+            </ul>
+          </motion.div>
+
+          {/* Column 5: Contact & Coordinates */}
           <motion.div
             initial={{ opacity: opacityVal, y: yVal }}
             whileInView={{ opacity: 1, y: 0 }}
