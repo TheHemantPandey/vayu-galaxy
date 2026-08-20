@@ -56,7 +56,7 @@ export default function ProtoPage() {
         <ProjectHero videoSrc="/assets/proto1.mp4" />
 
         <AboutSection
-          theme="light"
+          theme="dark"
           title={
             <>
               About <strong>Proto</strong>
