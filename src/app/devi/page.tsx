@@ -153,17 +153,63 @@ export default function DeviPage() {
         </section>
 
         {/* Video Player Section */}
-        <section className="flex flex-col items-center text-center py-[60px] px-5 md:px-[70px] bg-white">
-          <div className="w-full max-w-[100%] rounded-[20px] overflow-hidden">
-            <div className="relative w-full pb-[56.25%] overflow-hidden shadow-[0_8px_16px_rgba(255,0,0,0.2)] rounded-[20px]">
-              <iframe
-                src="https://www.youtube.com/embed/AN72t94dIaI?si=e8SXtFbvgx4E1YSt"
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute top-0 left-0 w-full h-full border-none"
-              ></iframe>
+        <section className="w-full bg-[#050505] text-[#F4F2ED] py-20 sm:py-24 md:py-32 px-6 sm:px-8 md:px-[10%] flex flex-col items-center relative overflow-hidden border-t border-white/[0.03] border-b border-white/[0.03]">
+          {/* Subtle blueprint grid line overlay for continuous story styling */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0 opacity-40" />
+
+          <div className="max-w-[1200px] w-full relative z-10 flex flex-col space-y-10 sm:space-y-14">
+            
+            {/* Section Header */}
+            <div className="w-full text-left">
+              <Reveal style="fade" direction="up" duration={0.8} delay={0.1}>
+                {/* Section Title */}
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F4F2ED] uppercase font-display leading-[1.1]">
+                  Devi Drone In Action
+                </h2>
+              </Reveal>
             </div>
+
+            {/* Cinematic YouTube Player Wrapper */}
+            <Reveal style="fade" direction="up" duration={1.0} delay={0.25} className="w-full">
+              <div className="relative w-full rounded-2xl overflow-hidden bg-[#0d0d0c] border border-white/[0.08] p-2 sm:p-3 shadow-2xl">
+                {/* Subtle gold top line accent */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#9E824C]/40 to-transparent" />
+                
+                {/* Video wrapper */}
+                <div className="relative w-full rounded-xl overflow-hidden pb-[56.25%] bg-black">
+                  <iframe
+                    src="https://www.youtube.com/embed/AN72t94dIaI?si=e8SXtFbvgx4E1YSt"
+                    title="Devi Drone Field Demonstration Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute top-0 left-0 w-full h-full border-none filter brightness-95"
+                  ></iframe>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Optional Supporting Content / Metadata */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 pt-6 border-t border-white/10 items-start">
+              <div className="md:col-span-8">
+                <Reveal style="fade" direction="up" duration={0.8} delay={0.35}>
+                  <p className="text-sm sm:text-base text-zinc-400 font-light leading-[1.75] max-w-2xl text-left">
+                    Watch the real-world operational demonstration of the Devi Drone in action, illustrating its autonomous flight capability, stability, and control systems during field testing.
+                  </p>
+                </Reveal>
+              </div>
+
+              <div className="md:col-span-4 grid grid-cols-2 gap-4 font-mono text-[9px] sm:text-[10px] tracking-wider text-zinc-500 uppercase md:justify-items-end">
+                <div className="text-left md:text-right">
+                  <span className="block text-zinc-600 font-semibold mb-1">SYSTEM</span>
+                  <span className="text-zinc-300">DEVI DRONE</span>
+                </div>
+                <div className="text-left md:text-right">
+                  <span className="block text-zinc-600 font-semibold mb-1">DOCUMENTATION</span>
+                  <span className="text-zinc-300">FIELD VIDEO</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 
