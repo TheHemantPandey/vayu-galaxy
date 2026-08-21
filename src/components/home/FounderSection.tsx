@@ -12,6 +12,7 @@ interface SocialLink {
 interface FounderSectionProps {
   name?: string;
   title?: string;
+  headline?: string;
   descriptionParagraphs?: string[];
   socialLinks?: SocialLink[];
 }
@@ -23,6 +24,7 @@ interface FounderSectionProps {
 export default function FounderSection({
   name = "Mr. Raushan Kumar",
   title = "THE VISIONARY",
+  headline = "THE THINKING BEHIND VAYU GALAXY",
   descriptionParagraphs,
   socialLinks = [
     { href: "https://www.facebook.com/", iconClass: "fab fa-facebook-f" },
@@ -82,7 +84,7 @@ export default function FounderSection({
 
           {/* Large Headline */}
           <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#F4F2ED] mb-4 sm:mb-6 leading-tight tracking-tight uppercase break-words">
-            THE THINKING BEHIND VAYU GALAXY
+            {headline}
           </h2>
 
           {/* Visionary Name */}

@@ -47,12 +47,12 @@ export default function HeroContent({ contentRef }: HeroContentProps) {
       <h1 className="font-display uppercase tracking-[-0.01em] text-[#F4F2ED] leading-[1.05] flex flex-col gap-1.5 sm:gap-3">
         <div className="overflow-hidden py-1 -my-1">
           <span className="block text-[clamp(1.8rem,3vw+1rem,3.2rem)] font-light tracking-[0.05em] hero-title-vayu">
-            WORLD&apos;S FIRST
+            A FUTURE VISION FOR
           </span>
         </div>
         <div className="overflow-hidden py-1 -my-1">
           <span className="block text-[clamp(2.2rem,4.5vw+1.5rem,6rem)] font-medium tracking-[-0.02em] text-[#F4F2ED] hero-title-galaxy leading-[0.95]">
-            TOWNSHIP<span className="hidden sm:inline"> </span><br className="inline sm:hidden" />IN THE AIR
+            LIFE ABOVE<span className="hidden sm:inline"> </span><br className="inline sm:hidden" />THE LAND
           </span>
         </div>
       </h1>
@@ -60,7 +60,7 @@ export default function HeroContent({ contentRef }: HeroContentProps) {
       {/* Supporting Copy */}
       <div className="overflow-hidden py-0.5 -my-0.5 mt-5 sm:mt-8 max-w-xl">
         <p className="hero-subtitle text-[1rem] sm:text-[1.15rem] font-light text-[#D1CFC9] leading-relaxed">
-          A new layer of human habitation above the ground.
+          Exploring new possibilities for human habitation, movement, and development.
         </p>
       </div>
 

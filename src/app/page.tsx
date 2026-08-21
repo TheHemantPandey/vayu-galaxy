@@ -38,21 +38,19 @@ import AboutSection from "@/components/home/AboutSection";
 import VideoSection from "@/components/home/VideoSection";
 import CitiesAtRisk from "@/components/home/CitiesAtRisk";
 import MapView from "@/components/home/MapView";
-import FeatureSection from "@/components/home/FeatureSection";
 import ProjectGrid from "@/components/home/ProjectGrid";
 import FounderSection from "@/components/home/FounderSection";
+import ColonyConcept from "@/components/home/ColonyConcept";
+import InnovationShowcase from "@/components/home/InnovationShowcase";
+import FutureVision from "@/components/home/FutureVision";
 
 const forfirstpara = [
-  "Vayu Galaxy represents a bold new chapter in human architecture and conceptual design—introducing the 8th World of Wonder. By combining high-altitude structural engineering with self-sustaining luxury ecosystems, we are designing living spaces that float above the horizon, bridging the gap between Earth and the cosmos.",
+  "Vayu Galaxy represents a new chapter in conceptual architecture, exploring the viability of high-altitude habitation. By combining structural engineering concepts with self-sustaining ecosystems, we design speculative living spaces that float above the horizon, bridging the gap between land and sky.",
 ];
 const forsecondpara = [
   "Standing as a monument of absolute engineering marvel and spiritual legacy, Vayu Galaxy introduces the world's largest Lord Vishnu statue suspended in the air. This structure combines ancient Vedic architecture with modern high-altitude stabilization systems, creating a breathtaking spiritual beacon that transcends traditional boundaries.",
   "Hovering with advanced structural suspension and glowing with solar-powered illumination grids, the monument serves as an architectural protector of the city below. It represents a conceptual fusion of historical heritage, futuristic design, and absolute cultural pride.",
   "This iconic design serves as a testament to human ingenuity and spiritual devotion, rising majestically into the sky. It invites visitors from around the globe to witness a harmonious synthesis of technology and timeless devotion, marking a new milestone in conceptual landmark creation.",
-];
-const forthirdpara = [
-  "The Devi Drone is a high-performance, modular unmanned aerial vehicle (UAV) engineered for security, high-altitude surveillance, emergency medical logistics, and disaster management. Designed and developed with cutting-edge aerospace systems, it delivers a reliable, fully autonomous solution for operations in challenging terrains.",
-  "Integrating AI-driven obstacle detection, real-time thermal scanning, and synchronized network communication, the Devi Drone provides critical aerial insights instantly. Its modular payload bay allows quick attachment of specialized kits, making it a versatile tool for safeguarding environments and supporting emergency medical services.",
 ];
 
 export default function HomePage() {
@@ -76,7 +74,7 @@ export default function HomePage() {
         <AboutSection
           id="about"
           theme="light"
-          title="8th World of Wonder, Coming Soon!"
+          title="THE ATMOSPHERIC TOWNSHIP CONCEPT"
           paragraphs={forfirstpara}
           chapterNumber="01"
           chapterLabel="THE AERIAL TOWNSHIP"
@@ -87,6 +85,12 @@ export default function HomePage() {
             { label: "DEVELOPMENT STATE", value: "Conceptual Monograph" }
           ]}
         />
+
+        <ColonyConcept />
+
+        <InnovationShowcase />
+
+        <FutureVision />
 
         <VideoSection />
 
@@ -111,13 +115,6 @@ export default function HomePage() {
           layoutType="right-text"
         />
 
-        <FeatureSection
-          theme="dark"
-          title="Devi Drone"
-          paragraphs={forthirdpara}
-          imageSrc="/assets/drone.png"
-          imageAlt="Drone"
-        />
 
         {/* Projects Section Tech Heading */}
         <section className="h-[20vh] bg-black flex flex-col items-center justify-center text-[#FAFAFA] text-center border-y border-white/5">
@@ -129,11 +126,12 @@ export default function HomePage() {
         <ProjectGrid />
 
         <FounderSection
-          title="Meet Our Founder"
-          name="Mr. Raushan Kumar"
+          title="PEOPLE & PURPOSE"
+          headline="BUILT BY PEOPLE WHO BELIEVE THE FUTURE CAN BE DESIGNED."
+          name="Raushan Kumar // Lead Visionary"
           descriptionParagraphs={[
-            "Our visionary leader has built Vayu Galaxy with innovation and excellence at its core. Their journey is an inspiration, leading the way in the industry with groundbreaking solutions and a passion for progress.",
-            "Our visionary leader has built Vayu Galaxy with innovation and excellence at its core.",
+            "Vayu Galaxy is an ongoing journey driven by human curiosity and ambition. The vision is created by people who believe that the future environment doesn't have to be accepted as it is — it can be designed.",
+            "Our purpose is to explore new possibilities for human life, mobility, and habitation above the land. Through collective design, research, and experimental engineering, we map a new layer of spatial potential.",
           ]}
         />
       </main>

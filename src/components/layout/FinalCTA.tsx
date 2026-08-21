@@ -30,17 +30,17 @@ export default function FinalCTA() {
         >
           {/* Eyebrow Label */}
           <span className="block text-[0.7rem] sm:text-[0.75rem] font-sans tracking-[0.25em] text-[#B7A27A] uppercase mb-1">
-            THE NEXT HORIZON
+            07 &mdash; THE FINAL HORIZON
           </span>
 
           {/* Large display headline */}
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold text-[#F4F2ED] uppercase leading-tight tracking-tight max-w-3xl">
-            THE FUTURE OF HUMAN HABITATION STARTS WITH A VISION.
+            THE FUTURE DOESN&apos;T HAVE TO BE WAITED FOR.
           </h2>
 
           {/* Supporting Copy */}
           <p className="text-[#A09F9A] text-base md:text-lg font-light leading-relaxed max-w-xl mb-4">
-            Vayu Galaxy is an exploration of how architecture, technology and human imagination can come together to create a different possibility for tomorrow.
+            We invite you to understand, follow, and become part of the journey behind Vayu Galaxy as we explore new limits for human life.
           </p>
 
           {/* Architectural solid button CTA */}
