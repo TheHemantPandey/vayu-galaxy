@@ -40,6 +40,7 @@ export default function Header() {
       ],
     },
     { label: "Blogs", href: "/blog" },
+    { label: "Careers", href: "/careers" },
     { label: "Contact", href: "/contact" },
   ];
 

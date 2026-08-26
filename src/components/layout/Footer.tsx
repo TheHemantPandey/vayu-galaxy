@@ -244,6 +244,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/careers" className="group inline-flex items-center gap-2 text-base text-zinc-300 hover:text-white font-medium transition-colors">
+                  <span className="group-hover:translate-x-1 transition-transform">Careers</span>
+                  <span className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="group inline-flex items-center gap-2 text-base text-zinc-300 hover:text-white font-medium transition-colors">
                   <span className="group-hover:translate-x-1 transition-transform">Township Vision</span>
                   <span className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity">→</span>

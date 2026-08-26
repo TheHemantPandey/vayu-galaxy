@@ -512,3 +512,145 @@ docvayugalaxy@gmail.com | vayugalaxy.com`;
 
   return { subject: subjectLine, html, text };
 }
+
+// 5. CAREERS JOB APPLICATION EMAIL TEMPLATE
+export function generateJobApplicationEmail(data: {
+  fullName: string;
+  email: string;
+  phone: string;
+  jobTitle: string;
+  department: string;
+  employmentType: string;
+  coverLetter: string;
+  currentLocation?: string;
+  experience?: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  portfolioUrl?: string;
+}) {
+  const timestamp = formatTimestamp();
+  const userName = data.fullName?.trim() || "Candidate";
+  
+  const subjectLine = `New Job Application — ${data.jobTitle} — ${userName}`;
+
+  const personalFields = `
+    ${renderFieldRow("FULL NAME", data.fullName)}
+    ${renderFieldRow("EMAIL ADDRESS", data.email)}
+    ${renderFieldRow("PHONE NUMBER", data.phone)}
+    ${renderFieldRow("CURRENT LOCATION", data.currentLocation)}
+    ${renderFieldRow("YEARS OF EXPERIENCE", data.experience, true)}
+  `;
+
+  const jobFields = `
+    ${renderFieldRow("POSITION", data.jobTitle)}
+    ${renderFieldRow("DEPARTMENT", data.department)}
+    ${renderFieldRow("EMPLOYMENT TYPE", data.employmentType, true)}
+  `;
+
+  const linksFields = `
+    ${renderFieldRow("LINKEDIN PROFILE", data.linkedinUrl)}
+    ${renderFieldRow("GITHUB PROFILE", data.githubUrl)}
+    ${renderFieldRow("PORTFOLIO WEBSITE", data.portfolioUrl, true)}
+  `;
+
+  const contentHtml = `
+    ${renderSection("CANDIDATE INFORMATION", personalFields)}
+    ${renderSection("APPLICATION DETAILS", jobFields)}
+    ${renderSection("PROFESSIONAL LINKS", linksFields)}
+    ${renderMessageBox("COVER LETTER", data.coverLetter)}
+  `;
+
+  const html = wrapEmailHtml({
+    badge: "CAREERS / VAYU GALAXY",
+    title: "NEW JOB APPLICATION",
+    intro: `A new job application for the ${data.jobTitle} position has been received.`,
+    contentHtml,
+    timestamp,
+  });
+
+  const text = `VAYU GALAXY CAREERS
+NEW JOB APPLICATION
+
+--------------------------------
+CANDIDATE INFORMATION
+--------------------------------
+Full Name: ${data.fullName}
+Email Address: ${data.email}
+Phone Number: ${data.phone}
+Current Location: ${data.currentLocation || "Not provided"}
+Years of Experience: ${data.experience || "Not provided"}
+
+--------------------------------
+APPLICATION DETAILS
+--------------------------------
+Position: ${data.jobTitle}
+Department: ${data.department}
+Employment Type: ${data.employmentType}
+
+--------------------------------
+PROFESSIONAL LINKS
+--------------------------------
+LinkedIn: ${data.linkedinUrl || "Not provided"}
+GitHub: ${data.githubUrl || "Not provided"}
+Portfolio: ${data.portfolioUrl || "Not provided"}
+
+--------------------------------
+COVER LETTER
+--------------------------------
+${data.coverLetter}
+
+--------------------------------
+SUBMISSION DETAILS
+--------------------------------
+Received At: ${timestamp}
+
+Vayu Galaxy — Future Living. Technology. Innovation.`;
+
+  return { subject: subjectLine, html, text };
+}
+
+// 6. CANDIDATE CONFIRMATION EMAIL TEMPLATE
+export function generateCandidateConfirmationEmail(data: {
+  fullName: string;
+  jobTitle: string;
+}) {
+  const timestamp = formatTimestamp();
+  const subjectLine = `Application Received — Vayu Galaxy`;
+
+  const contentHtml = `
+    <div style="margin-bottom: 24px;">
+      <p style="font-size: 14px; color: #F5F5F5; line-height: 1.6; margin: 0 0 16px 0;">
+        Dear ${escapeHtml(data.fullName)},
+      </p>
+      <p style="font-size: 14px; color: #FAFAFA; line-height: 1.6; margin: 0 0 16px 0;">
+        Thank you for submitting your application for the <strong>${escapeHtml(data.jobTitle)}</strong> position at Vayu Galaxy.
+      </p>
+      <p style="font-size: 13px; color: #A1A1AA; line-height: 1.6; margin: 0 0 16px 0;">
+        Our recruitment and engineering teams will carefully review your credentials, portfolio assets, and experience. Please note that while we evaluate every application thoroughly, we cannot guarantee an interview or a direct response timeline.
+      </p>
+      <p style="font-size: 13px; color: #A1A1AA; line-height: 1.6; margin: 0;">
+        If your profile aligns with our current conceptual development sprints and technological research mandates, a member of our team will contact you to schedule an initial discussion.
+      </p>
+    </div>
+  `;
+
+  const html = wrapEmailHtml({
+    badge: "CAREERS / VAYU GALAXY",
+    title: "APPLICATION CONFIRMATION",
+    intro: "We have successfully received your job application profile.",
+    contentHtml,
+    timestamp,
+  });
+
+  const text = `Dear ${data.fullName},
+
+Thank you for submitting your application for the ${data.jobTitle} position at Vayu Galaxy.
+
+Our recruitment and engineering teams will carefully review your credentials, portfolio assets, and experience. Please note that while we evaluate every application thoroughly, we cannot guarantee an interview or a direct response timeline.
+
+If your profile aligns with our current conceptual development sprints and technological research mandates, a member of our team will contact you to schedule an initial discussion.
+
+Vayu Galaxy — Future Living. Technology. Innovation.`;
+
+  return { subject: subjectLine, html, text };
+}

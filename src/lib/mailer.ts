@@ -9,6 +9,11 @@ interface SendMailOptions {
   subject: string;
   text: string;
   html?: string;
+  attachments?: {
+    filename: string;
+    content: Buffer;
+    contentType?: string;
+  }[];
 }
 
 /**
@@ -22,6 +27,7 @@ export async function sendEmail({
   subject,
   text,
   html,
+  attachments,
 }: SendMailOptions) {
   const smtpHost = process.env.SMTP_HOST;
   const smtpPort = process.env.SMTP_PORT;
@@ -53,6 +59,11 @@ export async function sendEmail({
     subject: string;
     text: string;
     html?: string;
+    attachments?: {
+      filename: string;
+      content: Buffer;
+      contentType?: string;
+    }[];
   } = {
     from: `${senderName} <${smtpUser}>`,
     to: to || DESTINATION_EMAIL,
@@ -63,6 +74,10 @@ export async function sendEmail({
 
   if (html) {
     mailOptions.html = html;
+  }
+
+  if (attachments) {
+    mailOptions.attachments = attachments;
   }
 
   return await transporter.sendMail(mailOptions);

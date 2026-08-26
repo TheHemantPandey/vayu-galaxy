@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/data/blog";
+import { jobOpenings } from "@/data/careers";
 import { SITE_URL } from "@/lib/seo-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -55,6 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${SITE_URL}/careers`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
   ];
 
   // Dynamic blog post routes
@@ -65,5 +72,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...blogRoutes];
+  // Dynamic careers job routes
+  const jobRoutes: MetadataRoute.Sitemap = jobOpenings.map((job) => ({
+    url: `${SITE_URL}/careers/${job.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...blogRoutes, ...jobRoutes];
 }
