@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackCtaClick } from "@/lib/analytics";
 
 export default function Header() {
   const pathname = usePathname();
@@ -135,6 +136,13 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-3">
             <Link
               href="/book-now"
+              onClick={() =>
+                trackCtaClick({
+                  cta_name: "header_book_now",
+                  destination_url: "/book-now",
+                  link_location: "header_desktop",
+                })
+              }
               className="bg-white text-black hover:bg-cyan-400 hover:text-black font-bold text-xs uppercase tracking-widest px-5 py-2.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-1.5 group select-none cursor-pointer"
             >
               <span>BOOK NOW</span>
@@ -217,7 +225,14 @@ export default function Header() {
             <div className="pt-8 border-t border-white/10 space-y-4">
               <Link
                 href="/book-now"
-                onClick={toggleMenu}
+                onClick={() => {
+                  toggleMenu();
+                  trackCtaClick({
+                    cta_name: "header_book_now",
+                    destination_url: "/book-now",
+                    link_location: "header_mobile_drawer",
+                  });
+                }}
                 className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-space-grotesk font-bold py-3.5 px-6 rounded-full uppercase tracking-widest text-xs flex items-center justify-center gap-2 shadow-lg"
               >
                 BOOK NOW / EARLY ACCESS →
@@ -242,6 +257,13 @@ export default function Header() {
             </Link>
             <Link
               href="/book-now"
+              onClick={() =>
+                trackCtaClick({
+                  cta_name: "header_book_now",
+                  destination_url: "/book-now",
+                  link_location: "bottom_bar_mobile",
+                })
+              }
               className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white border border-white/15 font-space-grotesk font-bold py-3.5 px-4 text-[10px] sm:text-xs tracking-widest uppercase text-center rounded-sm flex items-center justify-center transition-all duration-300"
             >
               BOOK NOW

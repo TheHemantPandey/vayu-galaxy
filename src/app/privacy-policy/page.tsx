@@ -42,21 +42,32 @@ export default function PrivacyPolicyPage() {
             <strong>Inquiries & Contact Forms:</strong> If you reach out through our contact portals, we collect the content of your message along with your name, organization, and contact details.
           </li>
           <li>
-            <strong>Automatically Tracked Analytics:</strong> Technical metadata (such as IP addresses, browser types, screen scales, and referral sources) may be recorded dynamically to ensure proper visual scale and responsive system presentation.
+            <strong>Analytics & Technical Telemetry:</strong> When analytics configurations are active, technical metadata (such as pseudonymous client IDs, IP addresses, browser types, screen resolutions, and referral sources) is processed through Google Analytics 4 and Microsoft Clarity to understand aggregate usage patterns and optimize website performance without collecting personally identifiable information.
           </li>
         </ul>
       </section>
 
       <section className="space-y-4">
         <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wide text-[#F4F2ED] border-b border-white/5 pb-2">
-          3. Cookies and External Embeds
+          3. Cookies, Analytics, and External Embeds
         </h2>
         <p>
-          We use cookies to maintain page responsiveness and layout consistency. 
+          We use cookies and diagnostic tags to maintain page responsiveness, measure user engagement, and support layout consistency:
         </p>
-        <p>
-          <strong>Embedded Third-Party Media:</strong> Pages showcasing our flight videos or concept simulations (such as YouTube embeds) may trigger cookies set directly by those external providers. These cookies track player configurations, network parameters, and user metrics according to the external provider&apos;s own policies. You can control cookie preferences in your local browser settings.
-        </p>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <strong>Google Analytics 4:</strong> We use Google Analytics to analyze visitor interactions, popular routes, and aggregate engagement metrics. You can opt out using the Google Analytics Opt-out Browser Add-on.
+          </li>
+          <li>
+            <strong>Microsoft Clarity:</strong> We utilize Microsoft Clarity to capture visual behavioral analytics (heatmaps and anonymous session replays) to diagnose usability issues. All personal data entry fields are masked to protect user privacy.
+          </li>
+          <li>
+            <strong>Google Search Console Verification:</strong> We implement verification tokens to monitor site health, search indexing, and organic performance.
+          </li>
+          <li>
+            <strong>Embedded Third-Party Media:</strong> Pages showcasing our flight videos or concept simulations (such as YouTube embeds) may trigger cookies set directly by those external providers. You can control cookie preferences in your local browser settings.
+          </li>
+        </ul>
       </section>
 
       <section className="space-y-4">

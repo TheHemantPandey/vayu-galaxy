@@ -37,10 +37,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { Reveal } from "@/components/animation/Reveal";
 import { Parallax } from "@/components/animation/Parallax";
+import TrackView from "@/components/analytics/TrackView";
 
 export default function Spdt1Page() {
   return (
     <div className="spdt1-page-wrapper bg-[#050505]">
+      <TrackView
+        eventName="view_project_detail"
+        params={{
+          project_id: "spdt1",
+          project_name: "SPD T1",
+        }}
+      />
       {/* FontAwesome style icons */}
       <link
         rel="stylesheet"

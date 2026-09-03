@@ -38,10 +38,18 @@ import AboutSection from "@/components/home/AboutSection";
 import FounderSection from "@/components/home/FounderSection";
 import Image from "next/image";
 import { Reveal } from "@/components/animation/Reveal";
+import TrackView from "@/components/analytics/TrackView";
 
 export default function DeviPage() {
   return (
     <div className="devi-page-wrapper bg-white">
+      <TrackView
+        eventName="view_project_detail"
+        params={{
+          project_id: "devi_drone",
+          project_name: "Devi Drone",
+        }}
+      />
       {/* FontAwesome style icons */}
       <link
         rel="stylesheet"

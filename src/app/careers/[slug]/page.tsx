@@ -8,6 +8,7 @@ import { Reveal } from "@/components/animation/Reveal";
 import JobApplicationForm from "@/components/careers/JobApplicationForm";
 import { jobOpenings } from "@/data/careers";
 import { SITE_URL } from "@/lib/seo-config";
+import TrackView from "@/components/analytics/TrackView";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -64,6 +65,15 @@ export default async function JobDetailPage({ params }: Props) {
 
   return (
     <div className="job-detail-page-wrapper bg-[#050505] text-[#FAFAFA] min-h-screen flex flex-col justify-between relative overflow-hidden font-space-grotesk">
+      <TrackView
+        eventName="view_job_opening"
+        params={{
+          job_slug: job.slug,
+          job_title: job.title,
+          job_department: job.department,
+          employment_type: job.employmentType,
+        }}
+      />
       {/* FontAwesome style icons */}
       <link
         rel="stylesheet"

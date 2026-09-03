@@ -32,14 +32,17 @@ export default function CookiePolicyPage() {
           2. How We Use Cookies
         </h2>
         <p>
-          Vayu Galaxy uses cookies for essential site functions:
+          Vayu Galaxy uses cookies and local identifiers for essential platform stability, performance diagnostics, and analytics:
         </p>
         <ul className="list-disc pl-5 space-y-2">
           <li>
             <strong>Essential Layout Sessions:</strong> To preserve dark grid themes, animation sequences, responsive menu toggles, and coordinate registration details.
           </li>
           <li>
-            <strong>Performance Diagnostics:</strong> To count visitors and track browser heights to adjust grid rendering dimensions, ensuring fluid scaling.
+            <strong>Analytics & Usage Measurement (Google Analytics):</strong> When enabled via configuration, GA4 cookies (such as <code>_ga</code> and <code>_ga_*</code>) help us count visits, measure traffic sources, and evaluate page engagement to improve site architecture.
+          </li>
+          <li>
+            <strong>Experience Diagnostics (Microsoft Clarity):</strong> When active, Clarity cookies (such as <code>_clck</code>, <code>_clsk</code>, <code>CLID</code>, and <code>ANONCHK</code>) record anonymous navigational patterns, scroll depths, and heatmap metrics with strict input masking to resolve usability challenges.
           </li>
         </ul>
       </section>
@@ -52,7 +55,7 @@ export default function CookiePolicyPage() {
           To showcase our aerial technology concepts, we embed third-party video players (such as YouTube) and graphics tools. 
         </p>
         <p>
-          When you interact with these embeds, the external platforms may set tracking cookies on your device. These cookies are beyond Vayu Galaxy&apos;s control and are governed entirely by the third-party providers&apos; respective policy sheets.
+          When you interact with these embeds, the external platforms may set tracking cookies on your device. These cookies are governed entirely by the third-party providers&apos; respective policy sheets.
         </p>
       </section>
 

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { JobOpening } from "@/data/careers";
+import { trackLead } from "@/lib/analytics";
 
 interface JobApplicationFormProps {
   job: JobOpening;
@@ -155,6 +156,16 @@ export default function JobApplicationForm({ job }: JobApplicationFormProps) {
 
       if (response.ok && resBody.success) {
         setIsSubmitted(true);
+
+        // Track successful job application lead (strictly non-PII)
+        trackLead("job_application", {
+          form_name: "job_application",
+          job_slug: job.slug,
+          job_title: job.title,
+          job_department: job.department,
+          employment_type: job.employmentType,
+        });
+
         setFormData({
           fullName: "",
           email: "",
@@ -217,6 +228,7 @@ export default function JobApplicationForm({ job }: JobApplicationFormProps) {
       ref={formRef}
       onSubmit={handleSubmit}
       className="border border-white/10 bg-zinc-950/20 p-6 sm:p-8 md:p-10 rounded-3xl relative overflow-hidden shadow-2xl font-space-grotesk space-y-6"
+      data-clarity-mask="true"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none" />
 

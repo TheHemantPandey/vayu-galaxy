@@ -36,6 +36,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/animation/Reveal";
 import { Parallax } from "@/components/animation/Parallax";
+import TrackedCtaLink from "@/components/analytics/TrackedCtaLink";
 
 const projects = [
   {
@@ -454,15 +455,17 @@ export default function AboutPage() {
 
             {/* Architectural solid button CTA */}
             <Reveal style="fade" direction="up" duration={0.8} delay={0.45}>
-              <Link
+              <TrackedCtaLink
                 href="/book-now"
+                ctaName="about_cta_book"
+                linkLocation="about_page_closing_cta"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-[#F4F2ED] text-[#050505] hover:bg-transparent border border-transparent hover:border-[#F4F2ED] hover:text-[#F4F2ED] text-xs font-mono font-extrabold tracking-[0.25em] uppercase transition-all duration-500 rounded-sm group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4F2ED]"
               >
                 BOOK REGISTRATION
                 <span className="transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:transform-none">
                   →
                 </span>
-              </Link>
+              </TrackedCtaLink>
             </Reveal>
           </div>
 

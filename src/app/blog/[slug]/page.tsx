@@ -7,6 +7,7 @@ import FinalCTA from "@/components/layout/FinalCTA";
 import BlogCard from "@/components/blog/BlogCard";
 import { blogPosts } from "@/data/blog";
 import { SITE_URL, SITE_NAME } from "@/lib/seo-config";
+import TrackView from "@/components/analytics/TrackView";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -117,6 +118,15 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <div className="blog-detail-wrapper bg-[#050505] text-[#FAFAFA] min-h-screen flex flex-col justify-between">
+      <TrackView
+        eventName="view_blog_article"
+        params={{
+          article_slug: post.slug,
+          article_title: post.title,
+          article_category: post.category,
+          read_time: post.readTime,
+        }}
+      />
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"

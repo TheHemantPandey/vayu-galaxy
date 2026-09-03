@@ -1,8 +1,12 @@
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/layout/SmoothScrollProvider";
 import { SITE_URL, SITE_NAME, ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from "@/lib/seo-config";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import MicrosoftClarity from "@/components/analytics/MicrosoftClarity";
+import PageViewTracker from "@/components/analytics/PageViewTracker";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -42,6 +46,9 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
     },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
   alternates: {
     canonical: SITE_URL,
@@ -101,6 +108,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-screen antialiased">
+        <GoogleAnalytics />
+        <MicrosoftClarity />
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>

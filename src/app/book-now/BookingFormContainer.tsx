@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { trackLead } from "@/lib/analytics";
 
 export default function BookingFormContainer() {
   const [formData, setFormData] = useState({
@@ -118,6 +119,15 @@ export default function BookingFormContainer() {
       if (response.ok) {
         setIsSubmitted(true);
         setSubmissionFailed(false);
+
+        // Track successful booking lead (strictly non-PII)
+        trackLead("booking", {
+          form_name: "booking_registration",
+          interest_level: formData.interestLevel || undefined,
+          age_group: formData.ageGroup || undefined,
+          timeline: formData.timeline || undefined,
+          city: formData.city?.trim() || undefined,
+        });
       } else {
         setSubmissionFailed(true);
       }
@@ -403,7 +413,7 @@ export default function BookingFormContainer() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleFormSubmit} className="space-y-8 sm:space-y-10" noValidate>
+                <form onSubmit={handleFormSubmit} className="space-y-8 sm:space-y-10" noValidate data-clarity-mask="true">
                   {/* Step 1: 01 // ABOUT YOU */}
                   <div className="space-y-4 sm:space-y-6">
                     <div className="flex items-center gap-2 sm:gap-3 border-b border-white/10 pb-2.5 sm:pb-3">

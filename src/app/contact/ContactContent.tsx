@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FinalCTA from "@/components/layout/FinalCTA";
 import { motion } from "framer-motion";
+import { trackLead, trackPhoneCall, trackEmailClick, trackCopyEmail } from "@/lib/analytics";
 
 export default function ContactContent() {
   // Inquiry categories linked to form subject
@@ -60,11 +61,13 @@ export default function ContactContent() {
 
   // Copy Email Handler
   const handleCopyEmail = async () => {
+    trackCopyEmail({ click_location: "contact_page" });
     try {
       await navigator.clipboard.writeText("info@vayugalaxy.com");
       setCopiedEmail(true);
       setTimeout(() => setCopiedEmail(false), 2000);
     } catch {
+      trackEmailClick({ link_location: "contact_page" });
       window.location.href = "mailto:info@vayugalaxy.com";
     }
   };
@@ -111,6 +114,13 @@ export default function ContactContent() {
 
       if (response.ok) {
         setIsSubmitted(true);
+
+        // Track successful contact lead (strictly non-PII)
+        trackLead("contact", {
+          form_name: "contact_inquiry",
+          inquiry_category: formData.subject || selectedCategory,
+        });
+
         setFormData({
           fullName: "",
           email: "",
@@ -212,6 +222,7 @@ export default function ContactContent() {
                   </div>
                   <a
                     href="tel:+919876543210"
+                    onClick={() => trackPhoneCall({ link_location: "contact_page" })}
                     className="block bg-white/[0.03] border border-white/10 hover:border-cyan-400/50 rounded-xl p-3.5 text-sm font-semibold text-white hover:text-cyan-400 transition-colors"
                   >
                     +91 (011) 4567-8900
@@ -316,7 +327,7 @@ export default function ContactContent() {
                     </button>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6" data-clarity-mask="true">
                     <div className="border-b border-white/10 pb-4">
                       <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase font-bold block mb-1">
                         INQUIRY FORM

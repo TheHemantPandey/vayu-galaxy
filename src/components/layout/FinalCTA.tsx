@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
+import { trackCtaClick } from "@/lib/analytics";
 
 /**
  * FinalCTA — Cinematic closing section of the Vayu Galaxy homepage.
@@ -46,6 +47,13 @@ export default function FinalCTA() {
           {/* Architectural solid button CTA */}
           <Link
             href="/book-now"
+            onClick={() =>
+              trackCtaClick({
+                cta_name: "final_cta_book",
+                destination_url: "/book-now",
+                link_location: "homepage_final_cta",
+              })
+            }
             className="inline-flex items-center gap-3 px-8 py-4 bg-[#F4F2ED] text-[#050505] hover:bg-transparent border border-transparent hover:border-[#F4F2ED] hover:text-[#F4F2ED] text-xs font-mono font-extrabold tracking-[0.25em] uppercase transition-all duration-500 rounded-sm group mt-4 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4F2ED]"
           >
             BOOK REGISTRATION

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { trackNewsletterSubscription } from "@/lib/analytics";
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
@@ -57,6 +58,9 @@ export default function NewsletterSignup() {
       if (response.ok) {
         setIsSubmitted(true);
         setEmail(""); // Clear input on success
+
+        // Track successful newsletter subscription
+        trackNewsletterSubscription({ form_location: "newsletter_component" });
       } else {
         setIsError(true);
         setErrorMessage("ERROR. TRY AGAIN.");
@@ -86,6 +90,7 @@ export default function NewsletterSignup() {
       onSubmit={handleSubmit}
       className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between sm:justify-end gap-0.5 font-mono text-xs tracking-[0.25em] text-[#8E8E93]/60 uppercase w-full sm:w-auto"
       noValidate
+      data-clarity-mask="true"
     >
       <label htmlFor="newsletter-email" className="sr-only">
         Subscribe to Newsletter

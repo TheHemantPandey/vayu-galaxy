@@ -4,6 +4,12 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useLenis } from "@/hooks/useLenis";
 import { motion, useReducedMotion } from "framer-motion";
+import {
+  trackNewsletterSubscription,
+  trackEmailClick,
+  trackCopyEmail,
+  trackSocialClick,
+} from "@/lib/analytics";
 
 export default function Footer() {
   const lenis = useLenis();
@@ -51,6 +57,9 @@ export default function Footer() {
         setNewsletterStatus("success");
         setNewsletterMessage("YOU'RE IN. You'll hear from us when there's something worth sharing.");
         setNewsletterEmail("");
+
+        // Track successful newsletter subscription
+        trackNewsletterSubscription({ form_location: "footer" });
       } else {
         setNewsletterStatus("error");
         setNewsletterMessage("Failed to subscribe. Please try again.");
@@ -63,11 +72,13 @@ export default function Footer() {
 
   // Copy email to clipboard
   const handleCopyEmail = async () => {
+    trackCopyEmail({ click_location: "footer" });
     try {
       await navigator.clipboard.writeText("info@vayugalaxy.com");
       setCopiedEmail(true);
       setTimeout(() => setCopiedEmail(false), 2000);
     } catch {
+      trackEmailClick({ link_location: "footer" });
       window.location.href = "mailto:info@vayugalaxy.com";
     }
   };
@@ -112,7 +123,7 @@ export default function Footer() {
 
           {/* Pill-Shaped Newsletter Input Form */}
           <div className="w-full lg:w-auto">
-            <form onSubmit={handleNewsletterSubmit} className="relative flex items-center w-full sm:w-[420px]">
+            <form onSubmit={handleNewsletterSubmit} className="relative flex items-center w-full sm:w-[420px]" data-clarity-mask="true">
               <input
                 type="email"
                 placeholder="Enter your email address..."
@@ -132,8 +143,8 @@ export default function Footer() {
             {newsletterMessage && (
               <span className={`text-[11px] font-mono mt-2 block tracking-wider ${newsletterStatus === "success" ? "text-cyan-400" : "text-red-400"
                 }`}>
-                {newsletterMessage}
-              </span>
+              {newsletterMessage}
+            </span>
             )}
           </div>
         </motion.div>
@@ -170,6 +181,7 @@ export default function Footer() {
                 href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSocialClick({ platform: "x", link_location: "footer" })}
                 aria-label="Twitter / X"
                 className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/40 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all duration-300"
               >
@@ -183,6 +195,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSocialClick({ platform: "linkedin", link_location: "footer" })}
                 aria-label="LinkedIn"
                 className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/40 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all duration-300"
               >
@@ -196,6 +209,7 @@ export default function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSocialClick({ platform: "youtube", link_location: "footer" })}
                 aria-label="YouTube"
                 className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/40 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all duration-300"
               >
@@ -209,6 +223,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSocialClick({ platform: "instagram", link_location: "footer" })}
                 aria-label="Instagram"
                 className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/40 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all duration-300"
               >
@@ -370,7 +385,11 @@ export default function Footer() {
                 <svg className="w-4.5 h-4.5 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>
-                <a href="mailto:info@vayugalaxy.com" className="text-zinc-200 hover:text-white transition-colors">
+                <a
+                  href="mailto:info@vayugalaxy.com"
+                  onClick={() => trackEmailClick({ link_location: "footer" })}
+                  className="text-zinc-200 hover:text-white transition-colors"
+                >
                   info@vayugalaxy.com
                 </a>
               </div>

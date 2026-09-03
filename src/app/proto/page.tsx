@@ -36,10 +36,18 @@ import FinalCTA from "@/components/layout/FinalCTA";
 import ProjectHero from "@/components/projects/ProjectHero";
 import AboutSection from "@/components/home/AboutSection";
 import FounderSection from "@/components/home/FounderSection";
+import TrackView from "@/components/analytics/TrackView";
 
 export default function ProtoPage() {
   return (
     <div className="proto-page-wrapper bg-white">
+      <TrackView
+        eventName="view_project_detail"
+        params={{
+          project_id: "proto_robot",
+          project_name: "Proto Robot",
+        }}
+      />
       {/* FontAwesome style icons */}
       <link
         rel="stylesheet"
