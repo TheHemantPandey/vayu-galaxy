@@ -62,9 +62,6 @@ export default function PrivacyPolicyPage() {
             <strong>Microsoft Clarity:</strong> We utilize Microsoft Clarity to capture visual behavioral analytics (heatmaps and anonymous session replays) to diagnose usability issues. All personal data entry fields are masked to protect user privacy.
           </li>
           <li>
-            <strong>Google Search Console Verification:</strong> We implement verification tokens to monitor site health, search indexing, and organic performance.
-          </li>
-          <li>
             <strong>Embedded Third-Party Media:</strong> Pages showcasing our flight videos or concept simulations (such as YouTube embeds) may trigger cookies set directly by those external providers. You can control cookie preferences in your local browser settings.
           </li>
         </ul>

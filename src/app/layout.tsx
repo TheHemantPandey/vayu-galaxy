@@ -47,9 +47,6 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-  },
   alternates: {
     canonical: SITE_URL,
   },
