@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 
-export const DESTINATION_EMAIL = "docvayugalaxy@gmail.com";
+export const DESTINATION_EMAIL =
+  process.env.DESTINATION_EMAIL || process.env.SMTP_USER || "";
 
 interface SendMailOptions {
   to?: string;
@@ -18,7 +19,7 @@ interface SendMailOptions {
 
 /**
  * Centralized mailer utility for Vayu Galaxy forms.
- * All notification emails are dispatched to docvayugalaxy@gmail.com.
+ * Notification emails are dispatched to DESTINATION_EMAIL (or SMTP_USER if unset).
  */
 export async function sendEmail({
   to = DESTINATION_EMAIL,
@@ -66,7 +67,7 @@ export async function sendEmail({
     }[];
   } = {
     from: `${senderName} <${smtpUser}>`,
-    to: to || DESTINATION_EMAIL,
+    to: to || DESTINATION_EMAIL || smtpUser,
     replyTo: replyTo || smtpUser,
     subject,
     text,

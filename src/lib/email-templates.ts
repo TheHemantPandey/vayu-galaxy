@@ -128,7 +128,7 @@ function wrapEmailHtml({
                 Future Living. Technology. Innovation.
               </span>
               <span style="font-size: 10px; color: #666666; display: block;">
-                Delhi NCR, India &bull; docvayugalaxy@gmail.com &bull; <a href="https://vayugalaxy.com" style="color: #DFCFB7; text-decoration: none;">vayugalaxy.com</a>
+                Delhi NCR, India &bull; info@vayugalaxy.com &bull; <a href="https://vayugalaxy.com" style="color: #DFCFB7; text-decoration: none;">vayugalaxy.com</a>
               </span>
             </td>
           </tr>
@@ -254,7 +254,7 @@ Received At: ${timestamp}
 
 --------------------------------
 Vayu Galaxy — Future Living. Technology. Innovation.
-docvayugalaxy@gmail.com | vayugalaxy.com`;
+info@vayugalaxy.com | vayugalaxy.com`;
 
   return { subject: subjectLine, html, text };
 }
@@ -384,7 +384,7 @@ Received At: ${timestamp}
 
 --------------------------------
 Vayu Galaxy — Future Living. Technology. Innovation.
-docvayugalaxy@gmail.com | vayugalaxy.com`;
+info@vayugalaxy.com | vayugalaxy.com`;
 
   return { subject: subjectLine, html, text };
 }
@@ -429,7 +429,7 @@ Received At: ${timestamp}
 
 --------------------------------
 Vayu Galaxy — Future Living. Technology. Innovation.
-docvayugalaxy@gmail.com | vayugalaxy.com`;
+info@vayugalaxy.com | vayugalaxy.com`;
 
   return { subject: subjectLine, html, text };
 }
@@ -508,7 +508,7 @@ Received At: ${timestamp}
 
 --------------------------------
 Vayu Galaxy — Future Living. Technology. Innovation.
-docvayugalaxy@gmail.com | vayugalaxy.com`;
+info@vayugalaxy.com | vayugalaxy.com`;
 
   return { subject: subjectLine, html, text };
 }
